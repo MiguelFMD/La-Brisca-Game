@@ -12,9 +12,9 @@ public class Card : ScriptableObject
         Swords
     }
     [SerializeField] private Texture2D cardImage;
-    [SerializeField] private Suit cardSuit;
+    [SerializeField] public Suit cardSuit;
     [Range(1, 12)]
-    [SerializeField] private int number;
+    [SerializeField] public int number;
 
     /// <summary>
     /// Calculates the card's value based on the card number and the rules.
