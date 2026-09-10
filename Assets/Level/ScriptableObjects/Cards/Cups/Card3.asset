@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7407e08d038e34a4fb0be9c6dcfe1429, type: 3}
-  m_Name: TestCard
+  m_Name: Card3
   m_EditorClassIdentifier: Assembly-CSharp::Card
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2800000, guid: bb8a5e45a2b8b8b4eaaaa4a492f64550, type: 3}
   cardSuit: 0
-  number: 1
+  number: 3
