@@ -3,14 +3,16 @@ using UnityEngine;
 
 public class Hand : MonoBehaviour
 {
-    private List<Card> cards;
-    private int maxCardsAmount;
+    public List<Card> cards;
+    public int maxCardsAmount;
 
-    public void PlayCard(Card selectedCard)
+    public Card PlayCard(Card selectedCard)
     {
-        RemoveCard(selectedCard);
+        if(RemoveCard(selectedCard))
+            return selectedCard;
+        else
+            return null;
     }
-
 
     /// <summary>
     /// Makes the player jump if they have remaining stamina.
