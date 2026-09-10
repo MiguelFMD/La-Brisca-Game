@@ -6,11 +6,15 @@ public class Deck : MonoBehaviour
 {
     [SerializeField] private Card[] initialCards;
     private Queue<Card> deckCards;
-    private Card.Suit triumphSuit;
 
     void Start()
     {
         CreateDeck();
+    }
+
+    public Card RemoveCard()
+    {
+        return deckCards.Dequeue();
     }
 
     private void CreateDeck()
@@ -42,4 +46,6 @@ public class Deck : MonoBehaviour
         deckCards.Enqueue(cards[0]);
         //print(cards[0]);
     }
+
+    
 }

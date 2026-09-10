@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private Hand hand;
-    private int score;
+    public Hand hand;
+    public int score;
+    public Card playedCard;
 
 }
