@@ -5,9 +5,9 @@ using UnityEngine;
 public class Deck : MonoBehaviour
 {
     [SerializeField] private Card[] initialCards;
-    private Queue<Card> deckCards;
+    [SerializeField] private Queue<Card> deckCards;
 
-    void Start()
+    void Awake()
     {
         CreateDeck();
     }
@@ -17,14 +17,9 @@ public class Deck : MonoBehaviour
         return deckCards.Dequeue();
     }
 
-    private void CreateDeck()
+    private void InitialShuffle()
     {
-        deckCards = new Queue<Card>();
-        Shuffle();
-    }
-
-    private void Shuffle()
-    {
+        print("Shuffe deck");
         deckCards.Clear();
         List<Card> cards = new List<Card>();
         foreach(Card card in initialCards)
@@ -44,8 +39,13 @@ public class Deck : MonoBehaviour
         }
         //Card card = cards[random];
         deckCards.Enqueue(cards[0]);
-        //print(cards[0]);
+        print(deckCards);
     }
 
-    
+    private void CreateDeck()
+    {
+        print("Creating deck...");
+        deckCards = new Queue<Card>();
+        InitialShuffle();
+    }
 }

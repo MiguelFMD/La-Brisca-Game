@@ -6,6 +6,11 @@ public class Hand : MonoBehaviour
     public List<Card> cards;
     public int maxCardsAmount;
 
+    void Awake()
+    {
+        cards = new List<Card>();
+    }
+
     public Card PlayCard(Card selectedCard)
     {
         if(RemoveCard(selectedCard))
@@ -15,7 +20,7 @@ public class Hand : MonoBehaviour
     }
 
     /// <summary>
-    /// Makes the player jump if they have remaining stamina.
+    /// Adds a new card to the hand.
     /// </summary>
     public void DrawCard(Card newCard)
     {

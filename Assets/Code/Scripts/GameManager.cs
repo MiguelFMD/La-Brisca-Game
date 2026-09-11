@@ -1,9 +1,14 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
     
+    public static GameManager Instance { get; private set; }
+    [SerializeField] public Player[] players;
+    [SerializeField] public Deck deck;
+    [SerializeField] public TrickManager trickManager;
+    [SerializeField] private int cardsToDeal; 
     private void Awake()
     {
         // 1. Verificar si ya existe una instancia
@@ -19,5 +24,27 @@ public class GameManager : MonoBehaviour
 
         // 3. Hacer que persista entre cambios de escena
         DontDestroyOnLoad(gameObject);
+    }
+
+    void Start()
+    {
+        DealCards();
+    }
+
+    private void DealCards()
+    {
+        print("Dealing cards...");
+        for(int c = 0; c < cardsToDeal; c++)
+        {
+            print("Card number: " + c);
+            foreach(Player player in players)
+            {
+                Card card = deck.RemoveCard();
+                if(card)
+                {
+                    player.DrawCard(card);
+                }
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2297329773077372184}
   - component: {fileID: 995535604659820504}
+  - component: {fileID: 7366165989002325751}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -44,3 +45,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc333bac9d39a344ae573ca8b80e3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  score: 0
+  playedCard: {fileID: 0}
+--- !u!114 &7366165989002325751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745607643780981813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d6712e0ba337414396a4728d1fac42b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hand
+  cards: []
+  maxCardsAmount: 3

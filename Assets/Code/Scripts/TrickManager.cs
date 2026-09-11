@@ -4,17 +4,6 @@ using UnityEngine;
 public class TrickManager : MonoBehaviour
 {
     private Card.Suit triumphSuit;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public Player CalculateTrickWinner(List<Player> players, Card.Suit trickSuit)
     {

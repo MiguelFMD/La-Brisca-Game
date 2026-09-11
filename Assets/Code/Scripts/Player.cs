@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Hand hand;
     public int score;
     public Card playedCard;
+    private Hand hand;
+
+    void Awake()
+    {
+        hand = GetComponent<Hand>();
+    }
 
     public void PlayRandomCard()
     {
@@ -13,4 +18,8 @@ public class Player : MonoBehaviour
         hand.PlayCard(playedCard);
     }
 
+    public void DrawCard(Card newCard)
+    {
+        hand.DrawCard(newCard);
+    }
 }
