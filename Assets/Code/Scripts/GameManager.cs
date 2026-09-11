@@ -26,11 +26,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start()
-    {
-        PrepareGame();
-    }
-
     public void PrepareGame()
     {
         //Deal cards

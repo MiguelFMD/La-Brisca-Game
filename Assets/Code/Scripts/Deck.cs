@@ -14,7 +14,10 @@ public class Deck : MonoBehaviour
 
     public Card RemoveCard()
     {
-        return deckCards.Dequeue();
+        if(deckCards.Count > 0)
+            return deckCards.Dequeue();
+        else
+            return null;
     }
 
     private void InitialShuffle()
