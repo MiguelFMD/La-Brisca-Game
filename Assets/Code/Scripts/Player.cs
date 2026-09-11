@@ -13,13 +13,29 @@ public class Player : MonoBehaviour
 
     public void PlayRandomCard()
     {
-        int random = Random.Range(1, hand.maxCardsAmount - 1);
+        int random = Random.Range(1, hand.maxCardsAmount);
         playedCard = hand.cards[random];
+        print("Card played is: " + playedCard);
         hand.PlayCard(playedCard);
     }
 
     public void DrawCard(Card newCard)
     {
         hand.DrawCard(newCard);
+    }
+
+    public void ClearHand()
+    {
+        hand.ClearHand();
+    }
+
+    public void ClearPlayedCard()
+    {
+        playedCard = null;
+    }
+
+    public void SetPlayerScore()
+    {
+        
     }
 }

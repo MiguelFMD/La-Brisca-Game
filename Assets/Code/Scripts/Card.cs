@@ -13,13 +13,12 @@ public class Card : ScriptableObject
     }
     [SerializeField] private Texture2D cardImage;
     [SerializeField] public Suit cardSuit;
-    [Range(1, 12)]
     [SerializeField] public int number;
 
     /// <summary>
     /// Calculates the card's value based on the card number and the rules.
     /// </summary>
-    private int CalculateCardValue()
+    public int CalculateCardValue()
     {
         switch (number)
         {

@@ -27,6 +27,11 @@ public class Hand : MonoBehaviour
         AddCard(newCard);
     }
 
+    public void ClearHand()
+    {
+        cards.Clear();
+    }
+
     /// <summary>
     /// Adds a card.
     /// </summary>

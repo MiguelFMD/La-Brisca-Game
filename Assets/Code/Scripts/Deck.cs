@@ -7,17 +7,22 @@ public class Deck : MonoBehaviour
     [SerializeField] private Card[] initialCards;
     private Queue<Card> deckCards;
 
-    void Awake()
-    {
-        CreateDeck();
-    }
-
     public Card RemoveCard()
     {
         if(deckCards.Count > 0)
             return deckCards.Dequeue();
         else
             return null;
+    }
+
+    /// <summary>
+    /// Creates a new initial deck. Use this to start a new game.
+    /// </summary>
+    public void CreateDeck()
+    {
+        print("Creating deck...");
+        deckCards = new Queue<Card>();
+        InitialShuffle();
     }
 
     private void InitialShuffle()
@@ -43,12 +48,5 @@ public class Deck : MonoBehaviour
         //Card card = cards[random];
         deckCards.Enqueue(cards[0]);
         print(deckCards);
-    }
-
-    private void CreateDeck()
-    {
-        print("Creating deck...");
-        deckCards = new Queue<Card>();
-        InitialShuffle();
     }
 }
