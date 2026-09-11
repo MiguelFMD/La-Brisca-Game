@@ -5,7 +5,7 @@ using UnityEngine;
 public class Deck : MonoBehaviour
 {
     [SerializeField] private Card[] initialCards;
-    [SerializeField] private Queue<Card> deckCards;
+    private Queue<Card> deckCards;
 
     void Awake()
     {

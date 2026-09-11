@@ -28,7 +28,20 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        PrepareGame();
+    }
+
+    public void PrepareGame()
+    {
+        //Deal cards
         DealCards();
+        //Discover Triumph Suit
+        DiscoverTriumphSuit();
+    }
+
+    public void PlayTestTrick()
+    {
+        
     }
 
     private void DealCards()
@@ -46,5 +59,13 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void DiscoverTriumphSuit()
+    {
+        print("Discovering triumph suit...");
+        Card card = deck.RemoveCard();
+        trickManager.SetTriumphSuit(card.cardSuit);
+        print("The triumph suit is: " + card.cardSuit);
     }
 }

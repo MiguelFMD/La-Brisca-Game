@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
 
     public void PlayRandomCard()
     {
-        int random = Random.Range(1, hand.maxCardsAmount);
+        int random = Random.Range(1, hand.maxCardsAmount - 1);
         playedCard = hand.cards[random];
         hand.PlayCard(playedCard);
     }

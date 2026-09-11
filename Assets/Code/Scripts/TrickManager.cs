@@ -4,6 +4,17 @@ using UnityEngine;
 public class TrickManager : MonoBehaviour
 {
     private Card.Suit triumphSuit;
+    private Card.Suit exitSuit;
+
+    public void SetTriumphSuit(Card.Suit newSuit)
+    {
+        triumphSuit = newSuit;
+    }
+
+    public void SetExitSuit(Card.Suit newSuit)
+    {
+        exitSuit = newSuit;
+    }
 
     public Player CalculateTrickWinner(List<Player> players, Card.Suit trickSuit)
     {
@@ -40,4 +51,11 @@ public class TrickManager : MonoBehaviour
             return winner;
         }
     }
+
+    
+    private void RandomTriumphSuit()
+    {
+        SetTriumphSuit((Card.Suit)Random.Range(0, 3));
+    }
+    
 }
