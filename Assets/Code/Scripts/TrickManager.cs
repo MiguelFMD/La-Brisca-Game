@@ -5,7 +5,6 @@ using Unity.VisualScripting;
 
 public class TrickManager : MonoBehaviour
 {
-    //[SerializeField] private GameObject cardDisplayPrefab;
     [SerializeField] private float cardAnimationDuration;
     [SerializeField] private AnimationCurve easingCurve;
     [SerializeField] private RectTransform centerTableTransform; //A basic rect transform in the main canvas indicating the center of the table
@@ -14,18 +13,30 @@ public class TrickManager : MonoBehaviour
     private Card.Suit trickSuit;
     private int currentPlayer;
     private bool isNewTrickPlay = true;
+    private bool isAnimationPlaying = false;
+
+    void OnEnable()
+    {
+        EventManager.OnAnimationEnded += AnimationEnded;
+    }
+
+    void OnDisable()
+    {
+        EventManager.OnAnimationEnded -= AnimationEnded;
+    }
 
     //-----CORE FUNCTIONS------
     void Start()
     {
         players = GameManager.Instance.players;
-        //Select random player to start
+        
     }
 
     //-----PUBLIC FUNCTIONS------
     public void CardPlayed(CardDisplay cardDisplay)
     {
-        if(CheckPlayerTurn(cardDisplay.GetPlayerOwner())) //If the card owner is the corresponding player
+        //If the card owner is the corresponding player and there is no card animation playing
+        if(CheckPlayerTurn(cardDisplay.GetPlayerOwner()) & !isAnimationPlaying) 
         {
             CardToCenter(cardDisplay); //Put the card played on the center of the table
             cardDisplay.GetPlayerOwner().PlayCard(cardDisplay);
@@ -34,15 +45,7 @@ public class TrickManager : MonoBehaviour
                 if(players[currentPlayer].playedCard != null) 
                     SetTrickSuit(players[currentPlayer].playedCard.GetCardSuit()); //In new tricks we set the new trick suit with the first played card
             }
-            SelectNextPlayer();
-            if(CheckAllPlayersHavePlayed())
-            {
-                Player winner = CalculateTrickWinner();
-                print("The trick winner is: " + winner);
-                ClearTableVisuals();
-                isNewTrickPlay = true;
-                EventManager.TrickEnded();
-            }
+
         }
     }
 
@@ -155,9 +158,9 @@ public class TrickManager : MonoBehaviour
     private void CardToCenter(CardDisplay cardDisplay)
     {
         RectTransform cardRect = cardDisplay.GetComponent<RectTransform>();
-        cardRect.SetParent(centerTableTransform, true);
-        
-        //StartCoroutine(AnimateCard(cardRect));
+        //cardRect.SetParent(centerTableTransform, true);
+        cardRect.SetParent(cardRect.parent.parent);
+        StartCoroutine(AnimateCard(cardRect));
         
     }
 
@@ -176,7 +179,8 @@ public class TrickManager : MonoBehaviour
 
     private IEnumerator AnimateCard(RectTransform selectedCard)
     {
-        Vector2 targetPosition = centerTableTransform.position;
+        isAnimationPlaying = true;
+        Vector2 targetPosition = centerTableTransform.anchoredPosition;
         Vector2 startPosition = selectedCard.anchoredPosition;
         float timeElapsed = 0f;
 
@@ -191,9 +195,22 @@ public class TrickManager : MonoBehaviour
             selectedCard.anchoredPosition = Vector2.Lerp(startPosition, targetPosition, curveValue);
             yield return null; // Wait for the next frame
         }
+        isAnimationPlaying = false;
+        selectedCard.SetParent(centerTableTransform, true); // Snap to new parent
+        EventManager.AnimationEnded();
+    }
 
-        selectedCard.anchoredPosition = targetPosition; // Snap to final position
-        //selectedCard.SetParent(centerTableTransform, true);
+    private void AnimationEnded()
+    {
+        SelectNextPlayer();
+        if(CheckAllPlayersHavePlayed())
+        {
+            Player winner = CalculateTrickWinner();
+            print("The trick winner is: " + winner);
+            ClearTableVisuals();
+            isNewTrickPlay = true;
+            EventManager.TrickEnded();
+        }
     }
     
 }
