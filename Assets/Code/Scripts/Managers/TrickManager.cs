@@ -197,7 +197,7 @@ public class TrickManager : MonoBehaviour
         }
         isAnimationPlaying = false;
         selectedCard.SetParent(centerTableTransform, true); // Snap to new parent
-        EventManager.AnimationEnded();
+        EventManager.OnAnimationEnded?.Invoke();
     }
 
     private void AnimationEnded()
@@ -209,7 +209,7 @@ public class TrickManager : MonoBehaviour
             print("The trick winner is: " + winner);
             ClearTableVisuals();
             isNewTrickPlay = true;
-            EventManager.TrickEnded();
+            EventManager.OnTrickEnded?.Invoke();
         }
     }
     
