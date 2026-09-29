@@ -42,8 +42,14 @@ public class TrickManager : MonoBehaviour
             cardDisplay.GetPlayerOwner().PlayCard(cardDisplay);
             if(isNewTrickPlay)
             {
-                if(players[currentPlayer].playedCard != null) 
-                    SetTrickSuit(players[currentPlayer].playedCard.GetCardSuit()); //In new tricks we set the new trick suit with the first played card
+                //In new tricks we set the new trick suit with the first played card
+                if(players[currentPlayer].playedCard != null)
+                {
+                    SetTrickSuit(players[currentPlayer].playedCard.GetCardSuit());
+                    isNewTrickPlay = false;
+                    print("Trick suit is: " + trickSuit);
+                } 
+                    
             }
 
         }
@@ -72,6 +78,7 @@ public class TrickManager : MonoBehaviour
         {
             if(players[p].playedCard.GetCardSuit() == triumphSuit)
             {
+                print("Jugador: " + players[p] + " tiene " + triumphSuit);
                 trickWinners.Add(players[p]);
             }
         }
@@ -79,6 +86,7 @@ public class TrickManager : MonoBehaviour
         //If there is only 1, that's the winner
         if(trickWinners.Count == 1)
         {
+            print("Win by triumph suit");
             AddScoredCards(trickWinners[0], players);
             return trickWinners[0];
         }
@@ -96,6 +104,7 @@ public class TrickManager : MonoBehaviour
             //If there is only 1, that's the winner
             if(trickWinners.Count == 1)
             {
+                print("Win by trickSuit");
                 AddScoredCards(trickWinners[0], players);
                 return trickWinners[0];
             }
@@ -109,6 +118,7 @@ public class TrickManager : MonoBehaviour
                     if (winner.playedCard.GetCardRank() < player.playedCard.GetCardRank())
                         winner = player;
                 }
+                print("Win by rank");
                 AddScoredCards(winner, players);
                 return winner;
             }

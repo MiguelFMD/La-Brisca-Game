@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,12 @@ public class Player : MonoBehaviour
     public Card playedCard;
     public int playerNumber;
     private Hand hand;
+    
+    [Header("Player Stats")]
+    public float maxHealth = 100.0f;
+    public float currentHealth;
+    public int maxEnergy = 3;
+    public int currentEnergy;
 
     void OnEnable()
     {
@@ -22,6 +29,8 @@ public class Player : MonoBehaviour
     void Awake()
     {
         hand = GetComponent<Hand>();
+        currentHealth = maxHealth;
+        currentEnergy = maxEnergy;
     }
 
     /*public void PlayRandomCard()
@@ -35,6 +44,7 @@ public class Player : MonoBehaviour
         }
     }*/
 
+    //------CARDS FUNCTIONS----------
     public void PlayCard(CardDisplay newPlayedCard)
     {
         playedCard = newPlayedCard.GetCardData();
@@ -76,6 +86,20 @@ public class Player : MonoBehaviour
     {
         if(cardDisplay.GetPlayerOwner() == this)
             GameManager.Instance.PlayCard(cardDisplay);
+    }
+
+    //------STATS FUNCTIONS-------
+
+    public void ChangeCurrentHealth(float value)
+    {
+        currentHealth = Math.Clamp(currentHealth + value, 0, maxHealth);
+        if(currentHealth <= 0)
+            EventManager.OnPlayerDead?.Invoke();
+    }
+
+    public void ChangeCurrentEnergy(int value)
+    {
+        currentEnergy = Math.Clamp(currentEnergy + value, 0, maxEnergy);
     }
 
 }

@@ -8,17 +8,6 @@ public class CardDisplay : MonoBehaviour
     private Card cardData;
     [SerializeField] private Image image;
     private Player playerOwner;
-    private Button cardButton;
-
-    private void Start()
-    {
-        cardButton.onClick.AddListener(() => OnButtonClick(this));
-    }
-
-    private void OnDisable()
-    {
-        cardButton.onClick.RemoveAllListeners();
-    }
 
     public void SetCardData(Card newCardData, Player owner)
     {
