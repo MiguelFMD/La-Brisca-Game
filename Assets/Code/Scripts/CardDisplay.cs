@@ -10,7 +10,7 @@ public class CardDisplay : MonoBehaviour
     private Player playerOwner;
     private Button cardButton;
 
-    private void OnEnable()
+    private void Start()
     {
         cardButton.onClick.AddListener(() => OnButtonClick(this));
     }
