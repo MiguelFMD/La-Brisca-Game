@@ -17,12 +17,12 @@ public class TrickManager : MonoBehaviour
 
     void OnEnable()
     {
-        EventManager.OnAnimationEnded += AnimationEnded;
+        EventManager.OnAnimationEnded += HandleAnimationEnded;
     }
 
     void OnDisable()
     {
-        EventManager.OnAnimationEnded -= AnimationEnded;
+        EventManager.OnAnimationEnded -= HandleAnimationEnded;
     }
 
     //-----CORE FUNCTIONS------
@@ -210,7 +210,7 @@ public class TrickManager : MonoBehaviour
         EventManager.OnAnimationEnded?.Invoke();
     }
 
-    private void AnimationEnded()
+    private void HandleAnimationEnded()
     {
         SelectNextPlayer();
         if(CheckAllPlayersHavePlayed())

@@ -18,12 +18,12 @@ public class Player : MonoBehaviour
 
     void OnEnable()
     {
-        EventManager.OnCardButtonClicked += TryPlayCard;
+        EventManager.OnCardButtonClicked += HandleButtonClicked;
     }
 
     void OnDisable()
     {
-        EventManager.OnCardButtonClicked -= TryPlayCard;
+        EventManager.OnCardButtonClicked -= HandleButtonClicked;
     }
 
     void Awake()
@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
         return hand.cards.Count == 0;
     }
 
-    private void TryPlayCard(CardDisplay cardDisplay)
+    private void HandleButtonClicked(CardDisplay cardDisplay)
     {
         if(cardDisplay.GetPlayerOwner() == this)
             GameManager.Instance.PlayCard(cardDisplay);
@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
     {
         currentHealth = Math.Clamp(currentHealth + value, 0, maxHealth);
         if(currentHealth <= 0)
-            EventManager.OnPlayerDead?.Invoke();
+            EventManager.OnPlayerDead?.Invoke(this);
     }
 
     public void ChangeCurrentEnergy(int value)

@@ -14,12 +14,14 @@ public class GameManager : MonoBehaviour
     
     void OnEnable()
     {
-        EventManager.OnTrickEnded += OnTrickEnded;
+        EventManager.OnTrickEnded += HandleTrickEnded;
+        EventManager.OnPlayerDead += HandlePlayerDead;
     }
 
     void OnDisable()
     {
-        EventManager.OnTrickEnded -= OnTrickEnded;
+        EventManager.OnTrickEnded -= HandleTrickEnded;
+        EventManager.OnPlayerDead -= HandlePlayerDead;
     }
 
     private void Awake()
@@ -82,18 +84,18 @@ public class GameManager : MonoBehaviour
         trickManager.CardPlayed(cardDisplay);
     }
 
-    private void OnTrickEnded()
+    private void HandleTrickEnded()
     {
-        if(deck.IsDeckEmpty() && EmptyHands()) //If the deck is empty that means the game has ended
+        /*if(deck.IsDeckEmpty() && EmptyHands()) //If the deck is empty that means the game has ended
         {
-            //print("ey");
             GetWinner();
-        }
-        else
-        {
+        }*/
+        
+        //else
+        //{
             RemovePlayersPlayedCard(); //Remove the played cards from players
             DealCards(1);
-        }
+        //}
     }
 
     private void DealCards(int cardsToDeal)
@@ -151,8 +153,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
-
     private Player GetWinner()
     {
         Player winner = players[0];
@@ -170,6 +170,13 @@ public class GameManager : MonoBehaviour
         }
         print("The winner is: " + winner.name);
         return winner;
+    }
+
+    private void HandlePlayerDead(Player deadPlayer)
+    {
+        print("Player: " + deadPlayer.name + " is dead");
+        print("Reseting game...");
+        ResetGame();
     }
 
     
