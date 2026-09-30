@@ -9,6 +9,10 @@ public class Player : MonoBehaviour
     public Card playedCard;
     public int playerNumber;
     private Hand hand;
+
+    //Events
+    public event Action<float, float> OnPlayerHealthChanged;
+    //public event Action<Player> OnPlayerDamaged;
     
     [Header("Player Stats")]
     public float maxHealth = 100.0f;
@@ -89,12 +93,21 @@ public class Player : MonoBehaviour
     }
 
     //------STATS FUNCTIONS-------
-
-    public void ChangeCurrentHealth(float value)
+    public void TakeDamage(int amount)
     {
-        currentHealth = Math.Clamp(currentHealth + value, 0, maxHealth);
-        if(currentHealth <= 0)
-            EventManager.OnPlayerDead?.Invoke(this);
+        currentHealth = Mathf.Max(0, currentHealth - amount);
+        OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
+
+        if (currentHealth == 0)
+        {
+            // Lógica de derrota/muerte
+        }
+    }
+
+    public void Heal(int amount)
+    {
+        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     public void ChangeCurrentEnergy(int value)

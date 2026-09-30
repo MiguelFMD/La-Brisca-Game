@@ -1,18 +1,26 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof (Image))]
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Image healthBar;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private Player targetPlayer;
+    private Image healthBar;
+    void OnEnable()
     {
-        
+        if(targetPlayer != null)
+            targetPlayer.OnPlayerHealthChanged += HandlePlayerHealthChanged;
+        healthBar = GetComponent<Image>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnDisable()
     {
-        
+        if(targetPlayer != null)
+            targetPlayer.OnPlayerHealthChanged -= HandlePlayerHealthChanged;
+    }
+
+    private void HandlePlayerHealthChanged(float current, float max)
+    {
+        healthBar.material.SetFloat("_Health", current);
     }
 }

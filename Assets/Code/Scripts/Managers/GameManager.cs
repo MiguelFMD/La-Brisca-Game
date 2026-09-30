@@ -15,13 +15,13 @@ public class GameManager : MonoBehaviour
     void OnEnable()
     {
         EventManager.OnTrickEnded += HandleTrickEnded;
-        EventManager.OnPlayerDead += HandlePlayerDead;
+        //EventManager.OnPlayerDead += HandlePlayerDead;
     }
 
     void OnDisable()
     {
         EventManager.OnTrickEnded -= HandleTrickEnded;
-        EventManager.OnPlayerDead -= HandlePlayerDead;
+        //EventManager.OnPlayerDead -= HandlePlayerDead;
     }
 
     private void Awake()
