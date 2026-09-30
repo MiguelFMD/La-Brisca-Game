@@ -156,6 +156,7 @@ public class GameManager : MonoBehaviour
             players[p].ClearHand();
             players[p].playerNumber = p + 1;
             players[p].scoredCards.Clear();
+            players[p].Heal(players[p].maxHealth);
         }
     }
 
