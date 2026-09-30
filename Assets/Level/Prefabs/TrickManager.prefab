@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914cb098a9598dc449c90f8a50bda72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrickManager
-  cardDisplayPrefab: {fileID: 2723487353075509727, guid: 5768f1398e181e04cbb1939d3ba93779, type: 3}
   cardAnimationDuration: 2
   easingCurve:
     serializedVersion: 2
@@ -70,3 +69,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  centerTableTransform: {fileID: 0}
+  triumphCardDisplay: {fileID: 0}
+  triumphCards:
+  - {fileID: 11400000, guid: 00cf534084a9abb46862027e16e1f50a, type: 2}
+  - {fileID: 11400000, guid: 977254c12cba3bc4fb1b1a55856a51d7, type: 2}
+  - {fileID: 11400000, guid: 816b407558af6b9429c46ec92bc2ea0b, type: 2}
+  - {fileID: 11400000, guid: 3f810b962badc4d4596cd5e7639a8138, type: 2}

@@ -5,14 +5,14 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    [SerializeField] public Player player;
-    [SerializeField] public Player enemy;
-    [SerializeField] public Deck deck;
-    [SerializeField] public TrickManager trickManager;
+    public Player player;
+    public Player enemy;
+    public Player[] players;
+    public TrickManager trickManager;
     [SerializeField] private int initialCardsAmount;
     [SerializeField] private GameObject cardDisplayPrefab;
-    public Player[] players;
     private Queue<CardDisplay> cardPool = new Queue<CardDisplay>();
+    
     
     void OnEnable()
     {
@@ -54,10 +54,9 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
-        deck.CreateDeck();
         ResetPlayers();
-        DealCards(initialCardsAmount);
-        trickManager.SetTriumphSuit(deck.DiscoverTriumphSuit().GetCardSuit());
+        DrawCards(initialCardsAmount);
+        trickManager.DiscoverTriumphSuit();
         trickManager.ResetTrick();
     }
 
@@ -100,34 +99,25 @@ public class GameManager : MonoBehaviour
         //else
         //{
             RemovePlayersPlayedCard(); //Remove the played cards from players
-            DealCards(1);
+            DrawOneCard();
         //}
     }
 
-    private void DealCards(int cardsToDeal)
+    private void DrawCards(int cardsToDeal)
     {
-        if(deck.IsDeckEmpty()) //We dont try to deal if the dekc is empty
-            return;
-        //print("Dealing cards...");
         for(int c = 0; c < cardsToDeal; c++)
         {
-            //print("Card number: " + c);
-            DealOneCard();
+            DrawOneCard();
         }
     }
 
-    private void DealOneCard()
+    private void DrawOneCard()
     {
-        if(deck.IsDeckEmpty()) //We dont try to deal if the dekc is empty
-            return;
         foreach(Player player in players)
         {
-            Card card = deck.RemoveCard();
-            if(card)
-                player.DrawCard(card);
+            player.DrawCard();
         }
     }
-
 
     private void RemovePlayersPlayedCard()
     {
@@ -157,6 +147,7 @@ public class GameManager : MonoBehaviour
             players[p].playerNumber = p + 1;
             players[p].scoredCards.Clear();
             players[p].Heal(players[p].maxHealth);
+            players[p].CreateDeck();
         }
     }
 

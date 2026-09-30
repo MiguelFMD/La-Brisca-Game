@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-    [SerializeField] private Card[] initialCards;
-    [SerializeField] private SpriteRenderer triumphCardDisplay;
-    private Card triumphSuitCard;
+    [SerializeField] private DeckType deckType;
+    //[SerializeField] private SpriteRenderer triumphCardDisplay;
+    //private Card triumphSuitCard;
     private Queue<Card> deckCards;
     
     public Card RemoveCard()
@@ -18,17 +18,19 @@ public class Deck : MonoBehaviour
             
         else
         {
-            if(triumphSuitCard != null)
+            Debug.LogWarning("No cards left in the deck");
+            return null;
+            /*if(triumphSuitCard != null)
             {
                 Debug.LogWarning("No cards left, giving the triumph card");
-                triumphCardDisplay.gameObject.SetActive(false);
+                //triumphCardDisplay.gameObject.SetActive(false);
                 return triumphSuitCard;
             }
             else
             {
-                Debug.LogWarning("No cards left in the deck");
+                
                 return null;
-            }
+            }*/
             
         }
             
@@ -49,7 +51,7 @@ public class Deck : MonoBehaviour
         InitialShuffle();
     }
 
-    public Card DiscoverTriumphSuit()
+    /*public Card DiscoverTriumphSuit()
     {
         print("Discovering triumph suit...");
         triumphSuitCard = RemoveCard();
@@ -57,26 +59,25 @@ public class Deck : MonoBehaviour
         triumphCardDisplay.gameObject.SetActive(true);
         print("The triumph suit is: " + triumphSuitCard.GetCardSuit());
         return triumphSuitCard;
-    }
+    }*/
 
     private void InitialShuffle()
     {
         print("Shuffe deck");
         deckCards.Clear();
         List<Card> cards = new List<Card>();
-        foreach(Card card in initialCards)
+        foreach(Card card in deckType.cards)
         {
             cards.Add(card);
         }
 
         int random = 0;
 
-        for(int c = 0; c < initialCards.Length - 1; c++)
+        for(int c = 0; c < deckType.cards.Length - 1; c++)
         {
             random = Random.Range(0, cards.Count);
             Card card = cards[random];
             cards.RemoveAt(random);
-            //print(card.number);
             deckCards.Enqueue(card);
         }
         //Card card = cards[random];

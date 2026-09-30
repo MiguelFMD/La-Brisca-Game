@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public Card playedCard;
     public int playerNumber;
     private Hand hand;
+    [SerializeField] private Deck deck;
 
     //Events
     public event Action<float, float> OnPlayerHealthChanged;
@@ -56,9 +57,16 @@ public class Player : MonoBehaviour
         //print("Card played is: " + playedCard);
     }
 
-    public void DrawCard(Card newCard)
+    public void DrawCard()
     {
-        hand.DrawCard(newCard, this);
+        Card newCard = deck.RemoveCard();
+        if(newCard != null)
+            hand.DrawCard(newCard, this);
+    }
+
+    public void CreateDeck()
+    {
+        deck.CreateDeck();
     }
 
     public void ClearHand()

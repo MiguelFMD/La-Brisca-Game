@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class TrickManager : MonoBehaviour
 {
@@ -16,6 +16,8 @@ public class TrickManager : MonoBehaviour
     private Player trickWinner;
     private Player trickLoser;
     private bool isAnimationPlaying = false;
+    [SerializeField] private Image triumphCardDisplay;
+    [SerializeField] private Card[] triumphCards;
 
     void OnEnable()
     {
@@ -280,8 +282,6 @@ public class TrickManager : MonoBehaviour
         
     }
 
-    
-
     private bool CheckAllPlayersHavePlayed()
     {
         foreach(Player player in players)
@@ -338,4 +338,19 @@ public class TrickManager : MonoBehaviour
         }
     }
     
+    public void DiscoverTriumphSuit()
+    {
+        print("Discovering triumph suit...");
+        Card.Suit triumphSuit = (Card.Suit)Random.Range(0, System.Enum.GetValues(typeof(Card.Suit)).Length);
+        foreach(Card card in triumphCards)
+        {
+            if(card.GetCardSuit() == triumphSuit)
+            {
+                triumphCardDisplay.sprite = card.GetCardSprite();
+                break; 
+            }
+        }
+        triumphCardDisplay.gameObject.SetActive(true);
+        print("The triumph suit is: " + triumphSuit);
+    }
 }
