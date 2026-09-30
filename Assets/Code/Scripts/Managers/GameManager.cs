@@ -5,23 +5,29 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    [SerializeField] public Player[] players;
+    [SerializeField] public Player player;
+    [SerializeField] public Player enemy;
     [SerializeField] public Deck deck;
     [SerializeField] public TrickManager trickManager;
     [SerializeField] private int initialCardsAmount;
     [SerializeField] private GameObject cardDisplayPrefab;
+    public Player[] players;
     private Queue<CardDisplay> cardPool = new Queue<CardDisplay>();
     
     void OnEnable()
     {
         EventManager.OnTrickEnded += HandleTrickEnded;
-        //EventManager.OnPlayerDead += HandlePlayerDead;
+        //Two players mode
+        player.OnPlayerDead += HandlePlayerDead;
+        enemy.OnPlayerDead += HandleEnemyDead;
+        players = new Player[2] {player, enemy};
     }
 
     void OnDisable()
     {
         EventManager.OnTrickEnded -= HandleTrickEnded;
-        //EventManager.OnPlayerDead -= HandlePlayerDead;
+        player.OnPlayerDead -= HandlePlayerDead;
+        enemy.OnPlayerDead -= HandleEnemyDead;
     }
 
     private void Awake()
@@ -172,11 +178,14 @@ public class GameManager : MonoBehaviour
         return winner;
     }
 
-    private void HandlePlayerDead(Player deadPlayer)
+    private void HandlePlayerDead()
     {
-        print("Player: " + deadPlayer.name + " is dead");
-        print("Reseting game...");
-        ResetGame();
+        print("YOU LOSE!");
+    }
+
+    private void HandleEnemyDead()
+    {
+        print("YOU WIN!");
     }
 
     

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -12,7 +11,7 @@ public class Player : MonoBehaviour
 
     //Events
     public event Action<float, float> OnPlayerHealthChanged;
-    //public event Action<Player> OnPlayerDamaged;
+    public event Action OnPlayerDead;
     
     [Header("Player Stats")]
     public float maxHealth = 100.0f;
@@ -101,7 +100,8 @@ public class Player : MonoBehaviour
 
         if (currentHealth == 0)
         {
-            // Lógica de derrota/muerte
+            print("ey");
+            OnPlayerDead?.Invoke();
         }
     }
 

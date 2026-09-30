@@ -1,16 +1,46 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] private GameObject endScreen;
+    [SerializeField] private TextMeshProUGUI endText;
+    [SerializeField] private Button resetButton;
+    private Player player;
+    private Player enemy;
+    
     void Start()
     {
-        
+        endScreen.SetActive(false);
+        player = GameManager.Instance.player;
+        enemy = GameManager.Instance.enemy;
+        player.OnPlayerDead += HandlePlayerDead;
+        enemy.OnPlayerDead += HandleEnemyDead;
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnDisable()
     {
-        
+        player.OnPlayerDead -= HandlePlayerDead;
+        enemy.OnPlayerDead -= HandleEnemyDead;
     }
+
+    public void OnResetButtonPressed()
+    {
+        endScreen.SetActive(false);
+    }
+
+    private void HandlePlayerDead()
+    {
+        endScreen.SetActive(true);
+        endText.text = "YOU LOSE!";
+    }
+
+    private void HandleEnemyDead()
+    {
+        endScreen.SetActive(true);
+        endText.text = "YOU WIN!";
+    }
+
+    
 }
