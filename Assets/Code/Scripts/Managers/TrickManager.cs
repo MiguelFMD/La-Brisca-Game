@@ -13,6 +13,8 @@ public class TrickManager : MonoBehaviour
     private Card.Suit trickSuit;
     private int currentPlayer;
     private bool isNewTrickPlay = true;
+    private Player trickWinner;
+    private Player trickLoser;
     private bool isAnimationPlaying = false;
 
     void OnEnable()
@@ -124,6 +126,110 @@ public class TrickManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Calculates the trick winner and loser (only 1vs1 version)
+    /// </summary>
+    /// <returns>True if someone wins, false if draw</returns>
+    private bool CalculateTrickWinner1vs1()
+    {
+        //CARD SUIT
+        if(players[0].playedCard.GetCardSuit() == triumphSuit)
+        {
+            if(players[1].playedCard.GetCardSuit() == triumphSuit)
+            {
+                if(players[0].playedCard.GetCardRank() > players[1].playedCard.GetCardRank()) //0 win
+                {
+                    trickWinner = players[0];
+                    trickLoser = players[1];
+                    return true;
+                }
+                else if(players[0].playedCard.GetCardRank() < players[1].playedCard.GetCardRank())//1 win
+                {
+                    trickWinner = players[1];
+                    trickLoser = players[0];
+                    return true;
+                }
+                else //Draw
+                {
+                    return false;
+                }
+            }
+            else //0 win
+            {
+                trickWinner = players[0];
+                trickLoser = players[1];
+                return true;
+            }
+        }
+        else
+        {
+            if(players[1].playedCard.GetCardSuit() == triumphSuit) //1 win
+            {
+                trickWinner = players[1];
+                trickLoser = players[0];
+                return true;
+            }
+            else //Miramos el trick suit
+            {
+                if(players[0].playedCard.GetCardSuit() == trickSuit)
+                {
+                    if(players[1].playedCard.GetCardSuit() == trickSuit)
+                    {
+                        if(players[0].playedCard.GetCardRank() > players[1].playedCard.GetCardRank()) //0 win
+                        {
+                            trickWinner = players[0];
+                            trickLoser = players[1];
+                            return true;
+                        }
+                        else if(players[0].playedCard.GetCardRank() < players[1].playedCard.GetCardRank())//1 win
+                        {
+                            trickWinner = players[1];
+                            trickLoser = players[0];
+                            return true;
+                        }
+                        else //Draw
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        trickWinner = players[0];
+                        trickLoser = players[1];
+                        return true;
+                    }
+                }
+                else
+                {
+                    if(players[1].playedCard.GetCardSuit() == trickSuit)
+                    {
+                        trickWinner = players[1];
+                        trickLoser = players[0];
+                        return true;
+                    }
+                    else //Miramos cual es mas grande
+                    {
+                        if(players[0].playedCard.GetCardRank() > players[1].playedCard.GetCardRank()) //0 win
+                        {
+                            trickWinner = players[0];
+                            trickLoser = players[1];
+                            return true;
+                        }
+                        else if(players[0].playedCard.GetCardRank() < players[1].playedCard.GetCardRank())//1 win
+                        {
+                            trickWinner = players[1];
+                            trickLoser = players[0];
+                            return true;
+                        }
+                        else //Draw
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public void ClearTableVisuals()
     {
@@ -215,8 +321,17 @@ public class TrickManager : MonoBehaviour
         SelectNextPlayer();
         if(CheckAllPlayersHavePlayed())
         {
-            Player winner = CalculateTrickWinner();
-            print("The trick winner is: " + winner);
+            //Player winner = CalculateTrickWinner();
+            if(CalculateTrickWinner1vs1())
+            {
+                trickLoser.TakeDamage(trickWinner.playedCard.CalculateCardValue());
+                print("The trick winner is: " + trickWinner);
+            }
+            else
+            {
+                print("Draw");
+            }
+            
             ClearTableVisuals();
             isNewTrickPlay = true;
             EventManager.OnTrickEnded?.Invoke();

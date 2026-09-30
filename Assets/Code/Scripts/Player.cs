@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
         hand = GetComponent<Hand>();
         currentHealth = maxHealth;
         currentEnergy = maxEnergy;
+        OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     /*public void PlayRandomCard()
@@ -93,7 +94,7 @@ public class Player : MonoBehaviour
     }
 
     //------STATS FUNCTIONS-------
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
         currentHealth = Mathf.Max(0, currentHealth - amount);
         OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
@@ -104,7 +105,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
         currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
         OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);

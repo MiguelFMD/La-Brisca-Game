@@ -21,6 +21,7 @@ public class HealthBar : MonoBehaviour
 
     private void HandlePlayerHealthChanged(float current, float max)
     {
-        healthBar.material.SetFloat("_Health", current);
+        float normalizedHealth = current / max;
+        healthBar.material.SetFloat("_Health", normalizedHealth);
     }
 }
