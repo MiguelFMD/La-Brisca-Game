@@ -10,8 +10,11 @@ public class GameManager : MonoBehaviour
     public Player[] players;
     public TrickManager trickManager;
     [SerializeField] private int initialCardsAmount;
+
+    //Card prefab and pool
     [SerializeField] private GameObject cardDisplayPrefab;
     private Queue<CardDisplay> cardPool = new Queue<CardDisplay>();
+    [SerializeField] private RectTransform cardPoolTransform;
     
     
     void OnEnable()
@@ -81,6 +84,7 @@ public class GameManager : MonoBehaviour
     {
         cardToReturn.gameObject.SetActive(false); // Hide the card
         cardPool.Enqueue(cardToReturn); // Save it for future
+        cardToReturn.transform.SetParent(cardPoolTransform);
     }
 
     public void PlayCard(CardDisplay cardDisplay)

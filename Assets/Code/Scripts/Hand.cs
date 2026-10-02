@@ -7,7 +7,7 @@ public class Hand : MonoBehaviour
 {
     public List<Card> cards;
     public int maxCardsAmount;
-    [SerializeField] private RectTransform displayedCards;
+    public RectTransform displayedCards;
 
     void Awake()
     {
@@ -16,7 +16,7 @@ public class Hand : MonoBehaviour
 
     public Card PlayCard(Card selectedCard)
     {
-        print("Played card is: " + selectedCard.GetCardRank() + " of " + selectedCard.GetCardSuit());
+        //print("Played card is: " + selectedCard.GetCardRank() + " of " + selectedCard.GetCardSuit());
         if(RemoveCard(selectedCard))
             return selectedCard;
         else
@@ -86,7 +86,7 @@ public class Hand : MonoBehaviour
     }
 
 
-    private GameObject FindCardByCardData(Card selectedCard)
+    public GameObject FindCardByCardData(Card selectedCard)
     {
         for(int c = 0; c < displayedCards.childCount; c++)
         {

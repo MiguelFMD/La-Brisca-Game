@@ -46,7 +46,7 @@ public class Card : ScriptableObject
         }
 
         //Rest of card ranks don't have value
-        return 0;
+        return 1;
     }
 
     public Sprite GetCardSprite()

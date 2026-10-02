@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Hand))]
 public class Player : MonoBehaviour
 {
     public List<Card> scoredCards;
@@ -9,6 +10,7 @@ public class Player : MonoBehaviour
     public int playerNumber;
     private Hand hand;
     [SerializeField] private Deck deck;
+    public bool isEnemy = false;
 
     //Events
     public event Action<float, float> OnPlayerHealthChanged;
@@ -38,16 +40,7 @@ public class Player : MonoBehaviour
         OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
-    /*public void PlayRandomCard()
-    {
-        if(hand.cards.Count == 0)
-            Debug.LogError("Hand from player " + this.name + " is empty!");
-        else
-        {
-            int random = Random.Range(0, hand.cards.Count - 1);
-            PlayCard(hand.displayedCards.GetChild(random));
-        }
-    }*/
+    
 
     //------CARDS FUNCTIONS----------
     public void PlayCard(CardDisplay newPlayedCard)
@@ -62,6 +55,17 @@ public class Player : MonoBehaviour
         Card newCard = deck.RemoveCard();
         if(newCard != null)
             hand.DrawCard(newCard, this);
+    }
+
+    public void PlayRandomCard()
+    {
+        if(hand.cards.Count == 0)
+            Debug.LogError("Hand from player " + this.name + " is empty!");
+        else
+        {
+            int randomCard = UnityEngine.Random.Range(0, hand.cards.Count);
+            GameManager.Instance.PlayCard(hand.displayedCards.GetChild(randomCard).GetComponent<CardDisplay>());
+        }
     }
 
     public void CreateDeck()
@@ -106,9 +110,8 @@ public class Player : MonoBehaviour
         currentHealth = Mathf.Max(0, currentHealth - amount);
         OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
 
-        if (currentHealth == 0)
+        if (currentHealth <= 0)
         {
-            print("ey");
             OnPlayerDead?.Invoke();
         }
     }

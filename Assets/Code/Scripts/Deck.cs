@@ -46,7 +46,7 @@ public class Deck : MonoBehaviour
     /// </summary>
     public void CreateDeck()
     {
-        print("Creating deck...");
+        //print("Creating deck...");
         deckCards = new Queue<Card>();
         InitialShuffle();
     }
@@ -63,7 +63,7 @@ public class Deck : MonoBehaviour
 
     private void InitialShuffle()
     {
-        print("Shuffe deck");
+        //print("Shuffe deck");
         deckCards.Clear();
         List<Card> cards = new List<Card>();
         foreach(Card card in deckType.cards)

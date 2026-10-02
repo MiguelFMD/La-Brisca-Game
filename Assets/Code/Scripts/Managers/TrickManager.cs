@@ -39,8 +39,9 @@ public class TrickManager : MonoBehaviour
     //-----PUBLIC FUNCTIONS------
     public void CardPlayed(CardDisplay cardDisplay)
     {
+        //print("pal centro");
         //If the card owner is the corresponding player and there is no card animation playing
-        if(CheckPlayerTurn(cardDisplay.GetPlayerOwner()) & !isAnimationPlaying) 
+        if(CheckPlayerTurn(cardDisplay.GetPlayerOwner()) && !isAnimationPlaying) 
         {
             CardToCenter(cardDisplay); //Put the card played on the center of the table
             cardDisplay.GetPlayerOwner().PlayCard(cardDisplay);
@@ -51,7 +52,7 @@ public class TrickManager : MonoBehaviour
                 {
                     SetTrickSuit(players[currentPlayer].playedCard.GetCardSuit());
                     isNewTrickPlay = false;
-                    print("Trick suit is: " + trickSuit);
+                    //print("Trick suit is: " + trickSuit);
                 } 
                     
             }
@@ -63,6 +64,12 @@ public class TrickManager : MonoBehaviour
     {
         currentPlayer = Random.Range(0, players.Length);
         isNewTrickPlay = true;
+        ClearTableVisuals();
+        if(players[currentPlayer].isEnemy)
+        {
+            players[currentPlayer].PlayRandomCard();
+        }
+        
     }
     public void SetTriumphSuit(Card.Suit newSuit)
     {
@@ -295,8 +302,10 @@ public class TrickManager : MonoBehaviour
 
     private IEnumerator AnimateCard(RectTransform selectedCard)
     {
+        //print("animo");
         isAnimationPlaying = true;
         Vector2 targetPosition = centerTableTransform.anchoredPosition;
+        //print(targetPosition);
         Vector2 startPosition = selectedCard.anchoredPosition;
         float timeElapsed = 0f;
 
@@ -318,39 +327,56 @@ public class TrickManager : MonoBehaviour
 
     private void HandleAnimationEnded()
     {
-        SelectNextPlayer();
+        SelectNextPlayer();   
         if(CheckAllPlayersHavePlayed())
         {
             //Player winner = CalculateTrickWinner();
             if(CalculateTrickWinner1vs1())
             {
                 trickLoser.TakeDamage(trickWinner.playedCard.CalculateCardValue());
-                print("The trick winner is: " + trickWinner);
+                print("Ganador: " + trickWinner + " con " + trickWinner.playedCard);
+                print("Perdedor: " + trickLoser + " con " + trickLoser.playedCard);
+                //print("Triumph Suit era: " + triumphSuit);
+                //print("Trick Suit era: " + trickSuit);
+                //Assign the new currentPlayer (the winner)
+                for(int i = 0; i < players.Length; i++)
+                {
+                    if(players[i] == trickWinner)
+                    {
+                        currentPlayer = i;
+                        break;
+                    }
+                }
             }
             else
             {
                 print("Draw");
             }
-            
             ClearTableVisuals();
             isNewTrickPlay = true;
+            
             EventManager.OnTrickEnded?.Invoke();
+        }
+        if(players[currentPlayer].isEnemy)
+        {
+            players[currentPlayer].PlayRandomCard();
         }
     }
     
     public void DiscoverTriumphSuit()
     {
-        print("Discovering triumph suit...");
-        Card.Suit triumphSuit = (Card.Suit)Random.Range(0, System.Enum.GetValues(typeof(Card.Suit)).Length);
+        //print("Discovering triumph suit...");
+        Card.Suit newTriumphSuit = (Card.Suit)Random.Range(0, System.Enum.GetValues(typeof(Card.Suit)).Length);
         foreach(Card card in triumphCards)
         {
-            if(card.GetCardSuit() == triumphSuit)
+            if(card.GetCardSuit() == newTriumphSuit)
             {
                 triumphCardDisplay.sprite = card.GetCardSprite();
                 break; 
             }
         }
         triumphCardDisplay.gameObject.SetActive(true);
-        print("The triumph suit is: " + triumphSuit);
+        SetTriumphSuit(newTriumphSuit);
+        print("The triumph suit is: " + newTriumphSuit);
     }
 }
