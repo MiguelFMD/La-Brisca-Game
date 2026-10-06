@@ -39,7 +39,6 @@ public class TrickManager : MonoBehaviour
     //-----PUBLIC FUNCTIONS------
     public void CardPlayed(CardDisplay cardDisplay)
     {
-        //print("pal centro");
         //If the card owner is the corresponding player and there is no card animation playing
         if(CheckPlayerTurn(cardDisplay.GetPlayerOwner()) && !isAnimationPlaying) 
         {
@@ -243,10 +242,7 @@ public class TrickManager : MonoBehaviour
 
     public void ClearTableVisuals()
     {
-        // Recorremos todos los hijos del contenedor del centro de la mesa
-        // Se hace en un bucle inverso o guardando referencias, porque cambiar de padre ROMPE el bucle foreach
         CardDisplay[] cardsOnTable = centerTableTransform.GetComponentsInChildren<CardDisplay>();
-        
         foreach(CardDisplay card in cardsOnTable)
         {
             GameManager.Instance.ReturnCardToPool(card);
@@ -334,6 +330,7 @@ public class TrickManager : MonoBehaviour
             //Player winner = CalculateTrickWinner();
             if(CalculateTrickWinner1vs1())
             {
+                trickWinner.UseCardPower(trickLoser);
                 trickLoser.TakeDamage(trickWinner.playedCard.CalculateCardValue());
                 print("Ganador: " + trickWinner + " con " + trickWinner.playedCard);
                 print("Perdedor: " + trickLoser + " con " + trickLoser.playedCard);

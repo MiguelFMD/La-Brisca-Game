@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     public List<Card> scoredCards;
     public Card playedCard;
+    public CardDisplay playedCardDisplay;
     public int playerNumber;
     private Hand hand;
     [SerializeField] private Deck deck;
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
     //------CARDS FUNCTIONS----------
     public void PlayCard(CardDisplay newPlayedCard)
     {
+        playedCardDisplay = newPlayedCard;
         playedCard = newPlayedCard.GetCardData();
         hand.PlayCard(playedCard);
         //print("Card played is: " + playedCard);
@@ -106,6 +108,24 @@ public class Player : MonoBehaviour
     public void TriggerPlayerDead()
     {
         OnPlayerDead?.Invoke();
+    }
+
+    //Powers related
+
+    public void UseCardPower(Player trickLoser)
+    {
+        playedCardDisplay.UseMyPower(trickLoser);
+    }
+
+    public void RemoveRandomCard() //For clubs power
+    {
+        int random = UnityEngine.Random.Range(0, hand.cards.Count);
+        Card card = hand.cards[random];
+        if(card != null)
+        {
+            hand.PlayCard(card);
+            GameManager.Instance.ReturnCardToPool(hand.displayedCards.GetChild(random).GetComponent<CardDisplay>());
+        }
     }
 
     private void HandleButtonClicked(CardDisplay cardDisplay)

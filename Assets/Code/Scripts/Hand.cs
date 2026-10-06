@@ -74,12 +74,10 @@ public class Hand : MonoBehaviour
             CardDisplay card = displayedCards.GetChild(c).GetComponent<CardDisplay>();
             GameManager.Instance.ReturnCardToPool(card);
         }
-
-
     }
 
 
-    public GameObject FindCardByCardData(Card selectedCard)
+    /*public GameObject FindCardByCardData(Card selectedCard)
     {
         for(int c = 0; c < displayedCards.childCount; c++)
         {
@@ -89,5 +87,5 @@ public class Hand : MonoBehaviour
             }
         }
         return null;
-    }
+    }*/
 }

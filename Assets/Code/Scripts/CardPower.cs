@@ -1,15 +1,12 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CardDisplay))]
 public class CardPower : MonoBehaviour
 {
-    private CardDisplay cardDisplay;
     private Card cardData;
 
-    void Start()
+    public void SetCardPowerData(Card newCardData)
     {
-        cardDisplay = GetComponent<CardDisplay>();
-        cardData = cardDisplay.GetCardData();
+        cardData = newCardData;
     }
 
     public void InvokePower(Player trickWinner, Player trickLoser)
@@ -34,7 +31,7 @@ public class CardPower : MonoBehaviour
 
     private void ClubsPower(Player trickLoser)
     {
-        
+        trickLoser.RemoveRandomCard();
     }
 
     private void CupsPower(Player trickwinner)
