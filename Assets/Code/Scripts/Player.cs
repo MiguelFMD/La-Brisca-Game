@@ -98,6 +98,16 @@ public class Player : MonoBehaviour
         return hand.cards.Count == 0;
     }
 
+    public bool IsDeckEmpty()
+    {
+        return deck.IsDeckEmpty();
+    }
+
+    public void TriggerPlayerDead()
+    {
+        OnPlayerDead?.Invoke();
+    }
+
     private void HandleButtonClicked(CardDisplay cardDisplay)
     {
         if(cardDisplay.GetPlayerOwner() == this)

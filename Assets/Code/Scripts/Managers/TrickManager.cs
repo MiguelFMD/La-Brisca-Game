@@ -67,6 +67,7 @@ public class TrickManager : MonoBehaviour
         ClearTableVisuals();
         if(players[currentPlayer].isEnemy)
         {
+            print("play card");
             players[currentPlayer].PlayRandomCard();
         }
         
@@ -355,12 +356,14 @@ public class TrickManager : MonoBehaviour
             ClearTableVisuals();
             isNewTrickPlay = true;
             
-            EventManager.OnTrickEnded?.Invoke();
+            //EventManager.OnTrickEnded?.Invoke();
+            GameManager.Instance.HandleTrickEnded();
         }
-        if(players[currentPlayer].isEnemy)
-        {
-            players[currentPlayer].PlayRandomCard();
-        }
+        if(!GameManager.Instance.isGameEnded)
+            if(players[currentPlayer].isEnemy)
+            {
+                players[currentPlayer].PlayRandomCard();
+            }
     }
     
     public void DiscoverTriumphSuit()

@@ -15,11 +15,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject cardDisplayPrefab;
     private Queue<CardDisplay> cardPool = new Queue<CardDisplay>();
     [SerializeField] private RectTransform cardPoolTransform;
+
+    public bool isGameEnded = false;
     
     
     void OnEnable()
     {
-        EventManager.OnTrickEnded += HandleTrickEnded;
+        //EventManager.OnTrickEnded += HandleTrickEnded;
         //Two players mode
         player.OnPlayerDead += HandlePlayerDead;
         enemy.OnPlayerDead += HandleEnemyDead;
@@ -28,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     void OnDisable()
     {
-        EventManager.OnTrickEnded -= HandleTrickEnded;
+        //EventManager.OnTrickEnded -= HandleTrickEnded;
         player.OnPlayerDead -= HandlePlayerDead;
         enemy.OnPlayerDead -= HandleEnemyDead;
     }
@@ -57,6 +59,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
+        isGameEnded = false;
         ResetPlayers();
         DrawCards(initialCardsAmount);
         trickManager.DiscoverTriumphSuit();
@@ -93,18 +96,27 @@ public class GameManager : MonoBehaviour
         trickManager.CardPlayed(cardDisplay);
     }
 
-    private void HandleTrickEnded()
+    public void HandleTrickEnded()
     {
-        /*if(deck.IsDeckEmpty() && EmptyHands()) //If the deck is empty that means the game has ended
+        RemovePlayersPlayedCard(); //Remove the played cards from players
+        if(player.IsHandEmpty() && player.IsDeckEmpty())
         {
-            GetWinner();
-        }*/
-        
-        //else
-        //{
-            RemovePlayersPlayedCard(); //Remove the played cards from players
-            DrawOneCard();
-        //}
+            if(enemy.IsHandEmpty() && enemy.IsDeckEmpty())
+            {
+                //Draw??
+            }
+            else //Solo el jugador se queda sin cartas
+            {
+                player.TriggerPlayerDead();
+            }
+            isGameEnded = true;
+        }
+        else if(enemy.IsHandEmpty()) //Solo el enemigo se queda sin cartas
+        {
+            enemy.TriggerPlayerDead();
+            isGameEnded = true;
+        }
+        DrawOneCard();
     }
 
     private void DrawCards(int cardsToDeal)
@@ -132,17 +144,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private bool EmptyHands()
-    {
-        foreach(Player player in players)
-        {
-            if(player.IsHandEmpty())
-                return true;
-
-        }
-        return false;
-    }
-
     private void ResetPlayers()
     {
         for(int p = 0; p < players.Length; p++)
@@ -155,7 +156,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private Player GetWinner()
+    private Player GetWinnerByScore() //By Score (old)
     {
         Player winner = players[0];
         int winnerScore = players[0].CalculateScore();
@@ -174,15 +175,25 @@ public class GameManager : MonoBehaviour
         return winner;
     }
 
+    private Player GetWinnerByHealth()
+    {
+        if(player.currentHealth > enemy.currentHealth)
+            return player;
+        else if(player.currentHealth < enemy.currentHealth)
+            return enemy;
+        else
+            return GetWinnerByScore();
+    }
+
     private void HandlePlayerDead()
     {
+        isGameEnded = true;
         print("YOU LOSE!");
     }
 
     private void HandleEnemyDead()
     {
+        isGameEnded = true;
         print("YOU WIN!");
-    }
-
-    
+    } 
 }

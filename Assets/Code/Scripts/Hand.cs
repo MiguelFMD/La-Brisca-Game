@@ -69,19 +69,19 @@ public class Hand : MonoBehaviour
 
     private void RemoveDisplayedCards()
     {
+        print("cards to remove: " + displayedCards.childCount);
+        Queue<CardDisplay> cardsToRemove = new Queue<CardDisplay>();
         for(int c = 0; c < displayedCards.childCount; c++)
         {
-            if(displayedCards.GetChild(c).TryGetComponent(out CardDisplay card))
-            {
-                GameManager.Instance.ReturnCardToPool(card);
-            }
-            /*if(displayedCards.GetChild(c).GetComponent<CardDisplay>().GetCardData() == null)
-            {
-                print("ey");
-                Destroy(displayedCards.GetChild(c).gameObject);
-            }
-            else
-                RemoveCard(displayedCards.GetChild(c).GetComponent<CardDisplay>().GetCardData());*/
+            print(c);
+            CardDisplay card = displayedCards.GetChild(c).GetComponent<CardDisplay>();
+            cardsToRemove.Enqueue(card);
+        }
+        
+        while(cardsToRemove.Count != 0)
+        {
+            CardDisplay card = cardsToRemove.Dequeue();
+            GameManager.Instance.ReturnCardToPool(card);
         }
     }
 
