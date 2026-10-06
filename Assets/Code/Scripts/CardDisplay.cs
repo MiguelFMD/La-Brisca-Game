@@ -23,10 +23,14 @@ public class CardDisplay : MonoBehaviour
         cardData = newCardData;
         image.sprite = cardData.GetCardSprite();
         playerOwner = owner;
-        /*if(playerOwner.isEnemy)
+        if(playerOwner.isEnemy)
         {
             cardButton.interactable = false;
-        }*/
+        }
+        else
+        {
+            cardButton.interactable = true;
+        }
     }
 
     public Card GetCardData()
@@ -43,14 +47,4 @@ public class CardDisplay : MonoBehaviour
     {
         return playerOwner;
     }
-
-    /*public SetPool(IObjectPool<CardDisplay> newPool)
-    {
-        pool = newPool;
-        CancelInvoke();
-        Invoke(nameof(ReturntoPool));
-    }*/
-
-
-
 }
