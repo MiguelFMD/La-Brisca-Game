@@ -45,7 +45,6 @@ public class Card : ScriptableObject
                 return 11;
         }
 
-        //Rest of card ranks don't have value
         return 1;
     }
 
