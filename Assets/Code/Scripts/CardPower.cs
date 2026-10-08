@@ -46,6 +46,6 @@ public class CardPower : MonoBehaviour
 
     private void GoldsPower(Player trickwinner)
     {
-        
+        trickwinner.DrawCard();
     }
 }
