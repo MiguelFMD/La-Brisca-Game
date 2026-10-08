@@ -1,4 +1,8 @@
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+using System.IO;
+#endif
 
 [CreateAssetMenu(fileName = "Card", menuName = "Scriptable Objects/Card")]
 public class Card : ScriptableObject
@@ -62,5 +66,36 @@ public class Card : ScriptableObject
     {
         return cardRank;
     }
+
+    #if UNITY_EDITOR
+    private void OnValidate()
+    {
+        // Only run in Editor (AssetDatabase is Editor-only)
+        if (string.IsNullOrWhiteSpace(""+cardRank)) return;
+
+        // Build the new name from serialized fields
+        string newName = $"{cardRank}_of_{cardSuit}";
+
+        // Get current asset path
+        string assetPath = AssetDatabase.GetAssetPath(this);
+        if (string.IsNullOrEmpty(assetPath)) return; // Not an asset yet
+
+        // Get current file name without extension
+        string currentName = Path.GetFileNameWithoutExtension(assetPath);
+
+        // Rename only if different
+        if (currentName != newName)
+        {
+            EditorApplication.delayCall += () =>
+            {
+                if(this != null)
+                {
+                    AssetDatabase.RenameAsset(assetPath, newName);
+                    AssetDatabase.SaveAssets();
+                }
+            };
+        }
+    }
+    #endif
     
 }
