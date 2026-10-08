@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7407e08d038e34a4fb0be9c6dcfe1429, type: 3}
-  m_Name: Four_of_Cups
+  m_Name: Four_of_Clubs
   m_EditorClassIdentifier: Assembly-CSharp::Card
   cardSprite: {fileID: 21300000, guid: 343a18f8b4611eb44aee1ad35b27f083, type: 3}
   cardSuit: 0
