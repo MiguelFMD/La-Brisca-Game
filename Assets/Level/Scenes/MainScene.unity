@@ -482,7 +482,7 @@ PrefabInstance:
     - target: {fileID: 6978560598763954643, guid: 88f8e0b8ffde3344ab62c6f7f1a88bdd, type: 3}
       propertyPath: deckType
       value: 
-      objectReference: {fileID: 11400000, guid: a8aa9591ea8079c4885359f1849a7027, type: 2}
+      objectReference: {fileID: 11400000, guid: cb8c78fbe97c6324183aa3b43781afe4, type: 2}
     - target: {fileID: 7190889041517923981, guid: 88f8e0b8ffde3344ab62c6f7f1a88bdd, type: 3}
       propertyPath: m_Name
       value: BasicDeck_Enemy
@@ -999,7 +999,7 @@ PrefabInstance:
     - target: {fileID: 6978560598763954643, guid: 88f8e0b8ffde3344ab62c6f7f1a88bdd, type: 3}
       propertyPath: deckType
       value: 
-      objectReference: {fileID: 11400000, guid: 85fd015c948d8024d849a66e539c2960, type: 2}
+      objectReference: {fileID: 11400000, guid: cb8c78fbe97c6324183aa3b43781afe4, type: 2}
     - target: {fileID: 7190889041517923981, guid: 88f8e0b8ffde3344ab62c6f7f1a88bdd, type: 3}
       propertyPath: m_Name
       value: BasicDeck_Player
@@ -2770,6 +2770,10 @@ PrefabInstance:
       propertyPath: displayedCards
       value: 
       objectReference: {fileID: 260561430}
+    - target: {fileID: 7366165989002325751, guid: 5be7c74ea3ed91341913874fc4e3571e, type: 3}
+      propertyPath: maxCardsAmount
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

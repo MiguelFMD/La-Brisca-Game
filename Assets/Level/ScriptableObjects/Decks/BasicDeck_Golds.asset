@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: BasicDeck_Golds
   m_EditorClassIdentifier: Assembly-CSharp::DeckType
   cards:
-  - {fileID: 11400000, guid: 3f810b962badc4d4596cd5e7639a8138, type: 2}
-  - {fileID: 11400000, guid: acbf5845c4ef34e41871f01d4451afa5, type: 2}
-  - {fileID: 11400000, guid: ad0fa7519944f224a9624efdec20b6be, type: 2}
-  - {fileID: 11400000, guid: 2b6d27831a93af34ab2d2acd14c12d81, type: 2}
-  - {fileID: 11400000, guid: 467f8acc4fe92834183819145b48ebca, type: 2}
-  - {fileID: 11400000, guid: d32b05d36980ca04cb83c29608a437f0, type: 2}
-  - {fileID: 11400000, guid: b60ccd40d2245d54c89ee22a662ef03c, type: 2}
-  - {fileID: 11400000, guid: 54e1a9962b0024e4381702cf30136ce8, type: 2}
-  - {fileID: 11400000, guid: b2c101c7d9cd6fc44bd94c306f9a6f2d, type: 2}
+  - {fileID: 11400000, guid: a5e225cd603a3754598661d72035d954, type: 2}
+  - {fileID: 11400000, guid: 748b985848fd2f743a6103ce8a1330d2, type: 2}
+  - {fileID: 11400000, guid: 9866289cc7e22ea46a865101d6b8805d, type: 2}
+  - {fileID: 11400000, guid: 2502251eb0510bc43b097ea414c676f6, type: 2}
+  - {fileID: 11400000, guid: a8a6629d2e57c11428ef8e3949caa08b, type: 2}
+  - {fileID: 11400000, guid: 5f6addf9f250d1a408fe27c390698ba7, type: 2}
+  - {fileID: 11400000, guid: 540fd5ad060393d4f8d616a4d0e24593, type: 2}
+  - {fileID: 11400000, guid: 0107be7461b7cc4498148914f6bd0129, type: 2}
