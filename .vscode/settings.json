@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "La-Brisca-Game.slnx"
+    "dotnet.defaultSolution": "LaBriscaGame.slnx"
 }

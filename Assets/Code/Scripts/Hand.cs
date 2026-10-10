@@ -25,7 +25,6 @@ public class Hand : MonoBehaviour
 
     public void DrawCard(Card newCard, Player owner)
     {
-        print("c");
         AddCard(newCard, owner);
     }
 
