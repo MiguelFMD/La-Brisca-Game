@@ -41,11 +41,11 @@ public class CardPower : MonoBehaviour
 
     private void SwordsPower(Player trickLoser)
     {
-        
+        trickLoser.TakeDamage(1.0f);
     }
 
     private void GoldsPower(Player trickwinner)
     {
-        
+        trickwinner.DrawCard();
     }
 }

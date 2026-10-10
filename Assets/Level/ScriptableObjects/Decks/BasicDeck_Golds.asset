@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 242aedcbafd5a81478193babf15e3eee, type: 3}
+  m_Name: BasicDeck_Golds
+  m_EditorClassIdentifier: Assembly-CSharp::DeckType
+  cards:
+  - {fileID: 11400000, guid: a5e225cd603a3754598661d72035d954, type: 2}
+  - {fileID: 11400000, guid: 748b985848fd2f743a6103ce8a1330d2, type: 2}
+  - {fileID: 11400000, guid: 9866289cc7e22ea46a865101d6b8805d, type: 2}
+  - {fileID: 11400000, guid: 2502251eb0510bc43b097ea414c676f6, type: 2}
+  - {fileID: 11400000, guid: a8a6629d2e57c11428ef8e3949caa08b, type: 2}
+  - {fileID: 11400000, guid: 5f6addf9f250d1a408fe27c390698ba7, type: 2}
+  - {fileID: 11400000, guid: 540fd5ad060393d4f8d616a4d0e24593, type: 2}
+  - {fileID: 11400000, guid: 0107be7461b7cc4498148914f6bd0129, type: 2}

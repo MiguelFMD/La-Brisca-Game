@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 242aedcbafd5a81478193babf15e3eee, type: 3}
+  m_Name: BasicDeck_Swords
+  m_EditorClassIdentifier: Assembly-CSharp::DeckType
+  cards:
+  - {fileID: 11400000, guid: 3f810b962badc4d4596cd5e7639a8138, type: 2}
+  - {fileID: 11400000, guid: acbf5845c4ef34e41871f01d4451afa5, type: 2}
+  - {fileID: 11400000, guid: ad0fa7519944f224a9624efdec20b6be, type: 2}
+  - {fileID: 11400000, guid: 2b6d27831a93af34ab2d2acd14c12d81, type: 2}
+  - {fileID: 11400000, guid: 467f8acc4fe92834183819145b48ebca, type: 2}
+  - {fileID: 11400000, guid: d32b05d36980ca04cb83c29608a437f0, type: 2}
+  - {fileID: 11400000, guid: b60ccd40d2245d54c89ee22a662ef03c, type: 2}
+  - {fileID: 11400000, guid: 54e1a9962b0024e4381702cf30136ce8, type: 2}
+  - {fileID: 11400000, guid: b2c101c7d9cd6fc44bd94c306f9a6f2d, type: 2}
