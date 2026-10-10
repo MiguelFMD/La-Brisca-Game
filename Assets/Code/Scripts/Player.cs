@@ -119,12 +119,20 @@ public class Player : MonoBehaviour
 
     public void RemoveRandomCard() //For clubs power
     {
-        int random = UnityEngine.Random.Range(0, hand.cards.Count);
-        Card card = hand.cards[random];
-        if(card != null)
+        if(!IsHandEmpty())
         {
-            hand.PlayCard(card);
-            GameManager.Instance.ReturnCardToPool(hand.displayedCards.GetChild(random).GetComponent<CardDisplay>());
+            int random = UnityEngine.Random.Range(0, hand.cards.Count);
+        
+            Card card = hand.cards[random];
+            if(card != null)
+            {
+                hand.PlayCard(card);
+                GameManager.Instance.ReturnCardToPool(hand.displayedCards.GetChild(random).GetComponent<CardDisplay>());
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Player's hand is empty");
         }
     }
 

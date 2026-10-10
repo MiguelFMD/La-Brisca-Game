@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 242aedcbafd5a81478193babf15e3eee, type: 3}
+  m_Name: CupsDeck
+  m_EditorClassIdentifier: Assembly-CSharp::DeckType
+  cards:
+  - {fileID: 11400000, guid: 2e662275d6b828946bb50389c81e8c27, type: 2}
+  - {fileID: 11400000, guid: 7403f21518cde0f46984c8b6373d8992, type: 2}
+  - {fileID: 11400000, guid: 5ab44e9e79e48a84a80f48aecaf572a9, type: 2}
+  - {fileID: 11400000, guid: 8487e0ae21d4fc143ad1b5a90ef39b06, type: 2}
+  - {fileID: 11400000, guid: 2f0442cd4b9c7854f9c08c00c7067acf, type: 2}

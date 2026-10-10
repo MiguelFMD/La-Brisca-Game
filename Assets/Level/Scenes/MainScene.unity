@@ -999,7 +999,7 @@ PrefabInstance:
     - target: {fileID: 6978560598763954643, guid: 88f8e0b8ffde3344ab62c6f7f1a88bdd, type: 3}
       propertyPath: deckType
       value: 
-      objectReference: {fileID: 11400000, guid: 85fd015c948d8024d849a66e539c2960, type: 2}
+      objectReference: {fileID: 11400000, guid: 890136fa9dfe3a844a92f10f2cc1f5e1, type: 2}
     - target: {fileID: 7190889041517923981, guid: 88f8e0b8ffde3344ab62c6f7f1a88bdd, type: 3}
       propertyPath: m_Name
       value: BasicDeck_Player

@@ -36,7 +36,7 @@ public class CardPower : MonoBehaviour
 
     private void CupsPower(Player trickwinner)
     {
-        
+        trickwinner.Heal(2.0f);
     }
 
     private void SwordsPower(Player trickLoser)

@@ -99,6 +99,7 @@ public class GameManager : MonoBehaviour
     public void HandleTrickEnded()
     {
         RemovePlayersPlayedCard(); //Remove the played cards from players
+        print("comprobar final de partida");
         if(player.IsHandEmpty() && player.IsDeckEmpty())
         {
             if(enemy.IsHandEmpty() && enemy.IsDeckEmpty())
