@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Hand))]
@@ -13,8 +15,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Deck deck;
     public bool isEnemy = false;
 
-    //Events
-    public event Action<float, float> OnPlayerHealthChanged;
+    [Header("Events")]
+    [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
     public event Action OnPlayerDead;
     
     [Header("Player Stats")]
@@ -28,7 +30,8 @@ public class Player : MonoBehaviour
         hand = GetComponent<Hand>();
         currentHealth = maxHealth;
         currentEnergy = maxEnergy;
-        OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
+        onPlayerHealthChanged.Raise(this);
+        //OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     public void SetPlayerData(DeckType newDeck, float newMaxHealth)
@@ -139,7 +142,8 @@ public class Player : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth = Mathf.Max(0, currentHealth - amount);
-        OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
+        onPlayerHealthChanged.Raise(this);
+        //OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
         {
@@ -150,7 +154,8 @@ public class Player : MonoBehaviour
     public void Heal(float amount)
     {
         currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
-        OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
+        onPlayerHealthChanged.Raise(this);
+        //OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     public void ChangeCurrentEnergy(int value)

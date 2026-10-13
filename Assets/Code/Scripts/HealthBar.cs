@@ -4,22 +4,18 @@ using UnityEngine.UI;
 [RequireComponent(typeof (Image))]
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Player targetPlayer;
     private Image healthBar;
     void OnEnable()
     {
-        if(targetPlayer != null)
-            targetPlayer.OnPlayerHealthChanged += HandlePlayerHealthChanged;
         healthBar = GetComponent<Image>();
     }
 
-    void OnDisable()
+    public void HandlePlayerHealthChanged(Player player)
     {
-        if(targetPlayer != null)
-            targetPlayer.OnPlayerHealthChanged -= HandlePlayerHealthChanged;
+        ChangeHealthBar(player.currentHealth, player.maxHealth);
     }
 
-    private void HandlePlayerHealthChanged(float current, float max)
+    private void ChangeHealthBar(float current, float max)
     {
         float normalizedHealth = current / max;
         healthBar.material.SetFloat("_Health", normalizedHealth);
