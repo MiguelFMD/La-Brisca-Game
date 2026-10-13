@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public List<Card> scoredCards;
     public Card playedCard;
     public CardDisplay playedCardDisplay;
-    public int playerNumber;
+    //public int playerNumber;
     private Hand hand;
     [SerializeField] private Deck deck;
     public bool isEnemy = false;
@@ -41,8 +41,12 @@ public class Player : MonoBehaviour
         OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
+    public void SetPlayerData(DeckType newDeck, float newMaxHealth)
+    {
+        deck.AssignDeck(newDeck);
+        maxHealth = newMaxHealth;
+    }
     
-
     //------CARDS FUNCTIONS----------
     public void PlayCard(CardDisplay newPlayedCard)
     {
@@ -109,7 +113,6 @@ public class Player : MonoBehaviour
     {
         OnPlayerDead?.Invoke();
     }
-
     //Powers related
 
     public void UseCardPower(Player trickLoser)

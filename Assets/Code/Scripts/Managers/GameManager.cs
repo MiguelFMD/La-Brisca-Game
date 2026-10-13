@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -66,6 +67,12 @@ public class GameManager : MonoBehaviour
         trickManager.ResetTrick();
     }
 
+    public void PrepareNextRound(DeckType enemyDeck, float enemyMaxHealth)
+    {
+        enemy.SetPlayerData(enemyDeck, enemyMaxHealth);
+        ResetGame();
+    }
+
     public CardDisplay GetCardVisual()
     {
         if (cardPool.Count > 0)
@@ -104,7 +111,7 @@ public class GameManager : MonoBehaviour
         {
             if(enemy.IsHandEmpty() && enemy.IsDeckEmpty())
             {
-                //Draw??
+                Debug.LogWarning("DRAW");
             }
             else //Solo el jugador se queda sin cartas
             {
@@ -150,7 +157,7 @@ public class GameManager : MonoBehaviour
         for(int p = 0; p < players.Length; p++)
         {
             players[p].ClearHand();
-            players[p].playerNumber = p + 1;
+            //players[p].playerNumber = p + 1;
             players[p].scoredCards.Clear();
             players[p].Heal(players[p].maxHealth);
             players[p].CreateDeck();

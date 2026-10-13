@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject endScreen;
     [SerializeField] private TextMeshProUGUI endText;
     [SerializeField] private Button resetButton;
+    [SerializeField] private Button nextRoundButton;
     private Player player;
     private Player enemy;
     
@@ -17,6 +18,8 @@ public class UIManager : MonoBehaviour
         enemy = GameManager.Instance.enemy;
         player.OnPlayerDead += HandlePlayerDead;
         enemy.OnPlayerDead += HandleEnemyDead;
+        resetButton.onClick.AddListener(HandleResetButtonPressed);
+        nextRoundButton.onClick.AddListener(HandleNextRoundClick);
     }
 
     void OnDisable()
@@ -25,9 +28,10 @@ public class UIManager : MonoBehaviour
         enemy.OnPlayerDead -= HandleEnemyDead;
     }
 
-    public void OnResetButtonPressed()
+    public void HandleResetButtonPressed()
     {
         endScreen.SetActive(false);
+        GameManager.Instance.ResetGame();
     }
 
     private void HandlePlayerDead()
@@ -42,5 +46,9 @@ public class UIManager : MonoBehaviour
         endText.text = "YOU WIN!";
     }
 
-    
+    private void HandleNextRoundClick()
+    {
+        endScreen.SetActive(false);
+        EventManager.OnNextRoundButtonClicked?.Invoke();
+    }    
 }

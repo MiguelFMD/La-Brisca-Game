@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class TrickManager : MonoBehaviour
 {
@@ -61,7 +62,7 @@ public class TrickManager : MonoBehaviour
 
     public void ResetTrick()
     {
-        currentPlayer = Random.Range(0, players.Length);
+        currentPlayer = UnityEngine.Random.Range(0, players.Length);
         isNewTrickPlay = true;
         ClearTableVisuals();
         if(players[currentPlayer].isEnemy)
@@ -358,15 +359,13 @@ public class TrickManager : MonoBehaviour
         }
         if(!GameManager.Instance.isGameEnded)
             if(players[currentPlayer].isEnemy)
-            {
                 players[currentPlayer].PlayRandomCard();
-            }
     }
     
     public void DiscoverTriumphSuit()
     {
         //print("Discovering triumph suit...");
-        Card.Suit newTriumphSuit = (Card.Suit)Random.Range(0, System.Enum.GetValues(typeof(Card.Suit)).Length);
+        Card.Suit newTriumphSuit = (Card.Suit)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(Card.Suit)).Length);
         foreach(Card card in triumphCards)
         {
             if(card.GetCardSuit() == newTriumphSuit)
