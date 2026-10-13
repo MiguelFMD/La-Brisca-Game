@@ -962,13 +962,13 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  centerTableTransform: {fileID: 1538796939}
   triumphCardDisplay: {fileID: 1095751301}
   triumphCards:
   - {fileID: 11400000, guid: 00cf534084a9abb46862027e16e1f50a, type: 2}
   - {fileID: 11400000, guid: 977254c12cba3bc4fb1b1a55856a51d7, type: 2}
   - {fileID: 11400000, guid: 816b407558af6b9429c46ec92bc2ea0b, type: 2}
   - {fileID: 11400000, guid: 3f810b962badc4d4596cd5e7639a8138, type: 2}
+  centerTableTransform: {fileID: 1538796939}
 --- !u!1001 &740756726
 PrefabInstance:
   m_ObjectHideFlags: 0

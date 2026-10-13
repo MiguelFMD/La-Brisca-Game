@@ -6,9 +6,15 @@ using System;
 
 public class TrickManager : MonoBehaviour
 {
+    [Header("Card animation")]
     [SerializeField] private float cardAnimationDuration;
     [SerializeField] private AnimationCurve easingCurve;
+    [Header("Table references")]
+    [SerializeField] private Image triumphCardDisplay;
+    [SerializeField] private Card[] triumphCards;
     [SerializeField] private RectTransform centerTableTransform; //A basic rect transform in the main canvas indicating the center of the table
+    [Header("Events")]
+    private GameEvent onCardAnimationEnded;
     private Player[] players;
     private Card.Suit triumphSuit;
     private Card.Suit trickSuit;
@@ -17,18 +23,6 @@ public class TrickManager : MonoBehaviour
     private Player trickWinner;
     private Player trickLoser;
     private bool isAnimationPlaying = false;
-    [SerializeField] private Image triumphCardDisplay;
-    [SerializeField] private Card[] triumphCards;
-
-    void OnEnable()
-    {
-        EventManager.OnAnimationEnded += HandleAnimationEnded;
-    }
-
-    void OnDisable()
-    {
-        EventManager.OnAnimationEnded -= HandleAnimationEnded;
-    }
 
     //-----CORE FUNCTIONS------
     void Start()
@@ -320,7 +314,7 @@ public class TrickManager : MonoBehaviour
         }
         isAnimationPlaying = false;
         selectedCard.SetParent(centerTableTransform, true); // Snap to new parent
-        EventManager.OnAnimationEnded?.Invoke();
+        HandleAnimationEnded();
     }
 
     private void HandleAnimationEnded()
@@ -335,9 +329,6 @@ public class TrickManager : MonoBehaviour
                 trickLoser.TakeDamage(trickWinner.playedCard.CalculateCardValue());
                 print("Ganador: " + trickWinner + " con " + trickWinner.playedCard);
                 print("Perdedor: " + trickLoser + " con " + trickLoser.playedCard);
-                //print("Triumph Suit era: " + triumphSuit);
-                //print("Trick Suit era: " + trickSuit);
-                //Assign the new currentPlayer (the winner)
                 for(int i = 0; i < players.Length; i++)
                 {
                     if(players[i] == trickWinner)

@@ -1,18 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
-
-[CreateAssetMenu(fileName = "GameEvent", menuName = "Scriptable Objects/GameEvent")]
-public abstract class GameEvent<T> : ScriptableObject
+public abstract class BaseGameEvent<T> : ScriptableObject
 {
     //The list of listeners that this event will notify if is raised
-    private readonly List<GameEventListener<T>> listeners = new List<GameEventListener<T>>();
+    private readonly List<BaseGameEventListener<T>> listeners = new List<BaseGameEventListener<T>>();
 
-    public void RegisterListener(GameEventListener<T> listener)
+    public void RegisterListener(BaseGameEventListener<T> listener)
     {
         listeners.Add(listener);
     }
 
-    public void UnRegisterListener(GameEventListener<T> listener)
+    public void UnRegisterListener(BaseGameEventListener<T> listener)
     {
         listeners.Remove(listener);
     }
