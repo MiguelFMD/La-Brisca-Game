@@ -23,16 +23,6 @@ public class Player : MonoBehaviour
     public int maxEnergy = 3;
     public int currentEnergy;
 
-    void OnEnable()
-    {
-        EventManager.OnCardButtonClicked += HandleButtonClicked;
-    }
-
-    void OnDisable()
-    {
-        EventManager.OnCardButtonClicked -= HandleButtonClicked;
-    }
-
     void Awake()
     {
         hand = GetComponent<Hand>();

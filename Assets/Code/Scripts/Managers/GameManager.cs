@@ -22,8 +22,6 @@ public class GameManager : MonoBehaviour
     
     void OnEnable()
     {
-        //EventManager.OnTrickEnded += HandleTrickEnded;
-        //Two players mode
         player.OnPlayerDead += HandlePlayerDead;
         enemy.OnPlayerDead += HandleEnemyDead;
         players = new Player[2] {player, enemy};

@@ -1,0 +1,1 @@
+public class CardGameEventListener : GameEventListener<CardDisplay> { }

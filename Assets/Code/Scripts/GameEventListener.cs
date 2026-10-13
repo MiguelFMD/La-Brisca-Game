@@ -1,25 +1,14 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameEventListener : MonoBehaviour
+public abstract class GameEventListener<T> : MonoBehaviour
 {
-    //Game event to listen to
-    public GameEvent Event;
-    //Response when GameEvent is fired/raised
-    public UnityEvent Response;
-
-    private void OnEnable()
-    {
-        Event.RegisterListener(this);
-    }
-
-    private void OnDisable()
-    {
-        Event.UnRegisterListener(this);
-    }
-    public void OnEventRaised()
-    {
-        Response.Invoke();
-    }
-
+    [Tooltip("Game event to listen to")]
+    [SerializeField] private GameEvent<T> gameEvent;
+    [Tooltip("Response when GameEvent is fired/raised")]
+    [SerializeField] private UnityEvent<T> response;
+    
+    private void OnEnable() => gameEvent?.RegisterListener(this);
+    private void OnDisable() => gameEvent?.UnRegisterListener(this);
+    public void OnEventRaised(T value) => response?.Invoke(value);
 }

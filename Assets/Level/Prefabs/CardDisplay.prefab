@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae3e86957c155a49b2a6de7ecf3dc81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardDisplay
+  onCardSelected: {fileID: 11400000, guid: a1124c7d7132a6e4c9639ff404417ae8, type: 2}
   image: {fileID: 3199916072864984371}
 --- !u!114 &6409914769226477461
 MonoBehaviour:

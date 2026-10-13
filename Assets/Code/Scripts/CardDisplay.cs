@@ -6,8 +6,8 @@ using UnityEngine.Pool;
 [RequireComponent(typeof(CardPower))]
 public class CardDisplay : MonoBehaviour
 {
+    [SerializeField] private CardGameEvent onCardSelected;
     private Button cardButton;
-    private IObjectPool<CardDisplay> pool;
     private Card cardData;
     private CardPower cardPower;
     [SerializeField] private Image image;
@@ -18,7 +18,6 @@ public class CardDisplay : MonoBehaviour
         cardButton = GetComponent<Button>();
         cardPower = GetComponent<CardPower>();
         cardButton.onClick.AddListener(OnButtonClick);
-        
     }
 
     public void SetCardData(Card newCardData, Player owner)
@@ -44,7 +43,7 @@ public class CardDisplay : MonoBehaviour
 
     public void OnButtonClick()
     {
-        EventManager.OnCardButtonClicked?.Invoke(this);
+        onCardSelected.Raise(this);
     }
 
     public Player GetPlayerOwner()
