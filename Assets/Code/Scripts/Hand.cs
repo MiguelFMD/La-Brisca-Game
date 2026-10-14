@@ -72,7 +72,7 @@ public class Hand : MonoBehaviour
         for(int c = displayedCards.childCount-1; c >= 0; c--)
         {
             CardDisplay card = displayedCards.GetChild(c).GetComponent<CardDisplay>();
-            GameManager.Instance.ReturnCardToPool(card);
+            card.ReturnToPool();
         }
     }
 }

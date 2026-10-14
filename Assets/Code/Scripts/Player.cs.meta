@@ -1,2 +1,16 @@
 fileFormatVersion: 2
 guid: bcc333bac9d39a344ae573ca8b80e3e2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - playedCard: {instanceID: 0}
+  - playedCardDisplay: {instanceID: 0}
+  - deck: {instanceID: 0}
+  - onGameRestarted: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
+  - onPlayerHealthChanged: {fileID: 11400000, guid: e4c1fea3429533b47be9d9cd6e2fd007, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

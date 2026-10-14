@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CardDisplay : MonoBehaviour
 {
     [SerializeField] private CardGameEvent onCardSelected;
+    [SerializeField] private CardGameEvent onReturnCard;
     private Button cardButton;
     private Card cardData;
     private CardPower cardPower;
@@ -62,5 +63,10 @@ public class CardDisplay : MonoBehaviour
     public void UseMyPower(Player trickLoser)
     {
         cardPower.InvokePower(playerOwner, trickLoser);
+    }
+
+    public void ReturnToPool()
+    {
+        if(onReturnCard != null) onReturnCard.Raise(this);
     }
 }

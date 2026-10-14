@@ -252,7 +252,7 @@ public class TrickManager : MonoBehaviour
         CardDisplay[] cardsOnTable = centerTableTransform.GetComponentsInChildren<CardDisplay>();
         foreach(CardDisplay card in cardsOnTable)
         {
-            GameManager.Instance.ReturnCardToPool(card);
+            card.ReturnToPool();
         }
     }
 

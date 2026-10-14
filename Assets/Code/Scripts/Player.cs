@@ -13,8 +13,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Deck deck;
     public bool isEnemy = false;
 
-    [Header("Events")]
+    [Header("Listener Events")]
     [SerializeField] private GameEvent onGameRestarted;
+    [Header("Raise Events")]
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
     public event Action OnPlayerDead;
     
@@ -148,12 +149,10 @@ public class Player : MonoBehaviour
         if(!IsHandEmpty())
         {
             int random = UnityEngine.Random.Range(0, hand.cards.Count);
-        
             Card card = hand.cards[random];
             if(card != null)
             {
                 hand.PlayCard(card);
-                GameManager.Instance.ReturnCardToPool(hand.displayedCards.GetChild(random).GetComponent<CardDisplay>());
             }
         }
         else

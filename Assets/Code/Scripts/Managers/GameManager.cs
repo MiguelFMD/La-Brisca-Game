@@ -4,8 +4,10 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    [Header("Events")]
+    [Header("Listeners Events")]
     [SerializeField] private GameEvent onGameRestarted;
+    [Header("Raise Events")]
+    [SerializeField] private CardGameEvent onReturnCard;
     public Player player;
     public Player enemy;
     public Player[] players;
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour
         enemy.OnPlayerDead += HandleEnemyDead;
         players = new Player[2] {player, enemy};
         if(onGameRestarted != null) onGameRestarted.OnRaised += ResetGame;
+        if(onReturnCard != null) onReturnCard.OnRaised += ReturnCardToPool;
     }
 
     void OnDisable()
@@ -32,6 +35,7 @@ public class GameManager : MonoBehaviour
         player.OnPlayerDead -= HandlePlayerDead;
         enemy.OnPlayerDead -= HandleEnemyDead;
         if(onGameRestarted != null) onGameRestarted.OnRaised -= ResetGame;
+        if(onReturnCard != null) onReturnCard.OnRaised -= ReturnCardToPool;
     }
 
     private void Awake()
@@ -84,7 +88,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ReturnCardToPool(CardDisplay cardToReturn)
+    private void ReturnCardToPool(CardDisplay cardToReturn)
     {
         cardToReturn.gameObject.SetActive(false); // Hide the card
         cardPool.Enqueue(cardToReturn); // Save it for future
@@ -99,6 +103,7 @@ public class GameManager : MonoBehaviour
         {
             if(enemy.IsHandEmpty() && enemy.IsDeckEmpty())
             {
+                enemy.TriggerPlayerDead();
                 Debug.LogWarning("DRAW");
             }
             else //Solo el jugador se queda sin cartas
@@ -115,19 +120,11 @@ public class GameManager : MonoBehaviour
         DrawOneCard();
     }
 
-    private void DrawCards(int cardsToDeal)
-    {
-        for(int c = 0; c < cardsToDeal; c++)
-        {
-            DrawOneCard();
-        }
-    }
-
     private void DrawOneCard()
     {
         foreach(Player player in players)
         {
-            //player.DrawCard();
+            player.DrawOneCard();
         }
     }
 
