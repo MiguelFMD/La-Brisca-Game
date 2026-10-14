@@ -938,9 +938,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 816b407558af6b9429c46ec92bc2ea0b, type: 2}
   - {fileID: 11400000, guid: 3f810b962badc4d4596cd5e7639a8138, type: 2}
   centerTableTransform: {fileID: 1538796939}
-  onCardAnimationEnded: {fileID: 0}
-  onGameRestarted: {fileID: 0}
-  onCardPlayed: {fileID: 11400000, guid: a1124c7d7132a6e4c9639ff404417ae8, type: 2}
+  onCardAnimationEnded: {fileID: 11400000, guid: db4d9f803dbdbf943857232228f13f83, type: 2}
+  onGameRestarted: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
+  onCardSelected: {fileID: 11400000, guid: a1124c7d7132a6e4c9639ff404417ae8, type: 2}
 --- !u!1001 &740756726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1682,6 +1682,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   endScreen: {fileID: 783174606}
   endText: {fileID: 964927599}
+  player: {fileID: 0}
+  enemy: {fileID: 0}
 --- !u!4 &1084401001
 Transform:
   m_ObjectHideFlags: 0
@@ -3383,6 +3385,10 @@ PrefabInstance:
       propertyPath: trickManager
       value: 
       objectReference: {fileID: 723708521}
+    - target: {fileID: 4546528772710704552, guid: ab0e20781611b364999b6b9ae06ff973, type: 3}
+      propertyPath: onGameRestarted
+      value: 
+      objectReference: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
     - target: {fileID: 4546528772710704552, guid: ab0e20781611b364999b6b9ae06ff973, type: 3}
       propertyPath: cardDisplayPrefab
       value: 

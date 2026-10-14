@@ -31,6 +31,11 @@ public class TrickManager : MonoBehaviour
         if(onGameRestarted != null) onGameRestarted.OnRaised += ResetTrick;
         if(onCardSelected != null) onCardSelected.OnRaised += CardSelected;
     }
+    void OnDisable()
+    {
+        if(onGameRestarted != null) onGameRestarted.OnRaised -= ResetTrick;
+        if(onCardSelected != null) onCardSelected.OnRaised -= CardSelected;
+    }
     void Start()
     {
         players = GameManager.Instance.players;

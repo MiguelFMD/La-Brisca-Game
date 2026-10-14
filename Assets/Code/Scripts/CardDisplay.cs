@@ -12,11 +12,20 @@ public class CardDisplay : MonoBehaviour
     [SerializeField] private Image image;
     private Player playerOwner;
 
+    void OnEnable()
+    {
+        cardButton.onClick.AddListener(OnButtonClick);
+    }
+
+    void OnDisable()
+    {
+        cardButton.onClick.RemoveListener(OnButtonClick);
+    }
+
     void Awake()
     {
         cardButton = GetComponent<Button>();
         cardPower = GetComponent<CardPower>();
-        cardButton.onClick.AddListener(OnButtonClick);
     }
 
     public void SetCardData(Card newCardData, Player owner)

@@ -14,15 +14,27 @@ public class Player : MonoBehaviour
     public bool isEnemy = false;
 
     [Header("Events")]
+    [SerializeField] private GameEvent onGameRestarted;
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
     public event Action OnPlayerDead;
     
     [Header("Player Stats")]
+    [SerializeField] private int initialCardsAmount = 3;
     public float maxHealth = 100.0f;
     public float currentHealth;
     public int maxEnergy = 3;
     public int currentEnergy;
 
+    void OnEnable()
+    {
+        if(onGameRestarted != null) onGameRestarted.OnRaised += Reset;
+    }
+
+    void OnDisable()
+    {
+        if(onGameRestarted != null) onGameRestarted.OnRaised -= Reset;
+    }
+    
     void Awake()
     {
         hand = GetComponent<Hand>();
@@ -48,6 +60,7 @@ public class Player : MonoBehaviour
         scoredCards.Clear();
         Heal(maxHealth);
         CreateDeck();
+        DrawCards(initialCardsAmount);
     }
     
     //------CARDS FUNCTIONS----------
@@ -68,7 +81,15 @@ public class Player : MonoBehaviour
         return randomCard;
     }
 
-    public void DrawCard()
+    private void DrawCards(int amount)
+    {
+        for(int c = 0; c < amount; c++)
+        {
+            DrawOneCard();
+        }
+    }
+
+    public void DrawOneCard()
     {
         Card newCard = deck.RemoveCard();
         if(newCard != null)
@@ -145,9 +166,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth = Mathf.Max(0, currentHealth - amount);
-        onPlayerHealthChanged.Raise(this);
-        //OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
-
+        if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
         if (currentHealth <= 0)
         {
             OnPlayerDead?.Invoke();
@@ -157,7 +176,7 @@ public class Player : MonoBehaviour
     public void Heal(float amount)
     {
         currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
-        onPlayerHealthChanged.Raise(this);
+        if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
         //OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 

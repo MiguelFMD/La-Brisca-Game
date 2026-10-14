@@ -4,10 +4,11 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    [Header("Events")]
+    [SerializeField] private GameEvent onGameRestarted;
     public Player player;
     public Player enemy;
     public Player[] players;
-    [SerializeField] private int initialCardsAmount;
 
     //Card prefab and pool
     [SerializeField] private GameObject cardDisplayPrefab;
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
         player.OnPlayerDead += HandlePlayerDead;
         enemy.OnPlayerDead += HandleEnemyDead;
         players = new Player[2] {player, enemy};
+        if(onGameRestarted != null) onGameRestarted.OnRaised += ResetGame;
     }
 
     void OnDisable()
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
         //EventManager.OnTrickEnded -= HandleTrickEnded;
         player.OnPlayerDead -= HandlePlayerDead;
         enemy.OnPlayerDead -= HandleEnemyDead;
+        if(onGameRestarted != null) onGameRestarted.OnRaised -= ResetGame;
     }
 
     private void Awake()
@@ -56,7 +59,6 @@ public class GameManager : MonoBehaviour
     public void ResetGame()
     {
         isGameEnded = false;
-        DrawCards(initialCardsAmount);
     }
 
     public void PrepareNextRound(DeckType enemyDeck, float enemyMaxHealth)
@@ -125,7 +127,7 @@ public class GameManager : MonoBehaviour
     {
         foreach(Player player in players)
         {
-            player.DrawCard();
+            //player.DrawCard();
         }
     }
 
