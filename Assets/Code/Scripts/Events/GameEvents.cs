@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public class GameEvent : ScriptableObject
 {
     //The list of listeners that this event will notify if is raised
     private readonly List<GameEventListener> listeners = new List<GameEventListener>();
+
+    public event Action OnRaised;
 
     public void RegisterListener(GameEventListener listener)
     {
@@ -23,6 +26,7 @@ public class GameEvent : ScriptableObject
         {
             listeners[i].OnEventRaised();
         }
+        OnRaised?.Invoke();
     }
 }
 

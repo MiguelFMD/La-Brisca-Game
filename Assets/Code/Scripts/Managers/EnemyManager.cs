@@ -9,9 +9,4 @@ public class EnemyManager : MonoBehaviour
         enemyPlayer = GetComponent<Player>();
         enemyPlayer.isEnemy = true;
     }
-
-    public void PlayRandomCard()
-    {
-        enemyPlayer.PlayRandomCard();
-    }
 }

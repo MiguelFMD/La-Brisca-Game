@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -5,14 +6,6 @@ public class LevelManager : MonoBehaviour
     private int currentLevel = 0;
     [Tooltip("Each enemy is a level. Put as much enemies as levels wanted")] 
     [SerializeField] private EnemyType [] enemies;
-    void OnEnable()
-    {
-        EventManager.OnNextRoundButtonClicked += HandleOnGameEnded;
-    }
-    void OnDisable()
-    {
-        EventManager.OnNextRoundButtonClicked -= HandleOnGameEnded;
-    }
     private void HandleOnGameEnded()
     {
         if(currentLevel < enemies.Length)

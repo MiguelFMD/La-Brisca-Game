@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
     public Player player;
     public Player enemy;
     public Player[] players;
-    public TrickManager trickManager;
     [SerializeField] private int initialCardsAmount;
 
     //Card prefab and pool
@@ -57,10 +56,7 @@ public class GameManager : MonoBehaviour
     public void ResetGame()
     {
         isGameEnded = false;
-        ResetPlayers();
         DrawCards(initialCardsAmount);
-        trickManager.DiscoverTriumphSuit();
-        trickManager.ResetTrick();
     }
 
     public void PrepareNextRound(DeckType enemyDeck, float enemyMaxHealth)
@@ -91,12 +87,6 @@ public class GameManager : MonoBehaviour
         cardToReturn.gameObject.SetActive(false); // Hide the card
         cardPool.Enqueue(cardToReturn); // Save it for future
         cardToReturn.transform.SetParent(cardPoolTransform);
-    }
-
-    public void PlayCard(CardDisplay cardDisplay)
-    {
-        //print("Card clicked is: " + cardDisplay.GetCardData().GetCardRank() + " of " + cardDisplay.GetCardData().GetCardSuit());
-        trickManager.CardPlayed(cardDisplay);
     }
 
     public void HandleTrickEnded()
@@ -148,17 +138,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ResetPlayers()
-    {
-        for(int p = 0; p < players.Length; p++)
-        {
-            players[p].ClearHand();
-            //players[p].playerNumber = p + 1;
-            players[p].scoredCards.Clear();
-            players[p].Heal(players[p].maxHealth);
-            players[p].CreateDeck();
-        }
-    }
 
     private Player GetWinnerByScore() //By Score (old)
     {

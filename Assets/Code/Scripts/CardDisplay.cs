@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Pool;
 
 [RequireComponent(typeof(Button))]
 [RequireComponent(typeof(CardPower))]

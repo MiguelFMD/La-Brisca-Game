@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 public class TrickManager : MonoBehaviour
 {
@@ -14,7 +13,9 @@ public class TrickManager : MonoBehaviour
     [SerializeField] private Card[] triumphCards;
     [SerializeField] private RectTransform centerTableTransform; //A basic rect transform in the main canvas indicating the center of the table
     [Header("Events")]
-    private GameEvent onCardAnimationEnded;
+    [SerializeField] private GameEvent onCardAnimationEnded;
+    [SerializeField] private GameEvent onGameRestarted;
+    [SerializeField] private CardGameEvent onCardSelected;
     private Player[] players;
     private Card.Suit triumphSuit;
     private Card.Suit trickSuit;
@@ -25,14 +26,18 @@ public class TrickManager : MonoBehaviour
     private bool isAnimationPlaying = false;
 
     //-----CORE FUNCTIONS------
+    void OnEnable()
+    {
+        if(onGameRestarted != null) onGameRestarted.OnRaised += ResetTrick;
+        if(onCardSelected != null) onCardSelected.OnRaised += CardSelected;
+    }
     void Start()
     {
         players = GameManager.Instance.players;
         
     }
 
-    //-----PUBLIC FUNCTIONS------
-    public void CardPlayed(CardDisplay cardDisplay)
+    private void CardSelected(CardDisplay cardDisplay)
     {
         //If the card owner is the corresponding player and there is no card animation playing
         if(CheckPlayerTurn(cardDisplay.GetPlayerOwner()) && !isAnimationPlaying) 
@@ -50,28 +55,30 @@ public class TrickManager : MonoBehaviour
                 } 
                     
             }
-
         }
     }
 
-    public void ResetTrick()
+    private void ResetTrick()
     {
         currentPlayer = UnityEngine.Random.Range(0, players.Length);
         isNewTrickPlay = true;
         ClearTableVisuals();
-        if(players[currentPlayer].isEnemy)
+        DiscoverTriumphSuit();
+        CheckEnemyTurn();
+    }
+
+    private void CheckEnemyTurn()
+    {
+        if(players[currentPlayer].isEnemy) //Is enemy turn?
         {
-            print("play card");
-            players[currentPlayer].PlayRandomCard();
+            CardToCenter(players[currentPlayer].PlayRandomCard());
         }
-        
     }
     public void SetTriumphSuit(Card.Suit newSuit)
     {
         triumphSuit = newSuit;
     }
-
-    public void SetTrickSuit(Card.Suit newSuit)
+    private void SetTrickSuit(Card.Suit newSuit)
     {
         trickSuit = newSuit;
     }
@@ -349,11 +356,10 @@ public class TrickManager : MonoBehaviour
             GameManager.Instance.HandleTrickEnded();
         }
         if(!GameManager.Instance.isGameEnded)
-            if(players[currentPlayer].isEnemy)
-                players[currentPlayer].PlayRandomCard();
+            CheckEnemyTurn();
     }
     
-    public void DiscoverTriumphSuit()
+    private void DiscoverTriumphSuit()
     {
         //print("Discovering triumph suit...");
         Card.Suit newTriumphSuit = (Card.Suit)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(Card.Suit)).Length);

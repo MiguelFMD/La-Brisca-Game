@@ -28,8 +28,12 @@ public class Player : MonoBehaviour
         hand = GetComponent<Hand>();
         currentHealth = maxHealth;
         currentEnergy = maxEnergy;
-        onPlayerHealthChanged.Raise(this);
-        //OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
+        if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
+    }
+
+    void Start()
+    {
+        Reset();
     }
 
     public void SetPlayerData(DeckType newDeck, float newMaxHealth)
@@ -37,14 +41,31 @@ public class Player : MonoBehaviour
         deck.AssignDeck(newDeck);
         maxHealth = newMaxHealth;
     }
+
+    private void Reset()
+    {
+        ClearHand();
+        scoredCards.Clear();
+        Heal(maxHealth);
+        CreateDeck();
+    }
     
     //------CARDS FUNCTIONS----------
     public void PlayCard(CardDisplay newPlayedCard)
     {
+        print(isEnemy);
         playedCardDisplay = newPlayedCard;
         playedCard = newPlayedCard.GetCardData();
         hand.PlayCard(playedCard);
         //print("Card played is: " + playedCard);
+    }
+
+    public CardDisplay PlayRandomCard()
+    {
+        int randomC = UnityEngine.Random.Range(0, hand.cards.Count);
+        CardDisplay randomCard = hand.displayedCards.GetChild(randomC).GetComponent<CardDisplay>();
+        PlayCard(randomCard);
+        return randomCard;
     }
 
     public void DrawCard()
@@ -52,17 +73,6 @@ public class Player : MonoBehaviour
         Card newCard = deck.RemoveCard();
         if(newCard != null)
             hand.DrawCard(newCard, this);
-    }
-
-    public void PlayRandomCard()
-    {
-        if(hand.cards.Count == 0)
-            Debug.LogError("Hand from player " + this.name + " is empty!");
-        else
-        {
-            int randomCard = UnityEngine.Random.Range(0, hand.cards.Count);
-            GameManager.Instance.PlayCard(hand.displayedCards.GetChild(randomCard).GetComponent<CardDisplay>());
-        }
     }
 
     public void CreateDeck()
@@ -104,6 +114,7 @@ public class Player : MonoBehaviour
     {
         OnPlayerDead?.Invoke();
     }
+    
     //Powers related
 
     public void UseCardPower(Player trickLoser)
@@ -128,12 +139,6 @@ public class Player : MonoBehaviour
         {
             Debug.LogWarning("Player's hand is empty");
         }
-    }
-
-    private void HandleButtonClicked(CardDisplay cardDisplay)
-    {
-        if(cardDisplay.GetPlayerOwner() == this)
-            GameManager.Instance.PlayCard(cardDisplay);
     }
 
     //------STATS FUNCTIONS-------

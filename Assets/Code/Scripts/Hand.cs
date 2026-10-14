@@ -75,17 +75,4 @@ public class Hand : MonoBehaviour
             GameManager.Instance.ReturnCardToPool(card);
         }
     }
-
-
-    /*public GameObject FindCardByCardData(Card selectedCard)
-    {
-        for(int c = 0; c < displayedCards.childCount; c++)
-        {
-            if(displayedCards.GetChild(c).GetComponent<CardDisplay>().GetCardData() == selectedCard)
-            {
-                return displayedCards.GetChild(c).gameObject;
-            }
-        }
-        return null;
-    }*/
 }

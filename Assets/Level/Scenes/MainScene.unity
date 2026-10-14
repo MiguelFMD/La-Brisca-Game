@@ -119,37 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &108864481
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 108864482}
-  m_Layer: 0
-  m_Name: ---------EVENTS------------
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &108864482
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 108864481}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.78865, y: 0.1387, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &129121474 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1571423998798537239, guid: b64a0b01bbb553044bf7e6c14a51582d, type: 3}
@@ -548,7 +517,7 @@ PrefabInstance:
     - target: {fileID: 6978560598763954643, guid: 88f8e0b8ffde3344ab62c6f7f1a88bdd, type: 3}
       propertyPath: deckType
       value: 
-      objectReference: {fileID: 11400000, guid: 85fd015c948d8024d849a66e539c2960, type: 2}
+      objectReference: {fileID: 11400000, guid: a8aa9591ea8079c4885359f1849a7027, type: 2}
     - target: {fileID: 7190889041517923981, guid: 88f8e0b8ffde3344ab62c6f7f1a88bdd, type: 3}
       propertyPath: m_Name
       value: BasicDeck_Enemy
@@ -635,7 +604,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 964927598}
-  m_Father: {fileID: 783174607}
+  m_Father: {fileID: 1114654793}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -876,14 +845,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 685128954}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1921962385}
   - {fileID: 741971633}
-  m_Father: {fileID: 783174607}
+  m_Father: {fileID: 1114654793}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -969,6 +938,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 816b407558af6b9429c46ec92bc2ea0b, type: 2}
   - {fileID: 11400000, guid: 3f810b962badc4d4596cd5e7639a8138, type: 2}
   centerTableTransform: {fileID: 1538796939}
+  onCardAnimationEnded: {fileID: 0}
+  onGameRestarted: {fileID: 0}
+  onCardPlayed: {fileID: 11400000, guid: a1124c7d7132a6e4c9639ff404417ae8, type: 2}
 --- !u!1001 &740756726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1020,7 +992,7 @@ PrefabInstance:
     - target: {fileID: 6978560598763954643, guid: 88f8e0b8ffde3344ab62c6f7f1a88bdd, type: 3}
       propertyPath: deckType
       value: 
-      objectReference: {fileID: 11400000, guid: 85fd015c948d8024d849a66e539c2960, type: 2}
+      objectReference: {fileID: 11400000, guid: 890136fa9dfe3a844a92f10f2cc1f5e1, type: 2}
     - target: {fileID: 7190889041517923981, guid: 88f8e0b8ffde3344ab62c6f7f1a88bdd, type: 3}
       propertyPath: m_Name
       value: BasicDeck_Player
@@ -1112,7 +1084,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 741971635}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
+        m_TargetAssemblyTypeName: GameEvent, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &741971635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1160,6 +1144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 783174607}
+  - component: {fileID: 783174608}
   m_Layer: 5
   m_Name: EndScreen
   m_TagString: Untagged
@@ -1179,8 +1164,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 497898381}
-  - {fileID: 685128955}
+  - {fileID: 1114654793}
   m_Father: {fileID: 1746887667}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1188,6 +1172,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &783174608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783174606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 253ef4a9cb3b96146a0f06c57a37867b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndScreenUI
+  onGameOver: {fileID: 0}
+  onGameRestarted: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
+  onReturnToMainMenu: {fileID: 0}
+  onNextLevelStarted: {fileID: 11400000, guid: a74f9db715827264998727ecb357ead1, type: 2}
 --- !u!1 &913136362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,7 +1198,6 @@ GameObject:
   m_Component:
   - component: {fileID: 913136363}
   - component: {fileID: 723708521}
-  - component: {fileID: 913136364}
   m_Layer: 0
   m_Name: TrickManager
   m_TagString: Untagged
@@ -1221,34 +1220,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &913136364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 913136362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02b634e907a2c5b4283b80a87b2f76a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CardGameEventListener
-  gameEvent: {fileID: 11400000, guid: a1124c7d7132a6e4c9639ff404417ae8, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 723708521}
-        m_TargetAssemblyTypeName: TrickManager, Assembly-CSharp
-        m_MethodName: CardPlayed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1001 &928759217
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1689,6 +1660,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1084401001}
   - component: {fileID: 1084401000}
+  - component: {fileID: 1084401002}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -1710,8 +1682,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   endScreen: {fileID: 783174606}
   endText: {fileID: 964927599}
-  resetButton: {fileID: 741971634}
-  nextRoundButton: {fileID: 1921962386}
 --- !u!4 &1084401001
 Transform:
   m_ObjectHideFlags: 0
@@ -1727,6 +1697,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1084401002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084400999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 646a7f8b20d0f4e4283af3f9366cd987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
+  gameEvent: {fileID: 0}
+  response:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1095751299
 GameObject:
   m_ObjectHideFlags: 0
@@ -1802,6 +1788,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1095751299}
   m_CullTransparentMesh: 1
+--- !u!1 &1114654792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1114654793}
+  m_Layer: 5
+  m_Name: Screen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1114654793
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114654792}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 497898381}
+  - {fileID: 685128955}
+  m_Father: {fileID: 783174607}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1125206106
 GameObject:
   m_ObjectHideFlags: 0
@@ -2057,9 +2080,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1375230890}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ResetGame
+      - m_Target: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
+        m_TargetAssemblyTypeName: GameEvent, Assembly-CSharp
+        m_MethodName: Raise
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2244,17 +2267,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356256226}
   m_CullTransparentMesh: 1
---- !u!114 &1375230890 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4546528772710704552, guid: ab0e20781611b364999b6b9ae06ff973, type: 3}
-  m_PrefabInstance: {fileID: 7276992402571100110}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ecd33e791415414995c60bcfebb4206, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
 --- !u!1 &1465877149
 GameObject:
   m_ObjectHideFlags: 0
@@ -2726,7 +2738,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1921962387}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: a74f9db715827264998727ecb357ead1, type: 2}
+        m_TargetAssemblyTypeName: GameEvent, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1921962387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3410,4 +3434,3 @@ SceneRoots:
   - {fileID: 1625351468}
   - {fileID: 372374426}
   - {fileID: 740756726}
-  - {fileID: 108864482}
