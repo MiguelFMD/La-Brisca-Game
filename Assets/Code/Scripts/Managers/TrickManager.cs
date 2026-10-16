@@ -12,10 +12,12 @@ public class TrickManager : MonoBehaviour
     [SerializeField] private Image triumphCardDisplay;
     [SerializeField] private Card[] triumphCards;
     [SerializeField] private RectTransform centerTableTransform; //A basic rect transform in the main canvas indicating the center of the table
-    [Header("Events")]
-    [SerializeField] private GameEvent onCardAnimationEnded;
+    [Header("Listeners Events")]
     [SerializeField] private GameEvent onGameRestarted;
     [SerializeField] private CardGameEvent onCardSelected;
+    [Header("Raise Events")]
+    [SerializeField] private GameEvent onTrickEnded;
+    [SerializeField] private GameEvent onCardAnimationEnded;
     private Player[] players;
     private Card.Suit triumphSuit;
     private Card.Suit trickSuit;
@@ -74,10 +76,13 @@ public class TrickManager : MonoBehaviour
 
     private void CheckEnemyTurn()
     {
+        print("Is enemy turn?");
         if(players[currentPlayer].isEnemy) //Is enemy turn?
         {
+            print("Yes");
             CardToCenter(players[currentPlayer].PlayRandomCard());
         }
+        else print("No");
     }
     public void SetTriumphSuit(Card.Suit newSuit)
     {
@@ -282,6 +287,7 @@ public class TrickManager : MonoBehaviour
             currentPlayer = 0;
         else
             currentPlayer++;
+        print("Next player is: " + players[currentPlayer]);
     }
 
     private void CardToCenter(CardDisplay cardDisplay)
@@ -300,7 +306,7 @@ public class TrickManager : MonoBehaviour
             if(player.playedCard == null)
                 return false;
         }
-        //print("All players have played");
+        print("All players have played");
         return true;
     }
 
@@ -331,6 +337,7 @@ public class TrickManager : MonoBehaviour
 
     private void HandleAnimationEnded()
     {
+        print("Animation ended");
         SelectNextPlayer();   
         if(CheckAllPlayersHavePlayed())
         {
@@ -356,9 +363,8 @@ public class TrickManager : MonoBehaviour
             }
             ClearTableVisuals();
             isNewTrickPlay = true;
-            
-            //EventManager.OnTrickEnded?.Invoke();
-            GameManager.Instance.HandleTrickEnded();
+            onTrickEnded.Raise();
+            print("Trick ended");
         }
         if(!GameManager.Instance.isGameEnded)
             CheckEnemyTurn();

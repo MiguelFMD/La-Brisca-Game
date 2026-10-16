@@ -24,7 +24,6 @@ public class EndScreenUI : MonoBehaviour
     private void OnDisable()
     {
         if (onGameOver != null) onGameOver.OnRaised -= Show;
-
         if (onGameRestarted != null) onGameRestarted.OnRaised -= Hide;
         if (onReturnToMainMenu != null) onReturnToMainMenu.OnRaised -= Hide;
         if (onNextLevelStarted != null) onNextLevelStarted.OnRaised -= Hide;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Hand))]
@@ -17,7 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameEvent onGameRestarted;
     [Header("Raise Events")]
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
-    public event Action OnPlayerDead;
+    [SerializeField] private PlayerGameEvent onPlayerDeath;
     
     [Header("Player Stats")]
     [SerializeField] private int initialCardsAmount = 3;
@@ -67,7 +68,6 @@ public class Player : MonoBehaviour
     //------CARDS FUNCTIONS----------
     public void PlayCard(CardDisplay newPlayedCard)
     {
-        print(isEnemy);
         playedCardDisplay = newPlayedCard;
         playedCard = newPlayedCard.GetCardData();
         hand.PlayCard(playedCard);
@@ -132,9 +132,9 @@ public class Player : MonoBehaviour
         return deck.IsDeckEmpty();
     }
 
-    public void TriggerPlayerDead()
+    public void TriggerPlayerDeath()
     {
-        OnPlayerDead?.Invoke();
+        onPlayerDeath.Raise(this);
     }
     
     //Powers related
@@ -168,7 +168,7 @@ public class Player : MonoBehaviour
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
         if (currentHealth <= 0)
         {
-            OnPlayerDead?.Invoke();
+            onPlayerDeath.Raise(this);
         }
     }
 

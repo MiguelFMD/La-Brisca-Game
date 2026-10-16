@@ -938,9 +938,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 816b407558af6b9429c46ec92bc2ea0b, type: 2}
   - {fileID: 11400000, guid: 3f810b962badc4d4596cd5e7639a8138, type: 2}
   centerTableTransform: {fileID: 1538796939}
-  onCardAnimationEnded: {fileID: 11400000, guid: db4d9f803dbdbf943857232228f13f83, type: 2}
   onGameRestarted: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
   onCardSelected: {fileID: 11400000, guid: a1124c7d7132a6e4c9639ff404417ae8, type: 2}
+  onTrickEnded: {fileID: 11400000, guid: d7c5d43b462a17d499b0f9e5fb156d0a, type: 2}
+  onCardAnimationEnded: {fileID: 11400000, guid: db4d9f803dbdbf943857232228f13f83, type: 2}
 --- !u!1001 &740756726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -992,7 +993,7 @@ PrefabInstance:
     - target: {fileID: 6978560598763954643, guid: 88f8e0b8ffde3344ab62c6f7f1a88bdd, type: 3}
       propertyPath: deckType
       value: 
-      objectReference: {fileID: 11400000, guid: 890136fa9dfe3a844a92f10f2cc1f5e1, type: 2}
+      objectReference: {fileID: 11400000, guid: a8aa9591ea8079c4885359f1849a7027, type: 2}
     - target: {fileID: 7190889041517923981, guid: 88f8e0b8ffde3344ab62c6f7f1a88bdd, type: 3}
       propertyPath: m_Name
       value: BasicDeck_Player
@@ -3141,6 +3142,10 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 995535604659820504, guid: 5be7c74ea3ed91341913874fc4e3571e, type: 3}
+      propertyPath: onGameRestarted
+      value: 
+      objectReference: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
+    - target: {fileID: 995535604659820504, guid: 5be7c74ea3ed91341913874fc4e3571e, type: 3}
       propertyPath: onPlayerHealthChanged
       value: 
       objectReference: {fileID: 11400000, guid: e4c1fea3429533b47be9d9cd6e2fd007, type: 2}
@@ -3320,6 +3325,10 @@ PrefabInstance:
       propertyPath: onReturnCard
       value: 
       objectReference: {fileID: 11400000, guid: a1ed30aadb2df7a48b94ad59687fb7c9, type: 2}
+    - target: {fileID: 4546528772710704552, guid: ab0e20781611b364999b6b9ae06ff973, type: 3}
+      propertyPath: onTrickEnded
+      value: 
+      objectReference: {fileID: 11400000, guid: d7c5d43b462a17d499b0f9e5fb156d0a, type: 2}
     - target: {fileID: 4546528772710704552, guid: ab0e20781611b364999b6b9ae06ff973, type: 3}
       propertyPath: trickManager
       value: 

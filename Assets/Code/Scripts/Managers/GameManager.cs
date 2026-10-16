@@ -6,8 +6,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     [Header("Listeners Events")]
     [SerializeField] private GameEvent onGameRestarted;
-    [Header("Raise Events")]
+    [SerializeField] private PlayerGameEvent onPlayerDeath;
+    [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private CardGameEvent onReturnCard;
+    [Header("Raise Events")]
+    [SerializeField] private GameEvent onGameOver;
+    
     public Player player;
     public Player enemy;
     public Player[] players;
@@ -22,20 +26,19 @@ public class GameManager : MonoBehaviour
     
     void OnEnable()
     {
-        player.OnPlayerDead += HandlePlayerDead;
-        enemy.OnPlayerDead += HandleEnemyDead;
         players = new Player[2] {player, enemy};
         if(onGameRestarted != null) onGameRestarted.OnRaised += ResetGame;
         if(onReturnCard != null) onReturnCard.OnRaised += ReturnCardToPool;
+        if(onPlayerDeath != null) onPlayerDeath.OnRaised += HandlePlayerDeath;
+        if(onTrickEnded != null) onTrickEnded.OnRaised += HandleTrickEnded;
     }
 
     void OnDisable()
     {
-        //EventManager.OnTrickEnded -= HandleTrickEnded;
-        player.OnPlayerDead -= HandlePlayerDead;
-        enemy.OnPlayerDead -= HandleEnemyDead;
         if(onGameRestarted != null) onGameRestarted.OnRaised -= ResetGame;
         if(onReturnCard != null) onReturnCard.OnRaised -= ReturnCardToPool;
+        if(onPlayerDeath != null) onPlayerDeath.OnRaised -= HandlePlayerDeath;
+        if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleTrickEnded;
     }
 
     private void Awake()
@@ -98,27 +101,29 @@ public class GameManager : MonoBehaviour
     public void HandleTrickEnded()
     {
         RemovePlayersPlayedCard(); //Remove the played cards from players
-        print("comprobar final de partida");
+        print("Comprobar final de partida");
         if(player.IsHandEmpty() && player.IsDeckEmpty())
         {
             if(enemy.IsHandEmpty() && enemy.IsDeckEmpty())
             {
-                enemy.TriggerPlayerDead();
+                enemy.TriggerPlayerDeath();
                 Debug.LogWarning("DRAW");
             }
             else //Solo el jugador se queda sin cartas
             {
-                player.TriggerPlayerDead();
+                player.TriggerPlayerDeath();
             }
             isGameEnded = true;
         }
         else if(enemy.IsHandEmpty()) //Solo el enemigo se queda sin cartas
         {
-            enemy.TriggerPlayerDead();
+            enemy.TriggerPlayerDeath();
             isGameEnded = true;
         }
         DrawOneCard();
     }
+
+    
 
     private void DrawOneCard()
     {
@@ -130,7 +135,7 @@ public class GameManager : MonoBehaviour
 
     private void RemovePlayersPlayedCard()
     {
-        //print("Removing played cards from players...");
+        print("Removing played cards from players...");
         foreach(Player player in players)
         {
             player.ClearPlayedCard();
@@ -167,15 +172,16 @@ public class GameManager : MonoBehaviour
             return GetWinnerByScore();
     }
 
-    private void HandlePlayerDead()
+    private void HandlePlayerDeath(Player deadPlayer)
     {
         isGameEnded = true;
-        print("YOU LOSE!");
+        if(deadPlayer.isEnemy)
+        {
+            print("YOU WIN");
+        }
+        else
+        {
+            print("YOU LOSE");
+        }
     }
-
-    private void HandleEnemyDead()
-    {
-        isGameEnded = true;
-        print("YOU WIN!");
-    } 
 }
