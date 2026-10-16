@@ -5,12 +5,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     [Header("Listeners Events")]
-    [SerializeField] private GameEvent onGameRestarted;
     [SerializeField] private PlayerGameEvent onPlayerDeath;
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private CardGameEvent onReturnCard;
     [Header("Raise Events")]
     [SerializeField] private GameEvent onGameOver;
+    [SerializeField] private GameEvent onGameRestarted;
     
     public Player player;
     public Player enemy;
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     void OnValidate()
     {
-        if(onGameRestarted == null) Debug.LogError($"[Critical] '{name}' needs 'onGameRestarted' in order to work.", this);
+        //if(onGameRestarted == null) Debug.LogError($"[Critical] '{name}' needs 'onGameRestarted' in order to work.", this);
         if(onReturnCard == null) Debug.LogError($"[Critical] '{name}' needs 'onReturnCard' in order to work.", this);
         if(onPlayerDeath == null) Debug.LogError($"[Critical] '{name}' needs 'onPlayerDeath' in order to work.", this);
         if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     void OnEnable()
     {
         players = new Player[2] {player, enemy};
-        if(onGameRestarted != null) onGameRestarted.OnRaised += ResetGame;
+        //if(onGameRestarted != null) onGameRestarted.OnRaised += ResetGame;
         if(onReturnCard != null) onReturnCard.OnRaised += ReturnCardToPool;
         if(onPlayerDeath != null) onPlayerDeath.OnRaised += HandlePlayerDeath;
         if(onTrickEnded != null) onTrickEnded.OnRaised += HandleTrickEnded;
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 
     void OnDisable()
     {
-        if(onGameRestarted != null) onGameRestarted.OnRaised -= ResetGame;
+        //if(onGameRestarted != null) onGameRestarted.OnRaised -= ResetGame;
         if(onReturnCard != null) onReturnCard.OnRaised -= ReturnCardToPool;
         if(onPlayerDeath != null) onPlayerDeath.OnRaised -= HandlePlayerDeath;
         if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleTrickEnded;
@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
     public void ResetGame()
     {
         isGameEnded = false;
+        onGameRestarted.Raise();
     }
 
     public void PrepareNextRound(DeckType enemyDeck, float enemyMaxHealth)

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EndScreenUI : MonoBehaviour
@@ -7,11 +8,13 @@ public class EndScreenUI : MonoBehaviour
 
     [Header("Close Events")]
     [SerializeField] private GameEvent onGameRestarted;
-    [SerializeField] private GameEvent onReturnToMainMenu;
     [SerializeField] private GameEvent onNextLevelStarted;
+
+    [SerializeField] private GameObject endScreen;
 
     void OnValidate()
     {
+        if(endScreen == null) Debug.LogError($"[Critical] '{name}' needs 'endScreen' in order to work.", this);
         if (onGameOver == null) Debug.LogError($"[Critical] '{name}' needs 'onGameOver' in order to work.", this);
     }
 
@@ -22,7 +25,6 @@ public class EndScreenUI : MonoBehaviour
 
         // Escuchar todos los eventos que cierran la pantalla
         if (onGameRestarted != null) onGameRestarted.OnRaised += Hide;
-        if (onReturnToMainMenu != null) onReturnToMainMenu.OnRaised += Hide;
         if (onNextLevelStarted != null) onNextLevelStarted.OnRaised += Hide;
     }
 
@@ -30,17 +32,16 @@ public class EndScreenUI : MonoBehaviour
     {
         if (onGameOver != null) onGameOver.OnRaised -= Show;
         if (onGameRestarted != null) onGameRestarted.OnRaised -= Hide;
-        if (onReturnToMainMenu != null) onReturnToMainMenu.OnRaised -= Hide;
         if (onNextLevelStarted != null) onNextLevelStarted.OnRaised -= Hide;
     }
 
     public void Show()
     {
-        gameObject.SetActive(true);
+        endScreen.SetActive(true);
     }
 
     public void Hide()
     {
-        gameObject.SetActive(false);
+        endScreen.SetActive(false);
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4902241378821944873}
   - component: {fileID: 6283791209887384834}
   - component: {fileID: 5100356618147146071}
+  - component: {fileID: 5320785064737871668}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -88,5 +89,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b07d76267fb5a304c853ab0caa7b0654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthBar
-  healthBar: {fileID: 6283791209887384834}
-  targetPlayer: {fileID: 0}
+--- !u!114 &5320785064737871668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033508514613382387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9dc4af8b4544aa498dd71d2bd06919d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGameEventListener
+  gameEvent: {fileID: 11400000, guid: 56f1e997dfca24a41800ba6a2badf55b, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5100356618147146071}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+        m_MethodName: HandlePlayerHealthChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

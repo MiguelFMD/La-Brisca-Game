@@ -18,13 +18,14 @@ public class TrickManager : MonoBehaviour
     [Header("Raise Events")]
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private GameEvent onCardAnimationEnded;
-    private Player[] players;
+    [SerializeField] private Player[] players;
+    private Player trickWinner;
+    private Player trickLoser;
     private Card.Suit triumphSuit;
     private Card.Suit trickSuit;
     private int currentPlayer;
     private bool isNewTrickPlay = true;
-    private Player trickWinner;
-    private Player trickLoser;
+    
     private bool isAnimationPlaying = false;
 
     //-----CORE FUNCTIONS------
@@ -43,11 +44,6 @@ public class TrickManager : MonoBehaviour
         if(onGameRestarted != null) onGameRestarted.OnRaised -= ResetTrick;
         if(onCardSelected != null) onCardSelected.OnRaised -= CardSelected;
     }
-    void Start()
-    {
-        players = GameManager.Instance.players;
-        
-    }
 
     private void CardSelected(CardDisplay cardDisplay)
     {
@@ -61,9 +57,9 @@ public class TrickManager : MonoBehaviour
                 //In new tricks we set the new trick suit with the first played card
                 if(players[currentPlayer].playedCard != null)
                 {
-                    SetTrickSuit(players[currentPlayer].playedCard.GetCardSuit());
+                    trickSuit = players[currentPlayer].playedCard.GetCardSuit();
                     isNewTrickPlay = false;
-                    //print("Trick suit is: " + trickSuit);
+                    print("Trick suit is: " + trickSuit);
                 } 
                     
             }
@@ -89,172 +85,68 @@ public class TrickManager : MonoBehaviour
         }
         else print("No");
     }
-    public void SetTriumphSuit(Card.Suit newSuit)
-    {
-        triumphSuit = newSuit;
-    }
-    private void SetTrickSuit(Card.Suit newSuit)
-    {
-        trickSuit = newSuit;
-    }
 
-    public Player CalculateTrickWinner()
-    {
-        List<Player> trickWinners = new List<Player>();
-        //First look the cards that are triumph suit, those are possible winners
-        for(int p = 0; p < players.Length; p++)
-        {
-            if(players[p].playedCard.GetCardSuit() == triumphSuit)
-            {
-                print("Jugador: " + players[p] + " tiene " + triumphSuit);
-                trickWinners.Add(players[p]);
-            }
-        }
-
-        //If there is only 1, that's the winner
-        if(trickWinners.Count == 1)
-        {
-            print("Win by triumph suit");
-            AddScoredCards(trickWinners[0], players);
-            return trickWinners[0];
-        }
-        else
-        {
-            trickWinners.Clear();
-            //if not lets check for the trickSuit
-            for(int p = 0; p < players.Length; p++)
-            {
-                if(players[p].playedCard.GetCardSuit() == trickSuit)
-                {
-                    trickWinners.Add(players[p]);
-                }
-            }
-            //If there is only 1, that's the winner
-            if(trickWinners.Count == 1)
-            {
-                print("Win by trickSuit");
-                AddScoredCards(trickWinners[0], players);
-                return trickWinners[0];
-            }
-            
-            else
-            {
-                Player winner = players[0];
-                foreach(Player player in players)
-                {
-                    //The card rank is bigger
-                    if (winner.playedCard.GetCardRank() < player.playedCard.GetCardRank())
-                        winner = player;
-                }
-                print("Win by rank");
-                AddScoredCards(winner, players);
-                return winner;
-            }
-        }
-    }
     /// <summary>
     /// Calculates the trick winner and loser (only 1vs1 version)
     /// </summary>
     /// <returns>True if someone wins, false if draw</returns>
     private bool CalculateTrickWinner1vs1()
     {
-        //CARD SUIT
-        if(players[0].playedCard.GetCardSuit() == triumphSuit)
+        Card card0 = players[0].playedCard;
+        Card card1 = players[1].playedCard;
+
+        // Comprobamos el empate exacto primero. Si son idénticas en rango y palo, es empate.
+        if (card0.GetCardSuit() == card1.GetCardSuit() && card0.GetCardRank() == card1.GetCardRank())
         {
-            if(players[1].playedCard.GetCardSuit() == triumphSuit)
-            {
-                if(players[0].playedCard.GetCardRank() > players[1].playedCard.GetCardRank()) //0 win
-                {
-                    trickWinner = players[0];
-                    trickLoser = players[1];
-                    return true;
-                }
-                else if(players[0].playedCard.GetCardRank() < players[1].playedCard.GetCardRank())//1 win
-                {
-                    trickWinner = players[1];
-                    trickLoser = players[0];
-                    return true;
-                }
-                else //Draw
-                {
-                    return false;
-                }
-            }
-            else //0 win
-            {
-                trickWinner = players[0];
-                trickLoser = players[1];
-                return true;
-            }
+            return false; // Empate
+        }
+
+        bool player0Wins = false;
+
+        // CASO 1: Ambos juegan el palo de triunfo
+        if (card0.GetCardSuit() == triumphSuit && card1.GetCardSuit() == triumphSuit)
+        {
+            player0Wins = card0.GetCardRank() > card1.GetCardRank();
+        }
+        // CASO 2: Solo el jugador 0 juega triunfo
+        else if (card0.GetCardSuit() == triumphSuit)
+        {
+            player0Wins = true;
+        }
+        // CASO 3: Solo el jugador 1 juega triunfo
+        else if (card1.GetCardSuit() == triumphSuit)
+        {
+            player0Wins = false;
+        }
+        // CASO 4: Ninguno juega triunfo. Ambos juegan el trickSuit (el palo que inició la baza)
+        else if (card0.GetCardSuit() == trickSuit && card1.GetCardSuit() == trickSuit)
+        {
+             player0Wins = card0.GetCardRank() > card1.GetCardRank();
+        }
+        // CASO 5: Solo el jugador 0 juega el trickSuit (el jugador 1 tiró otro palo que no es triunfo)
+        else if (card0.GetCardSuit() == trickSuit)
+        {
+            player0Wins = true;
+        }
+        // CASO 6: Solo el jugador 1 juega el trickSuit (el jugador 0 tiró otro palo que no es triunfo)
+        else if (card1.GetCardSuit() == trickSuit)
+        {
+            player0Wins = false;
+        }
+
+        // Asignamos ganadores y perdedores basados en el resultado
+        if (player0Wins)
+        {
+            trickWinner = players[0];
+            trickLoser = players[1];
         }
         else
         {
-            if(players[1].playedCard.GetCardSuit() == triumphSuit) //1 win
-            {
-                trickWinner = players[1];
-                trickLoser = players[0];
-                return true;
-            }
-            else //Miramos el trick suit
-            {
-                if(players[0].playedCard.GetCardSuit() == trickSuit)
-                {
-                    if(players[1].playedCard.GetCardSuit() == trickSuit)
-                    {
-                        if(players[0].playedCard.GetCardRank() > players[1].playedCard.GetCardRank()) //0 win
-                        {
-                            trickWinner = players[0];
-                            trickLoser = players[1];
-                            return true;
-                        }
-                        else if(players[0].playedCard.GetCardRank() < players[1].playedCard.GetCardRank())//1 win
-                        {
-                            trickWinner = players[1];
-                            trickLoser = players[0];
-                            return true;
-                        }
-                        else //Draw
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        trickWinner = players[0];
-                        trickLoser = players[1];
-                        return true;
-                    }
-                }
-                else
-                {
-                    if(players[1].playedCard.GetCardSuit() == trickSuit)
-                    {
-                        trickWinner = players[1];
-                        trickLoser = players[0];
-                        return true;
-                    }
-                    else //Miramos cual es mas grande
-                    {
-                        if(players[0].playedCard.GetCardRank() > players[1].playedCard.GetCardRank()) //0 win
-                        {
-                            trickWinner = players[0];
-                            trickLoser = players[1];
-                            return true;
-                        }
-                        else if(players[0].playedCard.GetCardRank() < players[1].playedCard.GetCardRank())//1 win
-                        {
-                            trickWinner = players[1];
-                            trickLoser = players[0];
-                            return true;
-                        }
-                        else //Draw
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
+            trickWinner = players[1];
+            trickLoser = players[0];
         }
+
+        return true;
     }
 
     public void ClearTableVisuals()
@@ -343,7 +235,7 @@ public class TrickManager : MonoBehaviour
     private void HandleAnimationEnded()
     {
         print("Animation ended");
-        SelectNextPlayer();   
+        SelectNextPlayer();  
         if(CheckAllPlayersHavePlayed())
         {
             //Player winner = CalculateTrickWinner();
@@ -377,7 +269,7 @@ public class TrickManager : MonoBehaviour
     
     private void DiscoverTriumphSuit()
     {
-        //print("Discovering triumph suit...");
+        print("Discovering triumph suit...");
         Card.Suit newTriumphSuit = (Card.Suit)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(Card.Suit)).Length);
         foreach(Card card in triumphCards)
         {
@@ -388,7 +280,7 @@ public class TrickManager : MonoBehaviour
             }
         }
         triumphCardDisplay.gameObject.SetActive(true);
-        SetTriumphSuit(newTriumphSuit);
+        triumphSuit = newTriumphSuit;
         print("The triumph suit is: " + newTriumphSuit);
     }
 }

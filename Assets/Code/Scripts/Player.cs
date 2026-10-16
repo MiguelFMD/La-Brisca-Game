@@ -170,10 +170,12 @@ public class Player : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth = Mathf.Max(0, currentHealth - amount);
+        print("Take damage: " + currentHealth);
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
         if (currentHealth <= 0)
         {
             onPlayerDeath.Raise(this);
+            print("dead");
         }
     }
 
