@@ -16,9 +16,11 @@ public class Player : MonoBehaviour
 
     [Header("Listener Events")]
     [SerializeField] private GameEvent onGameRestarted;
+     [SerializeField] private GameEvent onTrickEnded;
     [Header("Raise Events")]
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
     [SerializeField] private PlayerGameEvent onPlayerDeath;
+   
     
     [Header("Player Stats")]
     [SerializeField] private int initialCardsAmount = 3;
@@ -27,9 +29,16 @@ public class Player : MonoBehaviour
     public int maxEnergy = 3;
     public int currentEnergy;
 
+    void OnValidate()
+    {
+        if(onGameRestarted == null) Debug.LogError($"[Critical] '{name}' needs 'onGameRestarted' in order to work.", this);
+        if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
+    }
+
     void OnEnable()
     {
         if(onGameRestarted != null) onGameRestarted.OnRaised += Reset;
+        if(onTrickEnded != null) onTrickEnded.OnRaised += HandleOnTrickEnded;
     }
 
     void OnDisable()
@@ -58,7 +67,7 @@ public class Player : MonoBehaviour
 
     private void Reset()
     {
-        ClearHand();
+        hand.ClearHand();
         scoredCards.Clear();
         Heal(maxHealth);
         CreateDeck();
@@ -97,19 +106,15 @@ public class Player : MonoBehaviour
             hand.DrawCard(newCard, this);
     }
 
+    private void HandleOnTrickEnded()
+    {
+        playedCard = null;
+        DrawOneCard();
+    }
+
     public void CreateDeck()
     {
         deck.CreateDeck();
-    }
-
-    public void ClearHand()
-    {
-        hand.ClearHand();
-    }
-
-    public void ClearPlayedCard()
-    {
-        playedCard = null;
     }
 
     public int CalculateScore()

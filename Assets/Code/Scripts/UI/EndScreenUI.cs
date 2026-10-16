@@ -10,6 +10,11 @@ public class EndScreenUI : MonoBehaviour
     [SerializeField] private GameEvent onReturnToMainMenu;
     [SerializeField] private GameEvent onNextLevelStarted;
 
+    void OnValidate()
+    {
+        if (onGameOver == null) Debug.LogError($"[Critical] '{name}' needs 'onGameOver' in order to work.", this);
+    }
+
     private void OnEnable()
     {
         // Escuchar apertura

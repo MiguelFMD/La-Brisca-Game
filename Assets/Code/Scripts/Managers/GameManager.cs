@@ -22,8 +22,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RectTransform cardPoolTransform;
 
     public bool isGameEnded = false;
-    
-    
+
+    void OnValidate()
+    {
+        if(onGameRestarted == null) Debug.LogError($"[Critical] '{name}' needs 'onGameRestarted' in order to work.", this);
+        if(onReturnCard == null) Debug.LogError($"[Critical] '{name}' needs 'onReturnCard' in order to work.", this);
+        if(onPlayerDeath == null) Debug.LogError($"[Critical] '{name}' needs 'onPlayerDeath' in order to work.", this);
+        if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
+        if(onGameOver == null) Debug.LogError($"[Critical] '{name}' needs 'onGameOver' in order to work.", this);
+    }
     void OnEnable()
     {
         players = new Player[2] {player, enemy};
@@ -100,13 +107,12 @@ public class GameManager : MonoBehaviour
 
     public void HandleTrickEnded()
     {
-        RemovePlayersPlayedCard(); //Remove the played cards from players
         print("Comprobar final de partida");
         if(player.IsHandEmpty() && player.IsDeckEmpty())
         {
             if(enemy.IsHandEmpty() && enemy.IsDeckEmpty())
             {
-                enemy.TriggerPlayerDeath();
+                //GetWinnerByHealth().TriggerPlayerDeath();
                 Debug.LogWarning("DRAW");
             }
             else //Solo el jugador se queda sin cartas
@@ -119,26 +125,6 @@ public class GameManager : MonoBehaviour
         {
             enemy.TriggerPlayerDeath();
             isGameEnded = true;
-        }
-        DrawOneCard();
-    }
-
-    
-
-    private void DrawOneCard()
-    {
-        foreach(Player player in players)
-        {
-            player.DrawOneCard();
-        }
-    }
-
-    private void RemovePlayersPlayedCard()
-    {
-        print("Removing played cards from players...");
-        foreach(Player player in players)
-        {
-            player.ClearPlayedCard();
         }
     }
 
@@ -183,5 +169,6 @@ public class GameManager : MonoBehaviour
         {
             print("YOU LOSE");
         }
+        onGameOver.Raise();
     }
 }

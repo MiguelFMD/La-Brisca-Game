@@ -20,6 +20,7 @@ public abstract class BaseGameEvent<T> : ScriptableObject
 
     public void Raise(T value)
     {
+
         for(int i = listeners.Count - 1; i >= 0; i--)
         {
             listeners[i].OnEventRaised(value);

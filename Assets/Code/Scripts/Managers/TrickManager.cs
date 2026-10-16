@@ -28,6 +28,11 @@ public class TrickManager : MonoBehaviour
     private bool isAnimationPlaying = false;
 
     //-----CORE FUNCTIONS------
+    void OnValidate()
+    {
+        if(onGameRestarted == null) Debug.LogError($"[Critical] '{name}' needs 'onGameRestarted' in order to work.", this);
+        if(onCardSelected == null) Debug.LogError($"[Critical] '{name}' needs 'onCardSelected' in order to work.", this);
+    }
     void OnEnable()
     {
         if(onGameRestarted != null) onGameRestarted.OnRaised += ResetTrick;
