@@ -42,21 +42,21 @@ public class Deck : MonoBehaviour
     private void InitialShuffle()
     {
         deckCards.Clear();
-        List<Card> cards = new List<Card>();
-        foreach(Card card in deckType.cards)
+        if (deckType == null || deckType.cards == null || deckType.cards.Length == 0)
+            return;
+        Card[] cards = (Card[])deckType.cards.Clone();
+
+        for (int i = cards.Length - 1; i > 0; i--)
         {
-            cards.Add(card);
+            int randomIndex = Random.Range(0, i + 1);
+            Card temp = cards[i];
+            cards[i] = cards[randomIndex];
+            cards[randomIndex] = temp;
         }
 
-        int random;
-
-        for(int c = 0; c < deckType.cards.Length - 1; c++)
+        for (int i = 0; i < cards.Length; i++)
         {
-            random = Random.Range(0, cards.Count);
-            Card card = cards[random];
-            cards.RemoveAt(random);
-            deckCards.Enqueue(card);
+            deckCards.Enqueue(cards[i]);
         }
-        deckCards.Enqueue(cards[0]);
     }
 }

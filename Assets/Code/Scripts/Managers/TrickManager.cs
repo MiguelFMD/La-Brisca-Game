@@ -54,7 +54,7 @@ public class TrickManager : MonoBehaviour
         isNewTrickPlay = true;
         ClearTableVisuals();
         DiscoverTriumphSuit();
-        //CheckEnemyTurn();
+        canStartTrick = 0;
     }
 
     private void CardSelected(CardDisplay cardDisplay)

@@ -13,9 +13,6 @@ public class LevelManager : MonoBehaviour
             currentLevel++;
             LoadNewEnemy();  
         }
-           
-        //FALTA  --> Añadir al deck del jugador las nuevas cartas
-       
     }
 
     private void LoadNewEnemy()
