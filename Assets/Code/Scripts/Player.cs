@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Hand))]
@@ -9,15 +8,14 @@ public class Player : MonoBehaviour
     public List<Card> scoredCards;
     public Card playedCard;
     public CardDisplay playedCardDisplay;
-    //public int playerNumber;
+    public bool isEnemy = false;
     private Hand hand;
     [SerializeField] private Deck deck;
-    public bool isEnemy = false;
-
     [Header("Listener Events")]
     [SerializeField] private GameEvent onGameRestarted;
-     [SerializeField] private GameEvent onTrickEnded;
+    [SerializeField] private GameEvent onTrickEnded;
     [Header("Raise Events")]
+    [SerializeField] private GameEvent onCardsDealt;
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
     [SerializeField] private PlayerGameEvent onPlayerDeath;
    
@@ -26,13 +24,12 @@ public class Player : MonoBehaviour
     [SerializeField] private int initialCardsAmount = 3;
     public float maxHealth = 100.0f;
     public float currentHealth;
-    public int maxEnergy = 3;
-    public int currentEnergy;
 
     void OnValidate()
     {
         if(onGameRestarted == null) Debug.LogError($"[Critical] '{name}' needs 'onGameRestarted' in order to work.", this);
         if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
+        if(onCardsDealt == null) Debug.LogError($"[Critical] '{name}' needs 'onCardsDealt' in order to work.", this);
     }
 
     void OnEnable()
@@ -44,25 +41,14 @@ public class Player : MonoBehaviour
     void OnDisable()
     {
         if(onGameRestarted != null) onGameRestarted.OnRaised -= Reset;
+        if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleOnTrickEnded;
     }
     
     void Awake()
     {
         hand = GetComponent<Hand>();
         currentHealth = maxHealth;
-        currentEnergy = maxEnergy;
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
-    }
-
-    void Start()
-    {
-        Reset();
-    }
-
-    public void SetPlayerData(DeckType newDeck, float newMaxHealth)
-    {
-        deck.AssignDeck(newDeck);
-        maxHealth = newMaxHealth;
     }
 
     private void Reset()
@@ -72,9 +58,36 @@ public class Player : MonoBehaviour
         Heal(maxHealth);
         CreateDeck();
         DrawCards(initialCardsAmount);
+        onCardsDealt.Raise();
     }
-    
+
+    public void SetPlayerData(DeckType newDeck, float newMaxHealth)
+    {
+        deck.AssignDeck(newDeck);
+        maxHealth = newMaxHealth;
+    }
+
     //------CARDS FUNCTIONS----------
+
+    private void DrawCards(int amount)
+    {
+        for(int c = 0; c < amount; c++)
+        {
+            DrawOneCard();
+        }
+    }
+
+    private void HandleOnTrickEnded()
+    {
+        playedCard = null;
+        DrawOneCard();
+    }
+
+    private void CreateDeck()
+    {
+        deck.CreateDeck();
+    }
+
     public void PlayCard(CardDisplay newPlayedCard)
     {
         playedCardDisplay = newPlayedCard;
@@ -91,30 +104,11 @@ public class Player : MonoBehaviour
         return randomCard;
     }
 
-    private void DrawCards(int amount)
-    {
-        for(int c = 0; c < amount; c++)
-        {
-            DrawOneCard();
-        }
-    }
-
     public void DrawOneCard()
     {
         Card newCard = deck.RemoveCard();
         if(newCard != null)
             hand.DrawCard(newCard, this);
-    }
-
-    private void HandleOnTrickEnded()
-    {
-        playedCard = null;
-        DrawOneCard();
-    }
-
-    public void CreateDeck()
-    {
-        deck.CreateDeck();
     }
 
     public int CalculateScore()
@@ -170,12 +164,12 @@ public class Player : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth = Mathf.Max(0, currentHealth - amount);
-        print("Take damage: " + currentHealth);
+        //print("Take damage: " + currentHealth);
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
         if (currentHealth <= 0)
         {
-            onPlayerDeath.Raise(this);
             print("dead");
+            onPlayerDeath.Raise(this);
         }
     }
 
@@ -185,10 +179,4 @@ public class Player : MonoBehaviour
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
         //OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
     }
-
-    public void ChangeCurrentEnergy(int value)
-    {
-        currentEnergy = Math.Clamp(currentEnergy + value, 0, maxEnergy);
-    }
-
 }

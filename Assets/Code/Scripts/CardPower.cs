@@ -31,7 +31,7 @@ public class CardPower : MonoBehaviour
 
     private void ClubsPower(Player trickLoser)
     {
-        //  trickLoser.RemoveRandomCard();
+        trickLoser.RemoveRandomCard();
     }
 
     private void CupsPower(Player trickwinner)

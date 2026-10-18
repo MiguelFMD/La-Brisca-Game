@@ -50,11 +50,6 @@ public class CardDisplay : MonoBehaviour
         return cardData;
     }
 
-    public void OnButtonClick()
-    {
-        onCardSelected.Raise(this);
-    }
-
     public Player GetPlayerOwner()
     {
         return playerOwner;
@@ -68,5 +63,10 @@ public class CardDisplay : MonoBehaviour
     public void ReturnToPool()
     {
         if(onReturnCard != null) onReturnCard.Raise(this);
+    }
+
+    private void OnButtonClick()
+    {
+        onCardSelected.Raise(this);
     }
 }

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [Header("Raise Events")]
     [SerializeField] private GameEvent onGameOver;
     [SerializeField] private GameEvent onGameRestarted;
+    [SerializeField] private GameEvent onPlayerVictory;
     
     public Player player;
     public Player enemy;
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
         if(onPlayerDeath == null) Debug.LogError($"[Critical] '{name}' needs 'onPlayerDeath' in order to work.", this);
         if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
         if(onGameOver == null) Debug.LogError($"[Critical] '{name}' needs 'onGameOver' in order to work.", this);
+        if(onPlayerVictory == null) Debug.LogError($"[Critical] '{name}' needs 'onPlayerVictory' in order to work.", this);
     }
     void OnEnable()
     {
@@ -70,7 +72,7 @@ public class GameManager : MonoBehaviour
        ResetGame();
     }
 
-    public void ResetGame()
+    private void ResetGame()
     {
         isGameEnded = false;
         onGameRestarted.Raise();
@@ -164,12 +166,14 @@ public class GameManager : MonoBehaviour
         isGameEnded = true;
         if(deadPlayer.isEnemy)
         {
+            onPlayerVictory.Raise();
             print("YOU WIN");
         }
         else
         {
+            onGameOver.Raise();
             print("YOU LOSE");
         }
-        onGameOver.Raise();
+        
     }
 }

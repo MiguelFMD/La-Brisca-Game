@@ -15,6 +15,7 @@ public class TrickManager : MonoBehaviour
     [Header("Listeners Events")]
     [SerializeField] private GameEvent onGameRestarted;
     [SerializeField] private CardGameEvent onCardSelected;
+    [SerializeField] private GameEvent onCardsDealt;
     [Header("Raise Events")]
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private GameEvent onCardAnimationEnded;
@@ -25,7 +26,6 @@ public class TrickManager : MonoBehaviour
     private Card.Suit trickSuit;
     private int currentPlayer;
     private bool isNewTrickPlay = true;
-    
     private bool isAnimationPlaying = false;
 
     //-----CORE FUNCTIONS------
@@ -33,16 +33,28 @@ public class TrickManager : MonoBehaviour
     {
         if(onGameRestarted == null) Debug.LogError($"[Critical] '{name}' needs 'onGameRestarted' in order to work.", this);
         if(onCardSelected == null) Debug.LogError($"[Critical] '{name}' needs 'onCardSelected' in order to work.", this);
+        if(onCardsDealt == null) Debug.LogError($"[Critical] '{name}' needs 'onCardsDealt' in order to work.", this);
     }
     void OnEnable()
     {
         if(onGameRestarted != null) onGameRestarted.OnRaised += ResetTrick;
         if(onCardSelected != null) onCardSelected.OnRaised += CardSelected;
+        if(onCardsDealt != null) onCardsDealt.OnRaised += HandleCardsDealt;
     }
     void OnDisable()
     {
         if(onGameRestarted != null) onGameRestarted.OnRaised -= ResetTrick;
         if(onCardSelected != null) onCardSelected.OnRaised -= CardSelected;
+        if(onCardsDealt != null) onCardsDealt.OnRaised -= HandleCardsDealt;
+    }
+
+    private void ResetTrick()
+    {
+        currentPlayer = Random.Range(0, players.Length);
+        isNewTrickPlay = true;
+        ClearTableVisuals();
+        DiscoverTriumphSuit();
+        //CheckEnemyTurn();
     }
 
     private void CardSelected(CardDisplay cardDisplay)
@@ -66,13 +78,12 @@ public class TrickManager : MonoBehaviour
         }
     }
 
-    private void ResetTrick()
+    private int canStartTrick = 0;
+    private void HandleCardsDealt()
     {
-        currentPlayer = UnityEngine.Random.Range(0, players.Length);
-        isNewTrickPlay = true;
-        ClearTableVisuals();
-        DiscoverTriumphSuit();
-        CheckEnemyTurn();
+        canStartTrick++;
+        if(canStartTrick == 2)
+            CheckEnemyTurn();
     }
 
     private void CheckEnemyTurn()
