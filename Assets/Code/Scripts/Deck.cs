@@ -1,13 +1,15 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-    [SerializeField] private Card[] initialCards;
-    [SerializeField] private SpriteRenderer triumphCardDisplay;
-    private Card triumphSuitCard;
+    [SerializeField] private DeckType deckType;
     private Queue<Card> deckCards;
+
+    public void AssignDeck(DeckType newDeck)
+    {
+        deckType = newDeck;
+    }
     
     public Card RemoveCard()
     {
@@ -18,22 +20,11 @@ public class Deck : MonoBehaviour
             
         else
         {
-            if(triumphSuitCard != null)
-            {
-                Debug.LogWarning("No cards left, giving the triumph card");
-                triumphCardDisplay.gameObject.SetActive(false);
-                return triumphSuitCard;
-            }
-            else
-            {
-                Debug.LogWarning("No cards left in the deck");
-                return null;
-            }
-            
+            Debug.LogWarning("No cards left in the deck");
+            return null;
         }
             
     }
-
     public bool IsDeckEmpty()
     {
         return deckCards.Count == 0;
@@ -44,45 +35,28 @@ public class Deck : MonoBehaviour
     /// </summary>
     public void CreateDeck()
     {
-        print("Creating deck...");
+        //print("Creating deck...");
         deckCards = new Queue<Card>();
         InitialShuffle();
     }
-
-    public Card DiscoverTriumphSuit()
-    {
-        print("Discovering triumph suit...");
-        triumphSuitCard = RemoveCard();
-        triumphCardDisplay.sprite = triumphSuitCard.GetCardSprite();
-        triumphCardDisplay.gameObject.SetActive(true);
-        print("The triumph suit is: " + triumphSuitCard.GetCardSuit());
-        return triumphSuitCard;
-    }
-
     private void InitialShuffle()
     {
-        print("Shuffe deck");
         deckCards.Clear();
         List<Card> cards = new List<Card>();
-        foreach(Card card in initialCards)
+        foreach(Card card in deckType.cards)
         {
             cards.Add(card);
         }
 
-        int random = 0;
+        int random;
 
-        for(int c = 0; c < initialCards.Length - 1; c++)
+        for(int c = 0; c < deckType.cards.Length - 1; c++)
         {
             random = Random.Range(0, cards.Count);
             Card card = cards[random];
             cards.RemoveAt(random);
-            //print(card.number);
             deckCards.Enqueue(card);
         }
-        //Card card = cards[random];
         deckCards.Enqueue(cards[0]);
-        //print(deckCards);
     }
-
-    
 }

@@ -1,60 +1,114 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
+[RequireComponent(typeof(Hand))]
 public class Player : MonoBehaviour
 {
     public List<Card> scoredCards;
     public Card playedCard;
-    public int playerNumber;
+    public CardDisplay playedCardDisplay;
+    public bool isEnemy = false;
     private Hand hand;
+    [SerializeField] private Deck deck;
+    [Header("Listener Events")]
+    [SerializeField] private GameEvent onGameRestarted;
+    [SerializeField] private GameEvent onTrickEnded;
+    [Header("Raise Events")]
+    [SerializeField] private GameEvent onCardsDealt;
+    [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
+    [SerializeField] private PlayerGameEvent onPlayerDeath;
+   
+    
+    [Header("Player Stats")]
+    [SerializeField] private int initialCardsAmount = 3;
+    public float maxHealth = 100.0f;
+    public float currentHealth;
+
+    void OnValidate()
+    {
+        if(onGameRestarted == null) Debug.LogError($"[Critical] '{name}' needs 'onGameRestarted' in order to work.", this);
+        if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
+        if(onCardsDealt == null) Debug.LogError($"[Critical] '{name}' needs 'onCardsDealt' in order to work.", this);
+    }
 
     void OnEnable()
     {
-        EventManager.OnCardButtonClicked += TryPlayCard;
+        if(onGameRestarted != null) onGameRestarted.OnRaised += Reset;
+        if(onTrickEnded != null) onTrickEnded.OnRaised += HandleOnTrickEnded;
     }
 
     void OnDisable()
     {
-        EventManager.OnCardButtonClicked -= TryPlayCard;
+        if(onGameRestarted != null) onGameRestarted.OnRaised -= Reset;
+        if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleOnTrickEnded;
     }
-
+    
     void Awake()
     {
         hand = GetComponent<Hand>();
+        currentHealth = maxHealth;
+        if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
     }
 
-    /*public void PlayRandomCard()
+    private void Reset()
     {
-        if(hand.cards.Count == 0)
-            Debug.LogError("Hand from player " + this.name + " is empty!");
-        else
+        hand.ClearHand();
+        scoredCards.Clear();
+        Heal(maxHealth);
+        CreateDeck();
+        DrawCards(initialCardsAmount);
+        onCardsDealt.Raise();
+    }
+
+    public void SetPlayerData(DeckType newDeck, float newMaxHealth)
+    {
+        deck.AssignDeck(newDeck);
+        maxHealth = newMaxHealth;
+    }
+
+    //------CARDS FUNCTIONS----------
+
+    private void DrawCards(int amount)
+    {
+        for(int c = 0; c < amount; c++)
         {
-            int random = Random.Range(0, hand.cards.Count - 1);
-            PlayCard(hand.displayedCards.GetChild(random));
+            DrawOneCard();
         }
-    }*/
+    }
+
+    private void HandleOnTrickEnded()
+    {
+        playedCard = null;
+        DrawOneCard();
+    }
+
+    private void CreateDeck()
+    {
+        deck.CreateDeck();
+    }
 
     public void PlayCard(CardDisplay newPlayedCard)
     {
+        playedCardDisplay = newPlayedCard;
         playedCard = newPlayedCard.GetCardData();
         hand.PlayCard(playedCard);
         //print("Card played is: " + playedCard);
     }
 
-    public void DrawCard(Card newCard)
+    public CardDisplay PlayRandomCard()
     {
-        hand.DrawCard(newCard, this);
+        int randomC = UnityEngine.Random.Range(0, hand.cards.Count);
+        CardDisplay randomCard = hand.displayedCards.GetChild(randomC).GetComponent<CardDisplay>();
+        PlayCard(randomCard);
+        return randomCard;
     }
 
-    public void ClearHand()
+    public void DrawOneCard()
     {
-        hand.ClearHand();
-    }
-
-    public void ClearPlayedCard()
-    {
-        playedCard = null;
+        Card newCard = deck.RemoveCard();
+        if(newCard != null)
+            hand.DrawCard(newCard, this);
     }
 
     public int CalculateScore()
@@ -72,10 +126,57 @@ public class Player : MonoBehaviour
         return hand.cards.Count == 0;
     }
 
-    private void TryPlayCard(CardDisplay cardDisplay)
+    public bool IsDeckEmpty()
     {
-        if(cardDisplay.GetPlayerOwner() == this)
-            GameManager.Instance.PlayCard(cardDisplay);
+        return deck.IsDeckEmpty();
     }
 
+    public void TriggerPlayerDeath()
+    {
+        onPlayerDeath.Raise(this);
+    }
+    
+    //Powers related
+
+    public void UseCardPower(Player trickLoser)
+    {
+        playedCardDisplay.UseMyPower(trickLoser);
+    }
+
+    public void RemoveRandomCard() //For clubs power
+    {
+        if(!IsHandEmpty())
+        {
+            int random = UnityEngine.Random.Range(0, hand.cards.Count);
+            Card card = hand.cards[random];
+            if(card != null)
+            {
+                hand.PlayCard(card);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Player's hand is empty");
+        }
+    }
+
+    //------STATS FUNCTIONS-------
+    public void TakeDamage(float amount)
+    {
+        currentHealth = Mathf.Max(0, currentHealth - amount);
+        //print("Take damage: " + currentHealth);
+        if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
+        if (currentHealth <= 0)
+        {
+            print("dead");
+            onPlayerDeath.Raise(this);
+        }
+    }
+
+    public void Heal(float amount)
+    {
+        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
+        //OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
+    }
 }

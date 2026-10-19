@@ -1,14 +1,11 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Hand : MonoBehaviour
 {
     public List<Card> cards;
     public int maxCardsAmount;
-    [SerializeField] private GameObject cardDisplayPrefab;
-    [SerializeField] private RectTransform displayedCards;
+    public RectTransform displayedCards;
 
     void Awake()
     {
@@ -17,7 +14,7 @@ public class Hand : MonoBehaviour
 
     public Card PlayCard(Card selectedCard)
     {
-        print("Played card is: " + selectedCard.GetCardRank() + " of " + selectedCard.GetCardSuit());
+        //print("Played card is: " + selectedCard.GetCardRank() + " of " + selectedCard.GetCardSuit());
         if(RemoveCard(selectedCard))
             return selectedCard;
         else
@@ -52,13 +49,10 @@ public class Hand : MonoBehaviour
 
     private void AddDisplayCard(Card newCardData, Player owner)
     {
-        //GameObject newCard = Instantiate(cardDisplayPrefab, displayedCards.transform, false);
-        //newCard.GetComponent<RectTransform>().SetParent(displayedCards.transform, false);
         CardDisplay newCardDisplay = GameManager.Instance.GetCardVisual();
         newCardDisplay.transform.SetParent(displayedCards, false);
         newCardDisplay.transform.localScale = Vector3.one;
         newCardDisplay.SetCardData(newCardData, owner);
-        
     }
 
     ///--------------------Removing cards----------------
@@ -73,26 +67,10 @@ public class Hand : MonoBehaviour
 
     private void RemoveDisplayedCards()
     {
-        for(int c = 0; c < displayedCards.childCount; c++)
+        for(int c = displayedCards.childCount-1; c >= 0; c--)
         {
-            if(displayedCards.GetChild(c).GetComponent<CardDisplay>().GetCardData() == null)
-                Destroy(displayedCards.GetChild(c).gameObject);
-            else
-                RemoveCard(displayedCards.GetChild(c).GetComponent<CardDisplay>().GetCardData());
-            //Destroy(displayedCards.GetChild(c).gameObject);
+            CardDisplay card = displayedCards.GetChild(c).GetComponent<CardDisplay>();
+            card.ReturnToPool();
         }
-    }
-
-
-    private GameObject FindCardByCardData(Card selectedCard)
-    {
-        for(int c = 0; c < displayedCards.childCount; c++)
-        {
-            if(displayedCards.GetChild(c).GetComponent<CardDisplay>().GetCardData() == selectedCard)
-            {
-                return displayedCards.GetChild(c).gameObject;
-            }
-        }
-        return null;
     }
 }
