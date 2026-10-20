@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     private Hand hand;
     [SerializeField] private Deck deck;
     [Header("Listener Events")]
-    [SerializeField] private GameEvent onGameRestarted;
+    [SerializeField] private GameEvent onGameLoaded;
     [SerializeField] private GameEvent onTrickEnded;
     [Header("Raise Events")]
     [SerializeField] private GameEvent onCardsDealt;
@@ -27,20 +27,20 @@ public class Player : MonoBehaviour
 
     void OnValidate()
     {
-        if(onGameRestarted == null) Debug.LogError($"[Critical] '{name}' needs 'onGameRestarted' in order to work.", this);
+        if(onGameLoaded == null) Debug.LogError($"[Critical] '{name}' needs 'onGameLoaded' in order to work.", this);
         if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
         if(onCardsDealt == null) Debug.LogError($"[Critical] '{name}' needs 'onCardsDealt' in order to work.", this);
     }
 
     void OnEnable()
     {
-        if(onGameRestarted != null) onGameRestarted.OnRaised += Reset;
+        if(onGameLoaded != null) onGameLoaded.OnRaised += Reset;
         if(onTrickEnded != null) onTrickEnded.OnRaised += HandleOnTrickEnded;
     }
 
     void OnDisable()
     {
-        if(onGameRestarted != null) onGameRestarted.OnRaised -= Reset;
+        if(onGameLoaded != null) onGameLoaded.OnRaised -= Reset;
         if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleOnTrickEnded;
     }
     

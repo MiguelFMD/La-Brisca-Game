@@ -51,7 +51,7 @@ MonoBehaviour:
   playedCardDisplay: {fileID: 0}
   isEnemy: 1
   deck: {fileID: 0}
-  onGameRestarted: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
+  onGameLoaded: {fileID: 11400000, guid: 0312c12ce24835647a9c03d9a68c0892, type: 2}
   onTrickEnded: {fileID: 11400000, guid: d7c5d43b462a17d499b0f9e5fb156d0a, type: 2}
   onCardsDealt: {fileID: 11400000, guid: 8e139a933b2c99044927473b383794c1, type: 2}
   onPlayerHealthChanged: {fileID: 11400000, guid: 56f1e997dfca24a41800ba6a2badf55b, type: 2}

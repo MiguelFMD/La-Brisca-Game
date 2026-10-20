@@ -78,12 +78,6 @@ public class GameManager : MonoBehaviour
         onGameRestarted.Raise();
     }
 
-    public void PrepareNextRound(DeckType enemyDeck, float enemyMaxHealth)
-    {
-        enemy.SetPlayerData(enemyDeck, enemyMaxHealth);
-        ResetGame();
-    }
-
     public CardDisplay GetCardVisual()
     {
         if (cardPool.Count > 0)
