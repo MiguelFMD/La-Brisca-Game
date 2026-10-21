@@ -13,7 +13,7 @@ public class TrickManager : MonoBehaviour
     [SerializeField] private Card[] triumphCards;
     [SerializeField] private RectTransform centerTableTransform; //A basic rect transform in the main canvas indicating the center of the table
     [Header("Listeners Events")]
-    [SerializeField] private GameEvent onGameRestarted;
+    [SerializeField] private GameEvent onGameLoaded;
     [SerializeField] private CardGameEvent onCardSelected;
     [SerializeField] private GameEvent onCardsDealt;
     [Header("Raise Events")]
@@ -27,23 +27,24 @@ public class TrickManager : MonoBehaviour
     private int currentPlayer;
     private bool isNewTrickPlay = true;
     private bool isAnimationPlaying = false;
+    private bool isGameEnded = false;
 
     //-----CORE FUNCTIONS------
     void OnValidate()
     {
-        if(onGameRestarted == null) Debug.LogError($"[Critical] '{name}' needs 'onGameRestarted' in order to work.", this);
+        if(onGameLoaded == null) Debug.LogError($"[Critical] '{name}' needs 'onGameLoaded' in order to work.", this);
         if(onCardSelected == null) Debug.LogError($"[Critical] '{name}' needs 'onCardSelected' in order to work.", this);
         if(onCardsDealt == null) Debug.LogError($"[Critical] '{name}' needs 'onCardsDealt' in order to work.", this);
     }
     void OnEnable()
     {
-        if(onGameRestarted != null) onGameRestarted.OnRaised += ResetTrick;
+        if(onGameLoaded != null) onGameLoaded.OnRaised += ResetTrick;
         if(onCardSelected != null) onCardSelected.OnRaised += CardSelected;
         if(onCardsDealt != null) onCardsDealt.OnRaised += HandleCardsDealt;
     }
     void OnDisable()
     {
-        if(onGameRestarted != null) onGameRestarted.OnRaised -= ResetTrick;
+        if(onGameLoaded != null) onGameLoaded.OnRaised -= ResetTrick;
         if(onCardSelected != null) onCardSelected.OnRaised -= CardSelected;
         if(onCardsDealt != null) onCardsDealt.OnRaised -= HandleCardsDealt;
     }
@@ -55,10 +56,12 @@ public class TrickManager : MonoBehaviour
         ClearTableVisuals();
         DiscoverTriumphSuit();
         canStartTrick = 0;
+        isGameEnded = false;
     }
 
     private void CardSelected(CardDisplay cardDisplay)
     {
+        print("Card selected");
         //If the card owner is the corresponding player and there is no card animation playing
         if(CheckPlayerTurn(cardDisplay.GetPlayerOwner()) && !isAnimationPlaying) 
         {
@@ -274,7 +277,7 @@ public class TrickManager : MonoBehaviour
             onTrickEnded.Raise();
             print("Trick ended");
         }
-        if(!GameManager.Instance.isGameEnded)
+        if(isGameEnded)
             CheckEnemyTurn();
     }
     

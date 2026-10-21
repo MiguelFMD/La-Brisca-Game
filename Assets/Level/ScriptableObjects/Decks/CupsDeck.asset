@@ -13,14 +13,11 @@ MonoBehaviour:
   m_Name: CupsDeck
   m_EditorClassIdentifier: Assembly-CSharp::DeckType
   cards:
-  - {fileID: 11400000, guid: 571be35dfab30094a945a26e74dd4183, type: 2}
-  - {fileID: 11400000, guid: 571be35dfab30094a945a26e74dd4183, type: 2}
+  - {fileID: 11400000, guid: 977254c12cba3bc4fb1b1a55856a51d7, type: 2}
   - {fileID: 11400000, guid: 41cba24af27cb8147838e30fc0cd2fa5, type: 2}
+  - {fileID: 11400000, guid: 7403f21518cde0f46984c8b6373d8992, type: 2}
+  - {fileID: 11400000, guid: c2e54406e68b35f4b87344b74a83cda4, type: 2}
+  - {fileID: 11400000, guid: a4f2fd2c3295dac43908c2a8bb5d3269, type: 2}
   - {fileID: 11400000, guid: 3e1620e93d2650f43995efebfcab5407, type: 2}
-  - {fileID: 11400000, guid: 3b6d363c397de0648a2b9c98b480d17f, type: 2}
-  - {fileID: 11400000, guid: 3b6d363c397de0648a2b9c98b480d17f, type: 2}
-  - {fileID: 11400000, guid: 3b6d363c397de0648a2b9c98b480d17f, type: 2}
-  - {fileID: 11400000, guid: c2e54406e68b35f4b87344b74a83cda4, type: 2}
-  - {fileID: 11400000, guid: c2e54406e68b35f4b87344b74a83cda4, type: 2}
-  - {fileID: 11400000, guid: c2e54406e68b35f4b87344b74a83cda4, type: 2}
-  - {fileID: 11400000, guid: c2e54406e68b35f4b87344b74a83cda4, type: 2}
+  - {fileID: 11400000, guid: 507a9462f5d0980498b897055d7fe59d, type: 2}
+  - {fileID: 11400000, guid: 2e662275d6b828946bb50389c81e8c27, type: 2}
