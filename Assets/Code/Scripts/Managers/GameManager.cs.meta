@@ -4,12 +4,15 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - onGameRestarted: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
   - onPlayerDeath: {fileID: 11400000, guid: 12d2b981ea81e174a954a54284f9c18b, type: 2}
   - onTrickEnded: {fileID: 11400000, guid: d7c5d43b462a17d499b0f9e5fb156d0a, type: 2}
   - onReturnCard: {fileID: 11400000, guid: a1ed30aadb2df7a48b94ad59687fb7c9, type: 2}
+  - onGameFinished: {fileID: 11400000, guid: 10f214ac917a9674aa17eb4742d85c66, type: 2}
+  - onGameLoaded: {fileID: 11400000, guid: 0312c12ce24835647a9c03d9a68c0892, type: 2}
   - onGameOver: {fileID: 11400000, guid: f7b2230f28caf4348b575bfd572d60d9, type: 2}
-  - player: {instanceID: 0}
+  - onGameRestarted: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
+  - onPlayerVictory: {fileID: 11400000, guid: 3eeceff22c07fa742ba29fb12a6452b5, type: 2}
+  - player: {fileID: 995535604659820504, guid: 5be7c74ea3ed91341913874fc4e3571e, type: 3}
   - enemy: {instanceID: 0}
   - cardDisplayPrefab: {instanceID: 0}
   - cardPoolTransform: {instanceID: 0}

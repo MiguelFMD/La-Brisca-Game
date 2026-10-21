@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
         if(onReturnCard != null) onReturnCard.OnRaised -= ReturnCardToPool;
         if(onPlayerDeath != null) onPlayerDeath.OnRaised -= HandlePlayerDeath;
         if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleTrickEnded;
+        if(onGameFinished != null) onGameFinished.OnRaised -= HandleOnGameFinished;
+        if(onGameLoaded != null) onGameLoaded.OnRaised -= HandleOnGameLoaded;
     }
 
     private void Awake()
