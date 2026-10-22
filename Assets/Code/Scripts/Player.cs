@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameEvent onGameLoaded;
     [SerializeField] private GameEvent onTrickEnded;
     [Header("Raise Events")]
-    [SerializeField] private GameEvent onCardsDealt;
+    [SerializeField] private PlayerGameEvent onCardsDealt;
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
     [SerializeField] private PlayerGameEvent onPlayerDeath;
    
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
         Heal(maxHealth);
         CreateDeck();
         DrawCards(initialCardsAmount);
-        onCardsDealt.Raise();
+        onCardsDealt.Raise(this);
     }
 
     public void SetPlayerData(DeckType newDeck, float newMaxHealth)

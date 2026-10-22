@@ -15,11 +15,14 @@ public class TrickManager : MonoBehaviour
     [Header("Listeners Events")]
     [SerializeField] private GameEvent onGameLoaded;
     [SerializeField] private CardGameEvent onCardSelected;
-    [SerializeField] private GameEvent onCardsDealt;
+    [SerializeField] private PlayerGameEvent onCardsDealt;
+    [SerializeField] private GameEvent onGameOver;
     [Header("Raise Events")]
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private GameEvent onCardAnimationEnded;
-    [SerializeField] private Player[] players;
+    [SerializeField] private Player[] players = new Player[2];
+
+    private int playersPrepared = 0;
     private Player trickWinner;
     private Player trickLoser;
     private Card.Suit triumphSuit;
@@ -35,12 +38,15 @@ public class TrickManager : MonoBehaviour
         if(onGameLoaded == null) Debug.LogError($"[Critical] '{name}' needs 'onGameLoaded' in order to work.", this);
         if(onCardSelected == null) Debug.LogError($"[Critical] '{name}' needs 'onCardSelected' in order to work.", this);
         if(onCardsDealt == null) Debug.LogError($"[Critical] '{name}' needs 'onCardsDealt' in order to work.", this);
+        if(onGameOver == null) Debug.LogError($"[Critical] '{name}' needs 'onGameOver' in order to work.", this);
+         
     }
     void OnEnable()
     {
         if(onGameLoaded != null) onGameLoaded.OnRaised += ResetTrick;
         if(onCardSelected != null) onCardSelected.OnRaised += CardSelected;
         if(onCardsDealt != null) onCardsDealt.OnRaised += HandleCardsDealt;
+        if(onGameOver != null) onGameOver.OnRaised += HandleGameOver;
     }
     void OnDisable()
     {
@@ -55,7 +61,6 @@ public class TrickManager : MonoBehaviour
         isNewTrickPlay = true;
         ClearTableVisuals();
         DiscoverTriumphSuit();
-        canStartTrick = 0;
         isGameEnded = false;
     }
 
@@ -81,11 +86,17 @@ public class TrickManager : MonoBehaviour
         }
     }
 
-    private int canStartTrick = 0;
-    private void HandleCardsDealt()
+    private void HandleGameOver()
     {
-        canStartTrick++;
-        if(canStartTrick == 2)
+        isGameEnded = true;
+        playersPrepared = 0;
+    }
+
+    
+    private void HandleCardsDealt(Player player)
+    {
+        playersPrepared++;
+        if(playersPrepared == players.Length)
             CheckEnemyTurn();
     }
 
@@ -277,8 +288,7 @@ public class TrickManager : MonoBehaviour
             onTrickEnded.Raise();
             print("Trick ended");
         }
-        if(isGameEnded)
-            CheckEnemyTurn();
+        if(!isGameEnded) CheckEnemyTurn();
     }
     
     private void DiscoverTriumphSuit()
