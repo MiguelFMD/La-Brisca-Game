@@ -1,15 +1,32 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+
+public struct CardPayload
+{
+    public Card card;
+    public Player owner;
+    public CardPayload(Card newCard, Player newOwner)
+    {
+        card = newCard;
+        owner = newOwner;
+    }
+}
 
 public class Hand : MonoBehaviour
 {
     public List<Card> cards;
     public int maxCardsAmount;
-    public RectTransform displayedCards;
+    public Player playerOwner;
+    
+    [Header("Events")]
+    public CardPayloadGameEvent onAddedCard;
+    public PlayerGameEvent onClearHand;
 
     void Awake()
     {
         cards = new List<Card>();
+        playerOwner = GetComponent<Player>();
     }
 
     public Card PlayCard(Card selectedCard)
@@ -29,7 +46,8 @@ public class Hand : MonoBehaviour
     public void ClearHand()
     {
         cards.Clear();
-        RemoveDisplayedCards();
+        onClearHand.Raise(playerOwner);
+        //RemoveDisplayedCards();
     }
 
     ///--------------------Adding cards--------------------
@@ -43,34 +61,14 @@ public class Hand : MonoBehaviour
             return false;
         
         cards.Add(newCard);
-        AddDisplayCard(newCard, owner);
+        //AddDisplayCard(newCard, owner);
+        CardPayload cardPayload = new CardPayload(newCard, owner);
+        onAddedCard.Raise(cardPayload);
         return true;
     }
-
-    private void AddDisplayCard(Card newCardData, Player owner)
-    {
-        CardDisplay newCardDisplay = GameManager.Instance.GetCardVisual();
-        newCardDisplay.transform.SetParent(displayedCards, false);
-        newCardDisplay.transform.localScale = Vector3.one;
-        newCardDisplay.SetCardData(newCardData, owner);
-    }
-
-    ///--------------------Removing cards----------------
-
-    /// <summary>
-    /// Tryes to remove a card from the hand and returns true if succesfully removed the card, false if not.
-    /// </summary>
+    
     private bool RemoveCard(Card selectedCard)
     {
         return cards.Remove(selectedCard);
-    }
-
-    private void RemoveDisplayedCards()
-    {
-        for(int c = displayedCards.childCount-1; c >= 0; c--)
-        {
-            CardDisplay card = displayedCards.GetChild(c).GetComponent<CardDisplay>();
-            card.ReturnToPool();
-        }
     }
 }
