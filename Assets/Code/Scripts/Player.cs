@@ -5,8 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Hand))]
 public class Player : MonoBehaviour
 {
-    public List<Card> scoredCards;
-    public Card playedCard;
+    public List<CardData> scoredCards;
+    public CardData playedCard;
     public CardDisplay playedCardDisplay;
     public bool isEnemy = false;
     private Hand hand;
@@ -106,7 +106,7 @@ public class Player : MonoBehaviour
 
     public void DrawOneCard()
     {
-        Card newCard = deck.RemoveCard();
+        CardData newCard = deck.RemoveCard();
         if(newCard != null)
             hand.DrawCard(newCard, this);
     }
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
     public int CalculateScore()
     {
         int score = 0;
-        foreach(Card card in scoredCards)
+        foreach(CardData card in scoredCards)
         {
             score += card.CalculateCardValue();
         }
@@ -148,7 +148,7 @@ public class Player : MonoBehaviour
         if(!IsHandEmpty())
         {
             int random = UnityEngine.Random.Range(0, hand.cards.Count);
-            Card card = hand.cards[random];
+            CardData card = hand.cards[random];
             if(card != null)
             {
                 hand.PlayCard(card);

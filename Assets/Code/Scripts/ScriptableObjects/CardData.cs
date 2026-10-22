@@ -4,8 +4,8 @@ using UnityEditor;
 using System.IO;
 #endif
 
-[CreateAssetMenu(fileName = "Card", menuName = "Scriptable Objects/Card")]
-public class Card : ScriptableObject
+[CreateAssetMenu(fileName = "CardData", menuName = "Scriptable Objects/CardData")]
+public class CardData : ScriptableObject
 {
     [System.Serializable]
     public enum Suit

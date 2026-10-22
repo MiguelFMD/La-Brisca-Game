@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class CardPower : MonoBehaviour
 {
-    private Card cardData;
+    private CardData cardData;
 
-    public void SetCardPowerData(Card newCardData)
+    public void SetCardPowerData(CardData newCardData)
     {
         cardData = newCardData;
     }
@@ -13,16 +13,16 @@ public class CardPower : MonoBehaviour
     {
         switch(cardData.GetCardSuit())
         {
-            case Card.Suit.Clubs:
+            case CardData.Suit.Clubs:
                 ClubsPower(trickLoser);
                 break;
-            case Card.Suit.Cups:
+            case CardData.Suit.Cups:
                 CupsPower(trickWinner);
                 break;
-            case Card.Suit.Golds:
+            case CardData.Suit.Golds:
                 GoldsPower(trickWinner);
                 break;
-            case Card.Suit.Swords:
+            case CardData.Suit.Swords:
                 SwordsPower(trickLoser);
                 break;
                 

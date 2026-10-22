@@ -8,7 +8,7 @@ public class CardDisplay : MonoBehaviour
     [SerializeField] private CardGameEvent onCardSelected;
     [SerializeField] private CardGameEvent onReturnCard;
     private Button cardButton;
-    private Card cardData;
+    private CardData cardData;
     private CardPower cardPower;
     [SerializeField] private Image image;
     private Player playerOwner;
@@ -29,7 +29,7 @@ public class CardDisplay : MonoBehaviour
         cardPower = GetComponent<CardPower>();
     }
 
-    public void SetCardData(Card newCardData, Player owner)
+    public void SetCardData(CardData newCardData, Player owner)
     {
         cardData = newCardData;
         image.sprite = cardData.GetCardSprite();
@@ -45,7 +45,7 @@ public class CardDisplay : MonoBehaviour
         cardPower.SetCardPowerData(newCardData);
     }
 
-    public Card GetCardData()
+    public CardData GetCardData()
     {
         return cardData;
     }

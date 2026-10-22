@@ -10,7 +10,7 @@ public class TrickManager : MonoBehaviour
     [SerializeField] private AnimationCurve easingCurve;
     [Header("Table references")]
     [SerializeField] private Image triumphCardDisplay;
-    [SerializeField] private Card[] triumphCards;
+    [SerializeField] private CardData[] triumphCards;
     [SerializeField] private RectTransform centerTableTransform; //A basic rect transform in the main canvas indicating the center of the table
     [Header("Listeners Events")]
     [SerializeField] private GameEvent onGameLoaded;
@@ -25,8 +25,8 @@ public class TrickManager : MonoBehaviour
     private int playersPrepared = 0;
     private Player trickWinner;
     private Player trickLoser;
-    private Card.Suit triumphSuit;
-    private Card.Suit trickSuit;
+    private CardData.Suit triumphSuit;
+    private CardData.Suit trickSuit;
     private int currentPlayer;
     private bool isNewTrickPlay = true;
     private bool isAnimationPlaying = false;
@@ -117,8 +117,8 @@ public class TrickManager : MonoBehaviour
     /// <returns>True if someone wins, false if draw</returns>
     private bool CalculateTrickWinner1vs1()
     {
-        Card card0 = players[0].playedCard;
-        Card card1 = players[1].playedCard;
+        CardData card0 = players[0].playedCard;
+        CardData card1 = players[1].playedCard;
 
         // Comprobamos el empate exacto primero. Si son idénticas en rango y palo, es empate.
         if (card0.GetCardSuit() == card1.GetCardSuit() && card0.GetCardRank() == card1.GetCardRank())
@@ -294,8 +294,8 @@ public class TrickManager : MonoBehaviour
     private void DiscoverTriumphSuit()
     {
         print("Discovering triumph suit...");
-        Card.Suit newTriumphSuit = (Card.Suit)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(Card.Suit)).Length);
-        foreach(Card card in triumphCards)
+        CardData.Suit newTriumphSuit = (CardData.Suit)Random.Range(0, System.Enum.GetValues(typeof(CardData.Suit)).Length);
+        foreach(CardData card in triumphCards)
         {
             if(card.GetCardSuit() == newTriumphSuit)
             {

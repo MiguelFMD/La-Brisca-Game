@@ -4,9 +4,9 @@ using UnityEngine;
 
 public struct CardPayload
 {
-    public Card card;
+    public CardData card;
     public Player owner;
-    public CardPayload(Card newCard, Player newOwner)
+    public CardPayload(CardData newCard, Player newOwner)
     {
         card = newCard;
         owner = newOwner;
@@ -15,7 +15,7 @@ public struct CardPayload
 
 public class Hand : MonoBehaviour
 {
-    public List<Card> cards;
+    public List<CardData> cards;
     public int maxCardsAmount;
     public Player playerOwner;
     
@@ -25,11 +25,11 @@ public class Hand : MonoBehaviour
 
     void Awake()
     {
-        cards = new List<Card>();
+        cards = new List<CardData>();
         playerOwner = GetComponent<Player>();
     }
 
-    public Card PlayCard(Card selectedCard)
+    public CardData PlayCard(CardData selectedCard)
     {
         //print("Played card is: " + selectedCard.GetCardRank() + " of " + selectedCard.GetCardSuit());
         if(RemoveCard(selectedCard))
@@ -38,7 +38,7 @@ public class Hand : MonoBehaviour
             return null;
     }
 
-    public void DrawCard(Card newCard, Player owner)
+    public void DrawCard(CardData newCard, Player owner)
     {
         AddCard(newCard, owner);
     }
@@ -55,7 +55,7 @@ public class Hand : MonoBehaviour
     /// <summary>
     /// Adds a card.
     /// </summary>
-    private bool AddCard(Card newCard, Player owner)
+    private bool AddCard(CardData newCard, Player owner)
     {
         if(cards.Count >= maxCardsAmount)
             return false;
@@ -67,7 +67,7 @@ public class Hand : MonoBehaviour
         return true;
     }
     
-    private bool RemoveCard(Card selectedCard)
+    private bool RemoveCard(CardData selectedCard)
     {
         return cards.Remove(selectedCard);
     }
