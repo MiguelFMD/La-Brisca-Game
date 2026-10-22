@@ -20,8 +20,10 @@ public class Hand : MonoBehaviour
     public Player playerOwner;
     
     [Header("Events")]
-    public CardPayloadGameEvent onAddedCard;
-    public PlayerGameEvent onClearHand;
+    [SerializeField] private CardPayloadGameEvent onAddedCard;
+    [SerializeField] private PlayerGameEvent onClearHand;
+    [SerializeField] private CardGameEvent onCardPlayed;
+
 
     void Awake()
     {
@@ -29,11 +31,15 @@ public class Hand : MonoBehaviour
         playerOwner = GetComponent<Player>();
     }
 
-    public CardData PlayCard(CardData selectedCard)
+    public CardData PlayCard(CardData playedCard)
     {
         //print("Played card is: " + selectedCard.GetCardRank() + " of " + selectedCard.GetCardSuit());
-        if(RemoveCard(selectedCard))
-            return selectedCard;
+        if(RemoveCard(playedCard))
+        {
+            onCardPlayed.Raise(playedCard);
+            return playedCard;
+        }
+            
         else
             return null;
     }

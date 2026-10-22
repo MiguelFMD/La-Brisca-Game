@@ -11,7 +11,6 @@ public class CardDisplay : MonoBehaviour
     private CardData cardData;
     private CardPower cardPower;
     [SerializeField] private Image image;
-    private Player playerOwner;
 
     void OnEnable()
     {
@@ -29,12 +28,11 @@ public class CardDisplay : MonoBehaviour
         cardPower = GetComponent<CardPower>();
     }
 
-    public void SetCardData(CardData newCardData, Player owner)
+    public void SetCardData(CardData newCardData)
     {
         cardData = newCardData;
         image.sprite = cardData.GetCardSprite();
-        playerOwner = owner;
-        if(playerOwner.isEnemy)
+        if(newCardData.owner.isEnemy)
         {
             cardButton.interactable = false;
         }
@@ -52,21 +50,21 @@ public class CardDisplay : MonoBehaviour
 
     public Player GetPlayerOwner()
     {
-        return playerOwner;
+        return cardData.owner;
     }
 
     public void UseMyPower(Player trickLoser)
     {
-        cardPower.InvokePower(playerOwner, trickLoser);
+        cardPower.InvokePower(cardData.owner, trickLoser);
     }
 
     public void ReturnToPool()
     {
-        if(onReturnCard != null) onReturnCard.Raise(this);
+        if(onReturnCard != null) onReturnCard.Raise(cardData);
     }
 
     private void OnButtonClick()
     {
-        onCardSelected.Raise(this);
+        onCardSelected.Raise(cardData);
     }
 }

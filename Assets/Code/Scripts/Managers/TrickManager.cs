@@ -21,7 +21,6 @@ public class TrickManager : MonoBehaviour
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private GameEvent onCardAnimationEnded;
     [SerializeField] private Player[] players = new Player[2];
-
     private int playersPrepared = 0;
     private Player trickWinner;
     private Player trickLoser;
@@ -64,14 +63,14 @@ public class TrickManager : MonoBehaviour
         isGameEnded = false;
     }
 
-    private void CardSelected(CardDisplay cardDisplay)
+    private void CardSelected(CardData cardData)
     {
         print("Card selected");
         //If the card owner is the corresponding player and there is no card animation playing
-        if(CheckPlayerTurn(cardDisplay.GetPlayerOwner()) && !isAnimationPlaying) 
+        if(CheckPlayerTurn(cardData.owner) && !isAnimationPlaying) 
         {
-            CardToCenter(cardDisplay); //Put the card played on the center of the table
-            cardDisplay.GetPlayerOwner().PlayCard(cardDisplay);
+            //CardToCenter(cardDisplay); //Put the card played on the center of the table
+            cardData.owner.PlayCard(cardData);
             if(isNewTrickPlay)
             {
                 //In new tricks we set the new trick suit with the first played card
@@ -106,7 +105,7 @@ public class TrickManager : MonoBehaviour
         if(players[currentPlayer].isEnemy) //Is enemy turn?
         {
             print("Yes");
-            CardToCenter(players[currentPlayer].PlayRandomCard());
+            players[currentPlayer].PlayRandomCard();
         }
         else print("No");
     }
@@ -215,10 +214,8 @@ public class TrickManager : MonoBehaviour
     private void CardToCenter(CardDisplay cardDisplay)
     {
         RectTransform cardRect = cardDisplay.GetComponent<RectTransform>();
-        //cardRect.SetParent(centerTableTransform, true);
         cardRect.SetParent(cardRect.parent.parent);
         StartCoroutine(AnimateCard(cardRect));
-        
     }
 
     private bool CheckAllPlayersHavePlayed()

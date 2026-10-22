@@ -7,7 +7,6 @@ public class Player : MonoBehaviour
 {
     public List<CardData> scoredCards;
     public CardData playedCard;
-    public CardDisplay playedCardDisplay;
     public bool isEnemy = false;
     private Hand hand;
     [SerializeField] private Deck deck;
@@ -88,20 +87,18 @@ public class Player : MonoBehaviour
         deck.CreateDeck();
     }
 
-    public void PlayCard(CardDisplay newPlayedCard)
+    public void PlayCard(CardData newPlayedCard)
     {
-        playedCardDisplay = newPlayedCard;
-        playedCard = newPlayedCard.GetCardData();
+        playedCard = newPlayedCard;
         hand.PlayCard(playedCard);
         //print("Card played is: " + playedCard);
     }
 
-    public CardDisplay PlayRandomCard()
+    public CardData PlayRandomCard()
     {
         int randomC = UnityEngine.Random.Range(0, hand.cards.Count);
-        CardDisplay randomCard = hand.displayedCards.GetChild(randomC).GetComponent<CardDisplay>();
-        PlayCard(randomCard);
-        return randomCard;
+        PlayCard(hand.cards[randomC]);
+        return hand.cards[randomC];
     }
 
     public void DrawOneCard()
@@ -140,7 +137,7 @@ public class Player : MonoBehaviour
 
     public void UseCardPower(Player trickLoser)
     {
-        playedCardDisplay.UseMyPower(trickLoser);
+        playedCard.UseMyPower(trickLoser);
     }
 
     public void RemoveRandomCard() //For clubs power
