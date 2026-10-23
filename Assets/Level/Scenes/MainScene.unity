@@ -4416,7 +4416,8 @@ PrefabInstance:
       propertyPath: displayedCards
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6495400105532174158, guid: 45e92edeef72da3469c55085ebe45c57, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

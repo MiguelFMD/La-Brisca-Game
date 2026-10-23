@@ -7,7 +7,7 @@ public class HandView : MonoBehaviour
     public Hand playerHand;
     public Dictionary<CardData, CardDisplay> cardVisuals = new Dictionary<CardData, CardDisplay>();
     [Header("Listener events")]
-    [SerializeField] private CardPayloadGameEvent onAddedCard;
+    [SerializeField] private CardGameEvent onAddedCard;
     [SerializeField] private CardGameEvent onCardPlayed;
     [SerializeField] private PlayerGameEvent onClearHand;
     [Header("Raise events")]
@@ -45,14 +45,14 @@ public class HandView : MonoBehaviour
         return null;
     }
 
-    private void AddDisplayCard(CardPayload cardPayload)
+    private void AddDisplayCard(CardData cardData)
     {
-        if(cardPayload.owner != playerHand.playerOwner) return;
+        if(cardData.owner != playerHand.playerOwner) return;
         CardDisplay newCardDisplay = GameManager.Instance.GetCardVisual();
         newCardDisplay.transform.SetParent(transform, false);
         newCardDisplay.transform.localScale = Vector3.one;
-        newCardDisplay.SetCardData(cardPayload.card);
-        cardVisuals.Add(cardPayload.card, newCardDisplay);
+        newCardDisplay.SetCardData(cardData);
+        cardVisuals.Add(cardData, newCardDisplay);
     }
 
     private void HandleOnCardPlayed(CardData cardData)

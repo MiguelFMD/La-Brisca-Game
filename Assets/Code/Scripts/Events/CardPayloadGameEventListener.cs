@@ -1,1 +1,0 @@
-public class CardPayloadGameEventListener : BaseGameEventListener<CardDisplay> { }

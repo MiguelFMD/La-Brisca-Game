@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BoardVisualManager : MonoBehaviour
@@ -15,6 +16,8 @@ public class BoardVisualManager : MonoBehaviour
     [Header("Listener Events")]
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private CardGameEvent onCardToTable;
+
+    private List<CardDisplay> tableCards;
 
     void OnValidate()
     {
@@ -34,13 +37,26 @@ public class BoardVisualManager : MonoBehaviour
         if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleOnTrickEnded;
     }
 
+    void Awake()
+    {
+        tableCards = new List<CardDisplay>();
+    }
+
     private void HandleOnCardToTable(CardData cardData)
     {
-        if(cardData.owner != playerHandView.playerHand)
+        CardDisplay cardDisplay;
+        print(cardData.owner);
+        if(cardData.owner == playerHandView.playerHand.playerOwner)
+            cardDisplay = playerHandView.ExtractCardDisplay(cardData);
+        else if(cardData.owner == enemyHandView.playerHand.playerOwner)
+            cardDisplay = enemyHandView.ExtractCardDisplay(cardData);
+        else
         {
-            CardDisplay cardDisplay = playerHandView.ExtractCardDisplay(cardData);
-            CardToCenter(cardDisplay);
+            Debug.LogError("No owner");
+            return;
         }
+        tableCards.Add(cardDisplay);
+        CardToCenter(cardDisplay);
     }
 
     private void HandleOnTrickEnded()
@@ -77,9 +93,10 @@ public class BoardVisualManager : MonoBehaviour
 
     private void ClearTableVisuals()
     {
-        foreach(CardDisplay card in tableRectTransform)
+        foreach(CardDisplay card in tableCards)
         {
             card.ReturnToPool();
         }
+        tableCards.Clear();
     }
 }

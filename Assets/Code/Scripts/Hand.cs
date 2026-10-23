@@ -1,17 +1,5 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-
-public struct CardPayload
-{
-    public CardData card;
-    public Player owner;
-    public CardPayload(CardData newCard, Player newOwner)
-    {
-        card = newCard;
-        owner = newOwner;
-    }
-}
 
 public class Hand : MonoBehaviour
 {
@@ -20,7 +8,7 @@ public class Hand : MonoBehaviour
     public Player playerOwner;
     
     [Header("Events")]
-    [SerializeField] private CardPayloadGameEvent onAddedCard;
+    [SerializeField] private CardGameEvent onAddedCard;
     [SerializeField] private PlayerGameEvent onClearHand;
     [SerializeField] private CardGameEvent onCardPlayed;
 
@@ -31,11 +19,13 @@ public class Hand : MonoBehaviour
         playerOwner = GetComponent<Player>();
     }
 
-    public CardData PlayCard(CardData playedCard)
+    public CardData PlayCard(CardData selectedCard)
     {
+        CardData playedCard = selectedCard;
         //print("Played card is: " + selectedCard.GetCardRank() + " of " + selectedCard.GetCardSuit());
         if(RemoveCard(playedCard))
         {
+            print(playedCard);
             onCardPlayed.Raise(playedCard);
             return playedCard;
         }
@@ -44,9 +34,9 @@ public class Hand : MonoBehaviour
             return null;
     }
 
-    public void DrawCard(CardData newCard, Player owner)
+    public void DrawCard(CardData newCard)
     {
-        AddCard(newCard, owner);
+        AddCard(newCard);
     }
 
     public void ClearHand()
@@ -61,15 +51,13 @@ public class Hand : MonoBehaviour
     /// <summary>
     /// Adds a card.
     /// </summary>
-    private bool AddCard(CardData newCard, Player owner)
+    private bool AddCard(CardData newCard)
     {
         if(cards.Count >= maxCardsAmount)
             return false;
         
         cards.Add(newCard);
-        //AddDisplayCard(newCard, owner);
-        CardPayload cardPayload = new CardPayload(newCard, owner);
-        onAddedCard.Raise(cardPayload);
+        onAddedCard.Raise(newCard);
         return true;
     }
     
