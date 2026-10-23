@@ -1,13 +1,10 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
     [Header("Listeners Events")]
     [SerializeField] private PlayerGameEvent onPlayerDeath;
     [SerializeField] private GameEvent onTrickEnded;
-    [SerializeField] private CardGameEvent onReturnCard;
     [SerializeField] private GameEvent onGameFinished;
     [SerializeField] private GameEvent onGameLoaded;
     [Header("Raise Events")]
@@ -18,18 +15,10 @@ public class GameManager : MonoBehaviour
     public Player player;
     public Player enemy;
     public Player[] players;
-
-    //Card prefab and pool
-    [SerializeField] private GameObject cardDisplayPrefab;
-    private Queue<CardDisplay> cardPool = new Queue<CardDisplay>();
-    [SerializeField] private RectTransform cardPoolTransform;
-
     public bool isGameEnded = false;
 
     void OnValidate()
     {
-        //if(onGameRestarted == null) Debug.LogError($"[Critical] '{name}' needs 'onGameRestarted' in order to work.", this);
-        if(onReturnCard == null) Debug.LogError($"[Critical] '{name}' needs 'onReturnCard' in order to work.", this);
         if(onPlayerDeath == null) Debug.LogError($"[Critical] '{name}' needs 'onPlayerDeath' in order to work.", this);
         if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
         if(onGameOver == null) Debug.LogError($"[Critical] '{name}' needs 'onGameOver' in order to work.", this);
@@ -39,8 +28,6 @@ public class GameManager : MonoBehaviour
     }
     void OnEnable()
     {
-        players = new Player[2] {player, enemy};
-        //if(onReturnCard != null) onReturnCard.OnRaised += ReturnCardToPool;
         if(onPlayerDeath != null) onPlayerDeath.OnRaised += HandlePlayerDeath;
         if(onTrickEnded != null) onTrickEnded.OnRaised += HandleTrickEnded;
         if(onGameFinished != null) onGameFinished.OnRaised += HandleOnGameFinished;
@@ -49,7 +36,6 @@ public class GameManager : MonoBehaviour
 
     void OnDisable()
     {
-        //if(onReturnCard != null) onReturnCard.OnRaised -= ReturnCardToPool;
         if(onPlayerDeath != null) onPlayerDeath.OnRaised -= HandlePlayerDeath;
         if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleTrickEnded;
         if(onGameFinished != null) onGameFinished.OnRaised -= HandleOnGameFinished;
@@ -58,19 +44,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        // 1. Verificar si ya existe una instancia
-        if (Instance != null && Instance != this)
-        {
-            // Si ya existe otra, destruir este duplicado
-            Destroy(gameObject);
-            return;
-        }
-
-        // 2. Asignar la instancia actual
-        Instance = this;
-
-        // 3. Hacer que persista entre cambios de escena
-        DontDestroyOnLoad(gameObject);
+        players = new Player[2] {player, enemy};
     }
 
     void Start()
@@ -82,30 +56,6 @@ public class GameManager : MonoBehaviour
     {
         isGameEnded = false;
         onGameRestarted.Raise();
-    }
-
-    public CardDisplay GetCardVisual()
-    {
-        if (cardPool.Count > 0)
-        {
-            CardDisplay pooledCard = cardPool.Dequeue();
-            pooledCard.gameObject.SetActive(true);
-            return pooledCard;
-        }
-        else
-        {
-            //print("no habian cartas");
-            // Si no hay cartas reciclables, creamos una nueva
-            GameObject newCard = Instantiate(cardDisplayPrefab);
-            return newCard.GetComponent<CardDisplay>();
-        }
-    }
-
-    private void ReturnCardToPool(CardDisplay cardToReturn)
-    {
-        cardToReturn.gameObject.SetActive(false); // Hide the card
-        cardPool.Enqueue(cardToReturn); // Save it for future
-        cardToReturn.transform.SetParent(cardPoolTransform);
     }
 
     public void HandleTrickEnded()

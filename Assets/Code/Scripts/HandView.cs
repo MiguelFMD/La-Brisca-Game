@@ -13,6 +13,8 @@ public class HandView : MonoBehaviour
     [Header("Raise events")]
     [SerializeField] private CardGameEvent onCardToTable;
 
+    [SerializeField] private CardPoolSO cardPoolSO;
+
     void OnValidate()
     {
         if(onAddedCard == null) Debug.LogError($"[Critical] '{name}' needs 'onAddedCard' in order to work.", this);
@@ -48,7 +50,7 @@ public class HandView : MonoBehaviour
     private void AddDisplayCard(CardData cardData)
     {
         if(cardData.owner != playerHand.playerOwner) return;
-        CardDisplay newCardDisplay = GameManager.Instance.GetCardVisual();
+        CardDisplay newCardDisplay = cardPoolSO.Get();
         newCardDisplay.transform.SetParent(transform, false);
         newCardDisplay.transform.localScale = Vector3.one;
         newCardDisplay.SetCardData(cardData);

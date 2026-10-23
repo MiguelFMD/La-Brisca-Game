@@ -119,6 +119,54 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &18210776
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 18210778}
+  - component: {fileID: 18210777}
+  m_Layer: 0
+  m_Name: CardPoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &18210777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18210776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06bc6007f9a77da4f8f6c447c150ba7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardPoolManager
+  cardDisplayPrefab: {fileID: 2723487353075509727, guid: 5768f1398e181e04cbb1939d3ba93779, type: 3}
+  cardPoolTransform: {fileID: 1125206107}
+  cardPoolService: {fileID: 11400000, guid: d1e3f124a74090b4caa3d394c476376d, type: 2}
+  onReturnCard: {fileID: 11400000, guid: a1ed30aadb2df7a48b94ad59687fb7c9, type: 2}
+--- !u!4 &18210778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18210776}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &117745406
 GameObject:
   m_ObjectHideFlags: 0
@@ -3406,6 +3454,7 @@ MonoBehaviour:
   onCardPlayed: {fileID: 11400000, guid: b218f919976a1ce408888f83dbad32c7, type: 2}
   onClearHand: {fileID: 11400000, guid: fff8e42c26a8f014eab8e886c4dd1d29, type: 2}
   onCardToTable: {fileID: 11400000, guid: 37e0bbbd77d673e4585807bacc05d512, type: 2}
+  cardPoolSO: {fileID: 11400000, guid: d1e3f124a74090b4caa3d394c476376d, type: 2}
 --- !u!114 &1451562376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4033,6 +4082,7 @@ MonoBehaviour:
   onCardPlayed: {fileID: 11400000, guid: b218f919976a1ce408888f83dbad32c7, type: 2}
   onClearHand: {fileID: 11400000, guid: fff8e42c26a8f014eab8e886c4dd1d29, type: 2}
   onCardToTable: {fileID: 11400000, guid: 37e0bbbd77d673e4585807bacc05d512, type: 2}
+  cardPoolSO: {fileID: 11400000, guid: d1e3f124a74090b4caa3d394c476376d, type: 2}
 --- !u!114 &2041251666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4750,6 +4800,7 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 253698023}
   - {fileID: 1713885326}
+  - {fileID: 18210778}
   - {fileID: 1339134956}
   - {fileID: 7276992402571100110}
   - {fileID: 913136363}

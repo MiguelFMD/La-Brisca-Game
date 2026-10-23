@@ -95,12 +95,12 @@ public class Player : MonoBehaviour
         
     }
 
-    public CardData PlayRandomCard()
+    public void PlayRandomCard()
     {
         int randomC = UnityEngine.Random.Range(0, hand.cards.Count);
         print("Play random card");
         PlayCard(hand.cards[randomC]);
-        return hand.cards[randomC];
+        //return hand.cards[randomC];
     }
 
     public void DrawOneCard()
