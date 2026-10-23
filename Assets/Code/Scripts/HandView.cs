@@ -1,27 +1,48 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HandView : MonoBehaviour
 {
-    [SerializeField] private Hand playerHand;
-    private Dictionary<CardData, CardDisplay> cardVisuals = new Dictionary<CardData, CardDisplay>();
-    
+    public Hand playerHand;
+    public Dictionary<CardData, CardDisplay> cardVisuals = new Dictionary<CardData, CardDisplay>();
+    [Header("Listener events")]
     [SerializeField] private CardPayloadGameEvent onAddedCard;
     [SerializeField] private CardGameEvent onCardPlayed;
     [SerializeField] private PlayerGameEvent onClearHand;
+    [Header("Raise events")]
+    [SerializeField] private CardGameEvent onCardToTable;
+
+    void OnValidate()
+    {
+        if(onAddedCard == null) Debug.LogError($"[Critical] '{name}' needs 'onAddedCard' in order to work.", this);
+        if(onClearHand == null) Debug.LogError($"[Critical] '{name}' needs 'onClearHand' in order to work.", this);
+        if(onCardPlayed == null) Debug.LogError($"[Critical] '{name}' needs 'onCardPlayed' in order to work.", this);
+    }
 
     void OnEnable()
     {
-        onAddedCard.OnRaised += AddDisplayCard;
-        onClearHand.OnRaised += RemoveDisplayedCards;
-        onCardPlayed.OnRaised += HandleonCardPlayed;
+        if(onAddedCard != null) onAddedCard.OnRaised += AddDisplayCard;
+        if(onClearHand != null) onClearHand.OnRaised += RemoveDisplayedCards;
+        if(onCardPlayed != null) onCardPlayed.OnRaised += HandleOnCardPlayed;
     }
 
     void OnDisable()
     {
-        onAddedCard.OnRaised -= AddDisplayCard;
-        onClearHand.OnRaised -= RemoveDisplayedCards;
-        onCardPlayed.OnRaised += HandleonCardPlayed;
+        if(onAddedCard != null) onAddedCard.OnRaised -= AddDisplayCard;
+        if(onClearHand != null) onClearHand.OnRaised -= RemoveDisplayedCards;
+        if(onCardPlayed != null) onCardPlayed.OnRaised -= HandleOnCardPlayed;
+    }
+
+    public CardDisplay ExtractCardDisplay(CardData cardData)
+    {
+        if (cardVisuals.TryGetValue(cardData, out CardDisplay cardVisual))
+        {
+            cardVisuals.Remove(cardData);
+            cardVisual.transform.SetParent(null);
+            return cardVisual;
+        }
+        return null;
     }
 
     private void AddDisplayCard(CardPayload cardPayload)
@@ -34,15 +55,12 @@ public class HandView : MonoBehaviour
         cardVisuals.Add(cardPayload.card, newCardDisplay);
     }
 
-    private void HandleonCardPlayed(CardData cardData)
+    private void HandleOnCardPlayed(CardData cardData)
     {
         if(cardData.owner != playerHand.playerOwner) return;
-        if(cardVisuals.TryGetValue(cardData, out CardDisplay cardDisplay))
-        {
-            Transform cardTranform = cardDisplay.transform;
-            cardVisuals.Remove(cardData);
-        }
+        onCardToTable.Raise(cardData);
     }
+
 
     private void RemoveDisplayedCards(Player owner)
     {

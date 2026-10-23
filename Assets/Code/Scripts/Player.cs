@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
 
     public void UseCardPower(Player trickLoser)
     {
-        playedCard.UseMyPower(trickLoser);
+        //playedCard.UseMyPower(trickLoser);
     }
 
     public void RemoveRandomCard() //For clubs power

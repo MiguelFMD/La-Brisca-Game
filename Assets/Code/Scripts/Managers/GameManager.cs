@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     void OnEnable()
     {
         players = new Player[2] {player, enemy};
-        if(onReturnCard != null) onReturnCard.OnRaised += ReturnCardToPool;
+        //if(onReturnCard != null) onReturnCard.OnRaised += ReturnCardToPool;
         if(onPlayerDeath != null) onPlayerDeath.OnRaised += HandlePlayerDeath;
         if(onTrickEnded != null) onTrickEnded.OnRaised += HandleTrickEnded;
         if(onGameFinished != null) onGameFinished.OnRaised += HandleOnGameFinished;
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     void OnDisable()
     {
-        if(onReturnCard != null) onReturnCard.OnRaised -= ReturnCardToPool;
+        //if(onReturnCard != null) onReturnCard.OnRaised -= ReturnCardToPool;
         if(onPlayerDeath != null) onPlayerDeath.OnRaised -= HandlePlayerDeath;
         if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleTrickEnded;
         if(onGameFinished != null) onGameFinished.OnRaised -= HandleOnGameFinished;

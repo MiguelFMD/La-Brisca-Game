@@ -1,17 +1,11 @@
-using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TrickManager : MonoBehaviour
 {
-    [Header("Card animation")]
-    [SerializeField] private float cardAnimationDuration;
-    [SerializeField] private AnimationCurve easingCurve;
     [Header("Table references")]
     [SerializeField] private Image triumphCardDisplay;
     [SerializeField] private CardData[] triumphCards;
-    [SerializeField] private RectTransform centerTableTransform; //A basic rect transform in the main canvas indicating the center of the table
     [Header("Listeners Events")]
     [SerializeField] private GameEvent onGameLoaded;
     [SerializeField] private CardGameEvent onCardSelected;
@@ -28,8 +22,8 @@ public class TrickManager : MonoBehaviour
     private CardData.Suit trickSuit;
     private int currentPlayer;
     private bool isNewTrickPlay = true;
-    private bool isAnimationPlaying = false;
     private bool isGameEnded = false;
+    private bool isAnimationPlaying = false;
 
     //-----CORE FUNCTIONS------
     void OnValidate()
@@ -38,7 +32,7 @@ public class TrickManager : MonoBehaviour
         if(onCardSelected == null) Debug.LogError($"[Critical] '{name}' needs 'onCardSelected' in order to work.", this);
         if(onCardsDealt == null) Debug.LogError($"[Critical] '{name}' needs 'onCardsDealt' in order to work.", this);
         if(onGameOver == null) Debug.LogError($"[Critical] '{name}' needs 'onGameOver' in order to work.", this);
-         
+        if(onCardAnimationEnded == null) Debug.LogError ($"[Critical] '{name}' needs 'onCardAnimationEnded' in order to work.", this);
     }
     void OnEnable()
     {
@@ -46,19 +40,20 @@ public class TrickManager : MonoBehaviour
         if(onCardSelected != null) onCardSelected.OnRaised += CardSelected;
         if(onCardsDealt != null) onCardsDealt.OnRaised += HandleCardsDealt;
         if(onGameOver != null) onGameOver.OnRaised += HandleGameOver;
+        if(onCardAnimationEnded != null) onCardAnimationEnded.OnRaised += HandleAnimationEnded;
     }
     void OnDisable()
     {
         if(onGameLoaded != null) onGameLoaded.OnRaised -= ResetTrick;
         if(onCardSelected != null) onCardSelected.OnRaised -= CardSelected;
         if(onCardsDealt != null) onCardsDealt.OnRaised -= HandleCardsDealt;
+        if(onCardAnimationEnded != null) onCardAnimationEnded.OnRaised -= HandleAnimationEnded;
     }
 
     private void ResetTrick()
     {
         currentPlayer = Random.Range(0, players.Length);
         isNewTrickPlay = true;
-        ClearTableVisuals();
         DiscoverTriumphSuit();
         isGameEnded = false;
     }
@@ -71,6 +66,7 @@ public class TrickManager : MonoBehaviour
         {
             //CardToCenter(cardDisplay); //Put the card played on the center of the table
             cardData.owner.PlayCard(cardData);
+            isAnimationPlaying = true;
             if(isNewTrickPlay)
             {
                 //In new tricks we set the new trick suit with the first played card
@@ -91,7 +87,6 @@ public class TrickManager : MonoBehaviour
         playersPrepared = 0;
     }
 
-    
     private void HandleCardsDealt(Player player)
     {
         playersPrepared++;
@@ -173,14 +168,6 @@ public class TrickManager : MonoBehaviour
         return true;
     }
 
-    public void ClearTableVisuals()
-    {
-        CardDisplay[] cardsOnTable = centerTableTransform.GetComponentsInChildren<CardDisplay>();
-        foreach(CardDisplay card in cardsOnTable)
-        {
-            card.ReturnToPool();
-        }
-    }
 
     //-----PRIVATE FUNCTIONS------
     private void AddScoredCards(Player trickWinner, Player[] players)
@@ -211,13 +198,6 @@ public class TrickManager : MonoBehaviour
         print("Next player is: " + players[currentPlayer]);
     }
 
-    private void CardToCenter(CardDisplay cardDisplay)
-    {
-        RectTransform cardRect = cardDisplay.GetComponent<RectTransform>();
-        cardRect.SetParent(cardRect.parent.parent);
-        StartCoroutine(AnimateCard(cardRect));
-    }
-
     private bool CheckAllPlayersHavePlayed()
     {
         foreach(Player player in players)
@@ -229,35 +209,11 @@ public class TrickManager : MonoBehaviour
         return true;
     }
 
-    private IEnumerator AnimateCard(RectTransform selectedCard)
-    {
-        //print("animo");
-        isAnimationPlaying = true;
-        Vector2 targetPosition = centerTableTransform.anchoredPosition;
-        //print(targetPosition);
-        Vector2 startPosition = selectedCard.anchoredPosition;
-        float timeElapsed = 0f;
-
-        while (timeElapsed < cardAnimationDuration)
-        {
-            timeElapsed += Time.deltaTime;
-            float percentage = timeElapsed / cardAnimationDuration;
-            
-            // Evaluate the animation curve for smooth acceleration/deceleration
-            float curveValue = easingCurve.Evaluate(percentage);
-            
-            selectedCard.anchoredPosition = Vector2.Lerp(startPosition, targetPosition, curveValue);
-            yield return null; // Wait for the next frame
-        }
-        isAnimationPlaying = false;
-        selectedCard.SetParent(centerTableTransform, true); // Snap to new parent
-        HandleAnimationEnded();
-    }
-
     private void HandleAnimationEnded()
     {
         print("Animation ended");
         SelectNextPlayer();  
+        isAnimationPlaying = false;
         if(CheckAllPlayersHavePlayed())
         {
             //Player winner = CalculateTrickWinner();
@@ -280,7 +236,6 @@ public class TrickManager : MonoBehaviour
             {
                 print("Draw");
             }
-            ClearTableVisuals();
             isNewTrickPlay = true;
             onTrickEnded.Raise();
             print("Trick ended");

@@ -4,14 +4,14 @@ using UnityEngine;
 public class Deck : MonoBehaviour
 {
     [SerializeField] private DeckType deckType;
-    private Queue<Card> deckCards;
+    private Queue<CardData> deckCards;
 
     public void AssignDeck(DeckType newDeck)
     {
         deckType = newDeck;
     }
     
-    public Card RemoveCard()
+    public CardData RemoveCard()
     {
         if(!IsDeckEmpty())
         {
@@ -36,7 +36,7 @@ public class Deck : MonoBehaviour
     public void CreateDeck()
     {
         //print("Creating deck...");
-        deckCards = new Queue<Card>();
+        deckCards = new Queue<CardData>();
         InitialShuffle();
     }
     private void InitialShuffle()
@@ -44,12 +44,12 @@ public class Deck : MonoBehaviour
         deckCards.Clear();
         if (deckType == null || deckType.cards == null || deckType.cards.Length == 0)
             return;
-        Card[] cards = (Card[])deckType.cards.Clone();
+        CardData[] cards = (CardData[])deckType.cards.Clone();
 
         for (int i = cards.Length - 1; i > 0; i--)
         {
             int randomIndex = Random.Range(0, i + 1);
-            Card temp = cards[i];
+            CardData temp = cards[i];
             cards[i] = cards[randomIndex];
             cards[randomIndex] = temp;
         }

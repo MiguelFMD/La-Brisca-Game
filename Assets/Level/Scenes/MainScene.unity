@@ -1306,47 +1306,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914cb098a9598dc449c90f8a50bda72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrickManager
-  cardAnimationDuration: 1.5
-  easingCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.6990567
-      value: 0.9930445
-      inSlope: 0.42082033
-      outSlope: 0.42082033
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.21100968
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: -0.0875303
-      outSlope: -0.0875303
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.14547086
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   triumphCardDisplay: {fileID: 1095751301}
   triumphCards:
   - {fileID: 11400000, guid: 00cf534084a9abb46862027e16e1f50a, type: 2}
   - {fileID: 11400000, guid: 977254c12cba3bc4fb1b1a55856a51d7, type: 2}
   - {fileID: 11400000, guid: 816b407558af6b9429c46ec92bc2ea0b, type: 2}
   - {fileID: 11400000, guid: 3f810b962badc4d4596cd5e7639a8138, type: 2}
-  centerTableTransform: {fileID: 844133884}
   onGameLoaded: {fileID: 11400000, guid: 0312c12ce24835647a9c03d9a68c0892, type: 2}
   onCardSelected: {fileID: 11400000, guid: a1124c7d7132a6e4c9639ff404417ae8, type: 2}
   onCardsDealt: {fileID: 11400000, guid: 8e139a933b2c99044927473b383794c1, type: 2}
@@ -1736,7 +1701,7 @@ GameObject:
   - component: {fileID: 844133884}
   - component: {fileID: 844133885}
   m_Layer: 5
-  m_Name: CenterTable (1)
+  m_Name: CenterTable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3111,6 +3076,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1293663844}
   m_CullTransparentMesh: 1
+--- !u!1 &1339134954
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1339134956}
+  - component: {fileID: 1339134955}
+  m_Layer: 0
+  m_Name: BoardVisualManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1339134955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339134954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0fc5674f13611d41996420d745aad3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoardVisualManager
+  cardAnimationDuration: 1
+  easingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  tableRectTransform: {fileID: 844133884}
+  playerHandView: {fileID: 2041251665}
+  enemyHandView: {fileID: 1451562375}
+  onCardAnimationEnded: {fileID: 11400000, guid: db4d9f803dbdbf943857232228f13f83, type: 2}
+  onTrickEnded: {fileID: 11400000, guid: d7c5d43b462a17d499b0f9e5fb156d0a, type: 2}
+  onCardToTable: {fileID: 11400000, guid: 37e0bbbd77d673e4585807bacc05d512, type: 2}
+--- !u!4 &1339134956
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339134954}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1356256226
 GameObject:
   m_ObjectHideFlags: 0
@@ -3324,7 +3364,7 @@ GameObject:
   - component: {fileID: 1451562376}
   - component: {fileID: 1451562375}
   m_Layer: 5
-  m_Name: EnemyHand (1)
+  m_Name: EnemyHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3362,6 +3402,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandView
   playerHand: {fileID: 995535605711435899}
+  onAddedCard: {fileID: 11400000, guid: cd0a2d8b99f38dd4abea0fee41873742, type: 2}
+  onCardPlayed: {fileID: 11400000, guid: b218f919976a1ce408888f83dbad32c7, type: 2}
+  onClearHand: {fileID: 11400000, guid: fff8e42c26a8f014eab8e886c4dd1d29, type: 2}
+  onCardToTable: {fileID: 11400000, guid: 37e0bbbd77d673e4585807bacc05d512, type: 2}
 --- !u!114 &1451562376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3935,11 +3979,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2015207088 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1033508514613382387, guid: 9b294cb40197b5c4e98d01ff5e5aef77, type: 3}
-  m_PrefabInstance: {fileID: 2049079737}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2041251663
 GameObject:
   m_ObjectHideFlags: 0
@@ -3952,7 +3991,7 @@ GameObject:
   - component: {fileID: 2041251666}
   - component: {fileID: 2041251665}
   m_Layer: 5
-  m_Name: PlayerHand (1)
+  m_Name: PlayerHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3990,6 +4029,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandView
   playerHand: {fileID: 4226369508331607538}
+  onAddedCard: {fileID: 11400000, guid: cd0a2d8b99f38dd4abea0fee41873742, type: 2}
+  onCardPlayed: {fileID: 11400000, guid: b218f919976a1ce408888f83dbad32c7, type: 2}
+  onClearHand: {fileID: 11400000, guid: fff8e42c26a8f014eab8e886c4dd1d29, type: 2}
+  onCardToTable: {fileID: 11400000, guid: 37e0bbbd77d673e4585807bacc05d512, type: 2}
 --- !u!114 &2041251666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4123,55 +4166,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1033508514613382387, guid: 9b294cb40197b5c4e98d01ff5e5aef77, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2049079742}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b294cb40197b5c4e98d01ff5e5aef77, type: 3}
 --- !u!224 &2049079738 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3701652316600659318, guid: 9b294cb40197b5c4e98d01ff5e5aef77, type: 3}
   m_PrefabInstance: {fileID: 2049079737}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2049079739 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5100356618147146071, guid: 9b294cb40197b5c4e98d01ff5e5aef77, type: 3}
-  m_PrefabInstance: {fileID: 2049079737}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2015207088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b07d76267fb5a304c853ab0caa7b0654, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HealthBar
---- !u!114 &2049079742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2015207088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9dc4af8b4544aa498dd71d2bd06919d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerGameEventListener
-  gameEvent: {fileID: 11400000, guid: e4c1fea3429533b47be9d9cd6e2fd007, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2049079739}
-        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
-        m_MethodName: HandlePlayerHealthChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &2059676852
 GameObject:
   m_ObjectHideFlags: 0
@@ -4408,6 +4409,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: fff8e42c26a8f014eab8e886c4dd1d29, type: 2}
     - target: {fileID: 6621825684179871824, guid: 45e92edeef72da3469c55085ebe45c57, type: 3}
+      propertyPath: onCardPlayed
+      value: 
+      objectReference: {fileID: 11400000, guid: b218f919976a1ce408888f83dbad32c7, type: 2}
+    - target: {fileID: 6621825684179871824, guid: 45e92edeef72da3469c55085ebe45c57, type: 3}
       propertyPath: displayedCards
       value: 
       objectReference: {fileID: 0}
@@ -4572,6 +4577,10 @@ PrefabInstance:
       propertyPath: onClearHand
       value: 
       objectReference: {fileID: 11400000, guid: fff8e42c26a8f014eab8e886c4dd1d29, type: 2}
+    - target: {fileID: 7366165989002325751, guid: 5be7c74ea3ed91341913874fc4e3571e, type: 3}
+      propertyPath: onCardPlayed
+      value: 
+      objectReference: {fileID: 11400000, guid: b218f919976a1ce408888f83dbad32c7, type: 2}
     - target: {fileID: 7366165989002325751, guid: 5be7c74ea3ed91341913874fc4e3571e, type: 3}
       propertyPath: displayedCards
       value: 
@@ -4740,6 +4749,7 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 253698023}
   - {fileID: 1713885326}
+  - {fileID: 1339134956}
   - {fileID: 7276992402571100110}
   - {fileID: 913136363}
   - {fileID: 960970157}

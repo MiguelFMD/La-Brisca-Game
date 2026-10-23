@@ -3,6 +3,6 @@ using UnityEngine;
 
 public class TableView : MonoBehaviour
 {
-    private Dictionary<CardData, CardDisplay> cardVisuals = new Dictionary<CardData, CardDisplay>();
+    [SerializeField] private CardGameEvent onCardPlayed;
     
 }
