@@ -16,7 +16,8 @@ public class BoardVisualManager : MonoBehaviour
     [Header("Listener Events")]
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private CardGameEvent onCardToTable;
-
+    [SerializeField] private GameEvent onGameRestarded;
+    [Header("Card pool")]
     [SerializeField] private CardPoolSO cardPoolSO;
 
     private List<CardDisplay> tableCards;
@@ -25,18 +26,21 @@ public class BoardVisualManager : MonoBehaviour
     {
         if(onCardToTable == null) Debug.LogError($"[Critical] '{name}' needs 'onCardToTable' in order to work.", this);
         if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
+        if(onGameRestarded == null) Debug.LogError($"[Critical] '{name}' needs 'onGameRestarded' in order to work.", this);
     }
 
     void OnEnable()
     {
         if(onCardToTable != null) onCardToTable.OnRaised += HandleOnCardToTable;
         if(onTrickEnded != null) onTrickEnded.OnRaised += HandleOnTrickEnded;
+        if(onGameRestarded != null) onGameRestarded.OnRaised += ClearTableVisuals;
     }
 
     void OnDisable()
     {
         if(onCardToTable != null) onCardToTable.OnRaised -= HandleOnCardToTable;
         if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleOnTrickEnded;
+        if(onGameRestarded != null) onGameRestarded.OnRaised -= ClearTableVisuals;
     }
 
     void Awake()
@@ -70,7 +74,7 @@ public class BoardVisualManager : MonoBehaviour
     private void CardToCenter(CardDisplay cardDisplay)
     {
         RectTransform cardRect = cardDisplay.GetComponent<RectTransform>();
-        cardRect.SetParent(tableRectTransform);
+        //cardRect.SetParent(tableRectTransform);
         StartCoroutine(AnimateCard(cardRect));
     }
 
@@ -90,7 +94,7 @@ public class BoardVisualManager : MonoBehaviour
             selectedCard.anchoredPosition = Vector2.Lerp(startPosition, targetPosition, curveValue);
             yield return null; // Wait for the next frame
         }
-        selectedCard.SetParent(tableRectTransform, true); // Snap to new parent
+        selectedCard.SetParent(tableRectTransform); // Snap to new parent
         onCardAnimationEnded.Raise();
     }
 

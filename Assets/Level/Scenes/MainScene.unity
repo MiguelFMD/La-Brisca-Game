@@ -3152,7 +3152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0fc5674f13611d41996420d745aad3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoardVisualManager
-  cardAnimationDuration: 1
+  cardAnimationDuration: 2
   easingCurve:
     serializedVersion: 2
     m_Curve:
@@ -3168,8 +3168,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -3183,6 +3183,7 @@ MonoBehaviour:
   onCardAnimationEnded: {fileID: 11400000, guid: db4d9f803dbdbf943857232228f13f83, type: 2}
   onTrickEnded: {fileID: 11400000, guid: d7c5d43b462a17d499b0f9e5fb156d0a, type: 2}
   onCardToTable: {fileID: 11400000, guid: 37e0bbbd77d673e4585807bacc05d512, type: 2}
+  onGameRestarded: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
   cardPoolSO: {fileID: 11400000, guid: d1e3f124a74090b4caa3d394c476376d, type: 2}
 --- !u!4 &1339134956
 Transform:
