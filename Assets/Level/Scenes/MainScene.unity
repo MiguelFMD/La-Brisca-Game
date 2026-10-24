@@ -151,7 +151,6 @@ MonoBehaviour:
   cardDisplayPrefab: {fileID: 2723487353075509727, guid: 5768f1398e181e04cbb1939d3ba93779, type: 3}
   cardPoolTransform: {fileID: 1125206107}
   cardPoolService: {fileID: 11400000, guid: d1e3f124a74090b4caa3d394c476376d, type: 2}
-  onReturnCard: {fileID: 11400000, guid: a1ed30aadb2df7a48b94ad59687fb7c9, type: 2}
 --- !u!4 &18210778
 Transform:
   m_ObjectHideFlags: 0
@@ -3184,6 +3183,7 @@ MonoBehaviour:
   onCardAnimationEnded: {fileID: 11400000, guid: db4d9f803dbdbf943857232228f13f83, type: 2}
   onTrickEnded: {fileID: 11400000, guid: d7c5d43b462a17d499b0f9e5fb156d0a, type: 2}
   onCardToTable: {fileID: 11400000, guid: 37e0bbbd77d673e4585807bacc05d512, type: 2}
+  cardPoolSO: {fileID: 11400000, guid: d1e3f124a74090b4caa3d394c476376d, type: 2}
 --- !u!4 &1339134956
 Transform:
   m_ObjectHideFlags: 0

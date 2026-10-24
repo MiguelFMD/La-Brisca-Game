@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
     public void PlayCard(CardData newPlayedCard)
     {
         playedCard = newPlayedCard;
-        print("Card played is: " + playedCard);
+        //print("Card played is: " + playedCard);
         hand.PlayCard(playedCard);
         
     }
@@ -98,17 +98,16 @@ public class Player : MonoBehaviour
     public void PlayRandomCard()
     {
         int randomC = UnityEngine.Random.Range(0, hand.cards.Count);
-        print("Play random card");
+        //print("Play random card");
         PlayCard(hand.cards[randomC]);
-        //return hand.cards[randomC];
     }
 
     public void DrawOneCard()
     {
         CardData newCard = deck.RemoveCard();
+        if(newCard == null) return;
         newCard.owner = this;
-        if(newCard != null)
-            hand.DrawCard(newCard);
+        hand.DrawCard(newCard);
     }
 
     public int CalculateScore()

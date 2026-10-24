@@ -69,7 +69,7 @@ public class HandView : MonoBehaviour
         if(playerHand.playerOwner != owner) return;
         foreach(var card in cardVisuals)
         {
-            card.Value.ReturnToPool();
+            cardPoolSO.ReturnCard(card.Value);
         }
         cardVisuals.Clear();
     }

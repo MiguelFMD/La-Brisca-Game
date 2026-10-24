@@ -7,21 +7,12 @@ public class CardPoolManager : MonoBehaviour
     [SerializeField] private GameObject cardDisplayPrefab;
     [SerializeField] private RectTransform cardPoolTransform;
     [SerializeField] private CardPoolSO cardPoolService;
-    [Header("Events")]
-    [SerializeField] private CardGameEvent onReturnCard;
-
     private Queue<CardDisplay> cardPool = new Queue<CardDisplay>();
-    private Dictionary<CardData, CardDisplay> cardDisplays = new Dictionary<CardData,CardDisplay>();
 
     void OnEnable()
     {
-        if(onReturnCard != null) onReturnCard.OnRaised += ReturnCardToPool;
         cardPoolService.RequestCard = ProvideCard;
-    }
-
-    void OnDisable()
-    {
-        if(onReturnCard != null) onReturnCard.OnRaised -= ReturnCardToPool;
+        cardPoolService.ReturnCard = ReturnCardToPool;
     }
 
     private CardDisplay ProvideCard()
@@ -30,7 +21,6 @@ public class CardPoolManager : MonoBehaviour
         {
             CardDisplay pooledCard = cardPool.Dequeue();
             pooledCard.gameObject.SetActive(true);
-            cardDisplays.Remove(pooledCard.GetCardData());
             return pooledCard;
         }
         else
@@ -41,14 +31,11 @@ public class CardPoolManager : MonoBehaviour
         }
     }
 
-    private void ReturnCardToPool(CardData cardToReturn)
+    private void ReturnCardToPool(CardDisplay cardToReturn)
     {
-        if (cardDisplays.TryGetValue(cardToReturn, out CardDisplay cardDisplay))
-        {
-            cardDisplay.gameObject.SetActive(false); // Hide the card
-            cardPool.Enqueue(cardDisplay); // Save it for future
-            cardDisplays.Add(cardDisplay.GetCardData(), cardDisplay);
-            cardDisplay.transform.SetParent(cardPoolTransform);
-        }
+        print(cardToReturn);
+        cardToReturn.gameObject.SetActive(false); // Hide the card
+        cardPool.Enqueue(cardToReturn); // Save it for future
+        cardToReturn.transform.SetParent(cardPoolTransform);
     }
 }

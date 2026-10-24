@@ -25,7 +25,6 @@ public class Hand : MonoBehaviour
         //print("Played card is: " + selectedCard.GetCardRank() + " of " + selectedCard.GetCardSuit());
         if(RemoveCard(playedCard))
         {
-            print(playedCard);
             onCardPlayed.Raise(playedCard);
             return playedCard;
         }
@@ -43,7 +42,6 @@ public class Hand : MonoBehaviour
     {
         cards.Clear();
         onClearHand.Raise(playerOwner);
-        //RemoveDisplayedCards();
     }
 
     ///--------------------Adding cards--------------------

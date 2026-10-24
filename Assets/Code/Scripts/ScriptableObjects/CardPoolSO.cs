@@ -4,6 +4,7 @@ using UnityEngine;
 public class CardPoolSO : ScriptableObject
 {
     public System.Func<CardDisplay> RequestCard;
+    public System.Action<CardDisplay> ReturnCard;
 
     public CardDisplay Get()
     {

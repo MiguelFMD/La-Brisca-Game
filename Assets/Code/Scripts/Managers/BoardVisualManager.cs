@@ -17,6 +17,8 @@ public class BoardVisualManager : MonoBehaviour
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private CardGameEvent onCardToTable;
 
+    [SerializeField] private CardPoolSO cardPoolSO;
+
     private List<CardDisplay> tableCards;
 
     void OnValidate()
@@ -44,8 +46,8 @@ public class BoardVisualManager : MonoBehaviour
 
     private void HandleOnCardToTable(CardData cardData)
     {
+        //print(cardData);
         CardDisplay cardDisplay;
-        print(cardData.owner);
         if(cardData.owner == playerHandView.playerHand.playerOwner)
             cardDisplay = playerHandView.ExtractCardDisplay(cardData);
         else if(cardData.owner == enemyHandView.playerHand.playerOwner)
@@ -55,6 +57,7 @@ public class BoardVisualManager : MonoBehaviour
             Debug.LogError("No owner");
             return;
         }
+        //print(cardDisplay);
         tableCards.Add(cardDisplay);
         CardToCenter(cardDisplay);
     }
@@ -95,7 +98,7 @@ public class BoardVisualManager : MonoBehaviour
     {
         foreach(CardDisplay card in tableCards)
         {
-            card.ReturnToPool();
+            cardPoolSO.ReturnCard(card);
         }
         tableCards.Clear();
     }
