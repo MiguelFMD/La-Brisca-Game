@@ -16,7 +16,7 @@ public class BoardVisualManager : MonoBehaviour
     [Header("Listener Events")]
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private CardGameEvent onCardToTable;
-    [SerializeField] private GameEvent onGameRestarded;
+    [SerializeField] private GameEvent onGameLoaded;
     [Header("Card pool")]
     [SerializeField] private CardPoolSO cardPoolSO;
 
@@ -26,21 +26,21 @@ public class BoardVisualManager : MonoBehaviour
     {
         if(onCardToTable == null) Debug.LogError($"[Critical] '{name}' needs 'onCardToTable' in order to work.", this);
         if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
-        if(onGameRestarded == null) Debug.LogError($"[Critical] '{name}' needs 'onGameRestarded' in order to work.", this);
+        if(onGameLoaded == null) Debug.LogError($"[Critical] '{name}' needs 'onGameLoaded' in order to work.", this);
     }
 
     void OnEnable()
     {
         if(onCardToTable != null) onCardToTable.OnRaised += HandleOnCardToTable;
         if(onTrickEnded != null) onTrickEnded.OnRaised += HandleOnTrickEnded;
-        if(onGameRestarded != null) onGameRestarded.OnRaised += ClearTableVisuals;
+        if(onGameLoaded != null) onGameLoaded.OnRaised += ClearTableVisuals;
     }
 
     void OnDisable()
     {
         if(onCardToTable != null) onCardToTable.OnRaised -= HandleOnCardToTable;
         if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleOnTrickEnded;
-        if(onGameRestarded != null) onGameRestarded.OnRaised -= ClearTableVisuals;
+        if(onGameLoaded != null) onGameLoaded.OnRaised -= ClearTableVisuals;
     }
 
     void Awake()
@@ -50,7 +50,6 @@ public class BoardVisualManager : MonoBehaviour
 
     private void HandleOnCardToTable(CardData cardData)
     {
-        //print(cardData);
         CardDisplay cardDisplay;
         if(cardData.owner == playerHandView.playerHand.playerOwner)
             cardDisplay = playerHandView.ExtractCardDisplay(cardData);
@@ -61,8 +60,9 @@ public class BoardVisualManager : MonoBehaviour
             Debug.LogError("No owner");
             return;
         }
-        //print(cardDisplay);
         tableCards.Add(cardDisplay);
+        print("activada?");
+        print(cardDisplay.isActiveAndEnabled);
         CardToCenter(cardDisplay);
     }
 
@@ -73,15 +73,18 @@ public class BoardVisualManager : MonoBehaviour
 
     private void CardToCenter(CardDisplay cardDisplay)
     {
+        print(cardDisplay);
         RectTransform cardRect = cardDisplay.GetComponent<RectTransform>();
-        //cardRect.SetParent(tableRectTransform);
+        cardRect.SetParent(tableRectTransform, true);
         StartCoroutine(AnimateCard(cardRect));
     }
 
     private IEnumerator AnimateCard(RectTransform selectedCard)
     {
-        Vector2 targetPosition = tableRectTransform.anchoredPosition;
-        Vector2 startPosition = selectedCard.anchoredPosition;
+        Vector2 targetPosition = tableRectTransform.position;
+        Vector2 startPosition = selectedCard.position;
+        print(targetPosition);
+        print(startPosition);
         float timeElapsed = 0f;
         while (timeElapsed < cardAnimationDuration)
         {
@@ -91,10 +94,11 @@ public class BoardVisualManager : MonoBehaviour
             // Evaluate the animation curve for smooth acceleration/deceleration
             float curveValue = easingCurve.Evaluate(percentage);
             
-            selectedCard.anchoredPosition = Vector2.Lerp(startPosition, targetPosition, curveValue);
+            selectedCard.position = Vector2.Lerp(startPosition, targetPosition, curveValue);
             yield return null; // Wait for the next frame
         }
-        selectedCard.SetParent(tableRectTransform); // Snap to new parent
+        selectedCard.SetParent(tableRectTransform, false); // Snap to new parent
+        selectedCard.anchoredPosition = Vector2.zero;
         onCardAnimationEnded.Raise();
     }
 

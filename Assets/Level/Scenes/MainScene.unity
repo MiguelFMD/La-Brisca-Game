@@ -119,53 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &18210776
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 18210778}
-  - component: {fileID: 18210777}
-  m_Layer: 0
-  m_Name: CardPoolManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &18210777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 18210776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06bc6007f9a77da4f8f6c447c150ba7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CardPoolManager
-  cardDisplayPrefab: {fileID: 2723487353075509727, guid: 5768f1398e181e04cbb1939d3ba93779, type: 3}
-  cardPoolTransform: {fileID: 1125206107}
-  cardPoolService: {fileID: 11400000, guid: d1e3f124a74090b4caa3d394c476376d, type: 2}
---- !u!4 &18210778
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 18210776}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &117745406
 GameObject:
   m_ObjectHideFlags: 0
@@ -2735,41 +2688,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1125206106
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1125206107}
-  m_Layer: 5
-  m_Name: CardPool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1125206107
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125206106}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1746887667}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1127130573
 GameObject:
   m_ObjectHideFlags: 0
@@ -3183,7 +3101,7 @@ MonoBehaviour:
   onCardAnimationEnded: {fileID: 11400000, guid: db4d9f803dbdbf943857232228f13f83, type: 2}
   onTrickEnded: {fileID: 11400000, guid: d7c5d43b462a17d499b0f9e5fb156d0a, type: 2}
   onCardToTable: {fileID: 11400000, guid: 37e0bbbd77d673e4585807bacc05d512, type: 2}
-  onGameRestarded: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
+  onGameLoaded: {fileID: 11400000, guid: 0312c12ce24835647a9c03d9a68c0892, type: 2}
   cardPoolSO: {fileID: 11400000, guid: d1e3f124a74090b4caa3d394c476376d, type: 2}
 --- !u!4 &1339134956
 Transform:
@@ -3949,7 +3867,7 @@ RectTransform:
   - {fileID: 1293663845}
   - {fileID: 1095751300}
   - {fileID: 783174607}
-  - {fileID: 1125206107}
+  - {fileID: 1983238786}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4029,6 +3947,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1983238785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1983238786}
+  - component: {fileID: 1983238787}
+  m_Layer: 5
+  m_Name: CardPoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1983238786
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983238785}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1746887667}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1983238787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983238785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06bc6007f9a77da4f8f6c447c150ba7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardPoolManager
+  cardDisplayPrefab: {fileID: 2723487353075509727, guid: 5768f1398e181e04cbb1939d3ba93779, type: 3}
+  cardPoolService: {fileID: 11400000, guid: d1e3f124a74090b4caa3d394c476376d, type: 2}
 --- !u!1 &2041251663
 GameObject:
   m_ObjectHideFlags: 0
@@ -4767,7 +4735,7 @@ PrefabInstance:
     - target: {fileID: 4546528772710704552, guid: ab0e20781611b364999b6b9ae06ff973, type: 3}
       propertyPath: cardPoolTransform
       value: 
-      objectReference: {fileID: 1125206107}
+      objectReference: {fileID: 0}
     - target: {fileID: 4546528772710704552, guid: ab0e20781611b364999b6b9ae06ff973, type: 3}
       propertyPath: initialCardsAmount
       value: 3
@@ -4801,7 +4769,6 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 253698023}
   - {fileID: 1713885326}
-  - {fileID: 18210778}
   - {fileID: 1339134956}
   - {fileID: 7276992402571100110}
   - {fileID: 913136363}

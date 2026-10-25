@@ -52,7 +52,7 @@ public class TrickManager : MonoBehaviour
 
     private void ResetTrick()
     {
-        currentPlayer = Random.Range(0, players.Length);
+        currentPlayer = 1;// Random.Range(0, players.Length);
         isNewTrickPlay = true;
         DiscoverTriumphSuit();
         isGameEnded = false;

@@ -60,6 +60,7 @@ public class HandView : MonoBehaviour
     private void HandleOnCardPlayed(CardData cardData)
     {
         if(cardData.owner != playerHand.playerOwner) return;
+        print("carta a la mesa");
         onCardToTable.Raise(cardData);
     }
 
@@ -67,6 +68,7 @@ public class HandView : MonoBehaviour
     private void RemoveDisplayedCards(Player owner)
     {
         if(playerHand.playerOwner != owner) return;
+        
         foreach(var card in cardVisuals)
         {
             cardPoolSO.ReturnCard(card.Value);

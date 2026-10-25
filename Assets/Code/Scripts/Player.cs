@@ -90,15 +90,12 @@ public class Player : MonoBehaviour
     public void PlayCard(CardData newPlayedCard)
     {
         playedCard = newPlayedCard;
-        //print("Card played is: " + playedCard);
         hand.PlayCard(playedCard);
-        
     }
 
     public void PlayRandomCard()
     {
         int randomC = UnityEngine.Random.Range(0, hand.cards.Count);
-        //print("Play random card");
         PlayCard(hand.cards[randomC]);
     }
 

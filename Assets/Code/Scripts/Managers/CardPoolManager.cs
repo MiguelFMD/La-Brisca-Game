@@ -5,9 +5,14 @@ public class CardPoolManager : MonoBehaviour
 {
     [Header("Pool references")]
     [SerializeField] private GameObject cardDisplayPrefab;
-    [SerializeField] private RectTransform cardPoolTransform;
     [SerializeField] private CardPoolSO cardPoolService;
     private Queue<CardDisplay> cardPool = new Queue<CardDisplay>();
+    private RectTransform cardPoolTransform;
+
+    void Awake()
+    {
+        cardPoolTransform = GetComponent<RectTransform>();
+    }
 
     void OnEnable()
     {
@@ -33,7 +38,7 @@ public class CardPoolManager : MonoBehaviour
 
     private void ReturnCardToPool(CardDisplay cardToReturn)
     {
-        print(cardToReturn);
+        Debug.LogWarning("Return card to pool");
         cardToReturn.gameObject.SetActive(false); // Hide the card
         cardPool.Enqueue(cardToReturn); // Save it for future
         cardToReturn.transform.SetParent(cardPoolTransform);

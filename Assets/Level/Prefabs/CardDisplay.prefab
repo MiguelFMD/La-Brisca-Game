@@ -37,9 +37,9 @@ RectTransform:
   - {fileID: 3320706531838993789}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 65}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1042792867862897452
@@ -137,7 +137,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardDisplay
   onCardSelected: {fileID: 11400000, guid: a1124c7d7132a6e4c9639ff404417ae8, type: 2}
-  onReturnCard: {fileID: 11400000, guid: a1ed30aadb2df7a48b94ad59687fb7c9, type: 2}
   image: {fileID: 3199916072864984371}
 --- !u!114 &6409914769226477461
 MonoBehaviour:
