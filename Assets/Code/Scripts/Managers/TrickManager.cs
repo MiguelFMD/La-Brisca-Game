@@ -124,10 +124,8 @@ public class TrickManager : MonoBehaviour
     public void HandleAnimationEnded()
     {
         currentState?.AnimationEnded();
-        /*print("Animation ended");
-        SelectNextPlayer();  
-        isAnimationPlaying = false;
-        if(CheckAllPlayersHavePlayed())
+        
+        /*if(CheckAllPlayersHavePlayed())
         {
             TrickResult newTrickResult = BriscaRules.CalculateTrickWinner(triumphSuit, firstPlayer, secondPlayer);
             if(newTrickResult != null)
@@ -151,7 +149,6 @@ public class TrickManager : MonoBehaviour
             {
                 print("Draw");
             }
-            isNewTrickPlay = true;
             onTrickEnded.Raise();
             print("Trick ended");
         }

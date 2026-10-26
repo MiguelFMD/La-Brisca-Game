@@ -11,14 +11,11 @@ public class WaitingTurnState : TrickState
             _trickManager.Players[_trickManager.currentPlayer].PlayRandomCard();
             if(_trickManager.firstPlayer == null) _trickManager.firstPlayer = _trickManager.Players[_trickManager.currentPlayer];
             else _trickManager.secondPlayer = _trickManager.Players[_trickManager.currentPlayer];
-            //_trickManager.ChangeState(new CardResolutionState(_trickManager));
+            _trickManager.ChangeState(new CardResolutionState(_trickManager));
         }
     }
 
-    public override void Exit()
-    {
-        
-    }
+    public override void Exit(){}
 
     public override void CardSelected(CardData cardData)
     {
