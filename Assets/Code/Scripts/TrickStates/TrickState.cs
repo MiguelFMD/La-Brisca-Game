@@ -10,7 +10,5 @@ public abstract class TrickState
 
     public virtual void CardSelected(CardData cardData){}
 
-    public virtual void CardsDealt(Player player){}
-
     public virtual void AnimationEnded(){}
 }

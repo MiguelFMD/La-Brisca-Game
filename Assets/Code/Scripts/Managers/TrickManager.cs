@@ -9,11 +9,11 @@ public class TrickManager : MonoBehaviour
     [Header("Listeners Events")]
     [SerializeField] private GameEvent onGameLoaded;
     [SerializeField] private CardGameEvent onCardSelected;
-    [SerializeField] private PlayerGameEvent onCardsDealt;
-    [SerializeField] private GameEvent onGameOver;
+    //[SerializeField] private PlayerGameEvent onCardsDealt;
     [Header("Raise Events")]
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private GameEvent onCardAnimationEnded;
+    [SerializeField] private GameEvent onGameOver;
 
     private TrickState currentState;
     [SerializeField] private Player[] players = new Player[2];
@@ -28,7 +28,7 @@ public class TrickManager : MonoBehaviour
     {
         if(onGameLoaded == null) Debug.LogError($"[Critical] '{name}' needs 'onGameLoaded' in order to work.", this);
         if(onCardSelected == null) Debug.LogError($"[Critical] '{name}' needs 'onCardSelected' in order to work.", this);
-        if(onCardsDealt == null) Debug.LogError($"[Critical] '{name}' needs 'onCardsDealt' in order to work.", this);
+        //if(onCardsDealt == null) Debug.LogError($"[Critical] '{name}' needs 'onCardsDealt' in order to work.", this);
         if(onGameOver == null) Debug.LogError($"[Critical] '{name}' needs 'onGameOver' in order to work.", this);
         if(onCardAnimationEnded == null) Debug.LogError ($"[Critical] '{name}' needs 'onCardAnimationEnded' in order to work.", this);
     }
@@ -36,22 +36,25 @@ public class TrickManager : MonoBehaviour
     {
         if(onGameLoaded != null) onGameLoaded.OnRaised += ResetTrick;
         if(onCardSelected != null) onCardSelected.OnRaised += CardSelected;
-        if(onCardsDealt != null) onCardsDealt.OnRaised += HandleCardsDealt;
-        if(onGameOver != null) onGameOver.OnRaised += HandleGameOver;
+        //if(onCardsDealt != null) onCardsDealt.OnRaised += HandleCardsDealt;
         if(onCardAnimationEnded != null) onCardAnimationEnded.OnRaised += HandleAnimationEnded;
     }
     void OnDisable()
     {
         if(onGameLoaded != null) onGameLoaded.OnRaised -= ResetTrick;
         if(onCardSelected != null) onCardSelected.OnRaised -= CardSelected;
-        if(onCardsDealt != null) onCardsDealt.OnRaised -= HandleCardsDealt;
+        //if(onCardsDealt != null) onCardsDealt.OnRaised -= HandleCardsDealt;
         if(onCardAnimationEnded != null) onCardAnimationEnded.OnRaised -= HandleAnimationEnded;
-        if(onGameOver != null) onGameOver.OnRaised -= HandleGameOver;
     }
 
     private void ResetTrick()
     {
+        foreach(Player player in players)
+        {
+            player.Reset();
+        }
         currentPlayer = Random.Range(0, players.Length);
+        print("ey");
         TrickDealingState trickDealingState = new TrickDealingState(this);
         ChangeState(trickDealingState);
     }
@@ -69,26 +72,10 @@ public class TrickManager : MonoBehaviour
         currentState?.CardSelected(cardData);
     }
 
-    private void HandleGameOver()
-    {
-        //isGameEnded = true;
-        //playersPrepared = 0;
-    }
-
-    public void HandleCardsDealt(Player player)
+    /*public void HandleCardsDealt(Player player)
     {
         currentState?.CardsDealt(player);
-    }
-
-
-    //-----PRIVATE FUNCTIONS------
-    public void AddScoredCards(Player trickWinner, Player[] players)
-    {
-        foreach(Player player in players)
-        {
-            trickWinner.scoredCards.Add(player.playedCard);
-        }
-    }
+    }*/
 
     public bool CheckPlayerTurn(Player owner)
     {
@@ -124,40 +111,33 @@ public class TrickManager : MonoBehaviour
     public void HandleAnimationEnded()
     {
         currentState?.AnimationEnded();
-        
-        /*if(CheckAllPlayersHavePlayed())
-        {
-            TrickResult newTrickResult = BriscaRules.CalculateTrickWinner(triumphSuit, firstPlayer, secondPlayer);
-            if(newTrickResult != null)
-            {
-                Player trickWinner = newTrickResult.winner;
-                Player trickLoser = newTrickResult.loser;
-                //trickWinner.UseCardPower(trickLoser);
-                trickLoser.TakeDamage(BriscaRules.CalculateCardValue(trickWinner.playedCard));
-                print("Ganador: " + trickWinner + " con " + trickWinner.playedCard);
-                print("Perdedor: " + trickLoser + " con " + trickLoser.playedCard);
-                for(int i = 0; i < players.Length; i++)
-                {
-                    if(players[i] == trickWinner)
-                    {
-                        currentPlayer = i;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                print("Draw");
-            }
-            onTrickEnded.Raise();
-            print("Trick ended");
-        }
-        if(!isGameEnded) CheckEnemyTurn();*/
     }
 
     public void RaiseTrickEnded()
     {
         if(onTrickEnded != null) onTrickEnded.Raise();
+        print("Trick ended");
+    }
+
+    public void RaiseGameOver()
+    {
+        if(onGameOver != null) onGameOver.Raise();
+    }
+
+    public void DealInitalCards()
+    {
+        foreach(Player player in players)
+        {
+            player.DrawCards(player.initialCardsAmount);
+        }
+    }
+
+    public void DealOneCard()
+    {
+        foreach(Player player in players)
+        {
+            player.DrawOneCard();
+        }
     }
     
     public void DiscoverTriumphSuit()

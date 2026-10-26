@@ -11,7 +11,7 @@ public class TrickEvaluationState: TrickState
         {
             trickResult.loser.TakeDamage(BriscaRules.CalculateCardValue(trickResult.winner.playedCard));
             //activate powers
-            for(int i = 0; i < _trickManager.Players.Length; i++)
+            for(int i = 0; i < _trickManager.Players.Length; i++) //Next player to play is the winner
             {
                 if(_trickManager.Players[i] == trickResult.winner)
                 {
@@ -24,6 +24,7 @@ public class TrickEvaluationState: TrickState
         {
             Debug.LogWarning("DRAW!");
         }
+        _trickManager.ChangeState(new TrickCleanUpState(_trickManager));
     }
 
     public override void Exit() {}

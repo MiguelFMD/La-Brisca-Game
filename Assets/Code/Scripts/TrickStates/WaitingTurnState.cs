@@ -24,7 +24,7 @@ public class WaitingTurnState : TrickState
             cardData.owner.PlayCard(cardData);
             if(_trickManager.firstPlayer == null) _trickManager.firstPlayer = cardData.owner;
             else _trickManager.secondPlayer = cardData.owner;
-            //_trickManager.ChangeState(new CardResolutionState(_trickManager));
+            _trickManager.ChangeState(new CardResolutionState(_trickManager));
         }
     }
 }

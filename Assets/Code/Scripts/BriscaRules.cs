@@ -107,4 +107,42 @@ public static class BriscaRules
 
         return 1;
     }
+
+    public static bool CheckGameOverConditions(Player firstPlayer, Player secondPlayer)
+    {
+        if(firstPlayer.currentHealth <= 0 || secondPlayer.currentHealth <= 0)
+            return true;
+        if(CheckPlayersCardsLeft(firstPlayer, secondPlayer) != null)
+            return true;
+        return false;
+    }
+
+    private static Player ComparePlayersHealth(Player firstPlayer, Player secondPlayer)
+    {
+        if(firstPlayer.currentHealth > secondPlayer.currentHealth)
+            return firstPlayer;
+        else
+            return secondPlayer;
+    }
+
+    private static Player CheckPlayersCardsLeft(Player firstPlayer, Player secondPlayer)
+    {
+        Player winner = null;
+        if(firstPlayer.HasNoCardsLeft())
+        {
+            if(secondPlayer.HasNoCardsLeft())
+            {
+                return ComparePlayersHealth(firstPlayer, secondPlayer); //DRAW
+            }
+            else //Solo el jugador se queda sin cartas
+            {
+                winner = secondPlayer;
+            }
+        }
+        else if(secondPlayer.HasNoCardsLeft()) //Solo el enemigo se queda sin cartas
+        {
+            winner = firstPlayer;
+        }
+        return winner;
+    }
 }

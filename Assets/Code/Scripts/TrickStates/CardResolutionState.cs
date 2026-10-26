@@ -9,10 +9,7 @@ public class CardResolutionState: TrickState
         Debug.Log("Card resolution state");
     }
 
-    public override void Exit()
-    {
-        
-    }
+    public override void Exit() {}
 
     public override void AnimationEnded()
     {

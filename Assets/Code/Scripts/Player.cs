@@ -11,36 +11,36 @@ public class Player : MonoBehaviour
     private Hand hand;
     [SerializeField] private Deck deck;
     [Header("Listener Events")]
-    [SerializeField] private GameEvent onGameLoaded;
-    [SerializeField] private GameEvent onTrickEnded;
+    //[SerializeField] private GameEvent onGameLoaded;
+    //[SerializeField] private GameEvent onTrickEnded;
     [Header("Raise Events")]
-    [SerializeField] private PlayerGameEvent onCardsDealt;
+    //[SerializeField] private PlayerGameEvent onCardsDealt;
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
     [SerializeField] private PlayerGameEvent onPlayerDeath;
    
     
     [Header("Player Stats")]
-    [SerializeField] private int initialCardsAmount = 3;
+    [SerializeField] public int initialCardsAmount = 3;
     public float maxHealth = 100.0f;
     public float currentHealth;
 
     void OnValidate()
     {
-        if(onGameLoaded == null) Debug.LogError($"[Critical] '{name}' needs 'onGameLoaded' in order to work.", this);
-        if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
-        if(onCardsDealt == null) Debug.LogError($"[Critical] '{name}' needs 'onCardsDealt' in order to work.", this);
+        //if(onGameLoaded == null) Debug.LogError($"[Critical] '{name}' needs 'onGameLoaded' in order to work.", this);
+        //if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
+        //if(onCardsDealt == null) Debug.LogError($"[Critical] '{name}' needs 'onCardsDealt' in order to work.", this);
     }
 
     void OnEnable()
     {
-        if(onGameLoaded != null) onGameLoaded.OnRaised += Reset;
-        if(onTrickEnded != null) onTrickEnded.OnRaised += HandleOnTrickEnded;
+        //if(onGameLoaded != null) onGameLoaded.OnRaised += Reset;
+        //if(onTrickEnded != null) onTrickEnded.OnRaised += HandleOnTrickEnded;
     }
 
     void OnDisable()
     {
-        if(onGameLoaded != null) onGameLoaded.OnRaised -= Reset;
-        if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleOnTrickEnded;
+        //if(onGameLoaded != null) onGameLoaded.OnRaised -= Reset;
+        //if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleOnTrickEnded;
     }
     
     void Awake()
@@ -50,14 +50,12 @@ public class Player : MonoBehaviour
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
     }
 
-    private void Reset()
+    public void Reset()
     {
         hand.ClearHand();
         scoredCards.Clear();
         Heal(maxHealth);
         CreateDeck();
-        DrawCards(initialCardsAmount);
-        onCardsDealt.Raise(this);
     }
 
     public void SetPlayerData(DeckType newDeck, float newMaxHealth)
@@ -68,7 +66,7 @@ public class Player : MonoBehaviour
 
     //------CARDS FUNCTIONS----------
 
-    private void DrawCards(int amount)
+    public void DrawCards(int amount)
     {
         for(int c = 0; c < amount; c++)
         {
@@ -76,11 +74,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void HandleOnTrickEnded()
+    /*private void HandleOnTrickEnded()
     {
         playedCard = null;
-        DrawOneCard();
-    }
+    }*/
 
     private void CreateDeck()
     {
@@ -106,13 +103,18 @@ public class Player : MonoBehaviour
         newCard.owner = this;
         hand.DrawCard(newCard);
     }
+
+    public bool HasNoCardsLeft()
+    {
+        return IsHandEmpty() && IsDeckEmpty();
+    }
     
-    public bool IsHandEmpty()
+    private bool IsHandEmpty()
     {
         return hand.cards.Count == 0;
     }
 
-    public bool IsDeckEmpty()
+    private bool IsDeckEmpty()
     {
         return deck.IsDeckEmpty();
     }
