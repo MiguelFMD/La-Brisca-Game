@@ -67,18 +67,6 @@ public class TrickManager : MonoBehaviour
     private void CardSelected(CardData cardData)
     {
         currentState?.CardSelected(cardData);
-        /*if(CheckPlayerTurn(cardData.owner) && !isAnimationPlaying) 
-        {
-            cardData.owner.PlayCard(cardData);
-            isAnimationPlaying = true;
-            if(isNewTrickPlay)
-            {
-                firstPlayer = players[currentPlayer];
-                isNewTrickPlay = false; 
-            }
-            else
-                secondPlayer = players[currentPlayer];
-        }*/
     }
 
     private void HandleGameOver()
@@ -90,27 +78,8 @@ public class TrickManager : MonoBehaviour
     public void HandleCardsDealt(Player player)
     {
         currentState?.CardsDealt(player);
-        /*playersPrepared++;
-        if(playersPrepared == players.Length)
-            CheckEnemyTurn();*/
     }
 
-    public void CheckEnemyTurn()
-    {
-        /*if(players[currentPlayer].isEnemy) //Is enemy turn?
-        {
-            isAnimationPlaying = true;
-            players[currentPlayer].PlayRandomCard();
-            if(isNewTrickPlay)
-            {
-                firstPlayer = players[currentPlayer];
-                isNewTrickPlay = false;
-            }
-            else
-                secondPlayer = players[currentPlayer];
-        }
-        else print("No");*/
-    }
 
     //-----PRIVATE FUNCTIONS------
     public void AddScoredCards(Player trickWinner, Player[] players)

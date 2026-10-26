@@ -3,9 +3,7 @@ using UnityEngine;
 public class TrickDealingState : TrickState
 {
     private int playersPrepared;
-    public TrickDealingState(TrickManager trickManager) : base(trickManager)
-    {
-    }
+    public TrickDealingState(TrickManager trickManager) : base(trickManager) {}
 
     public override void Enter()
     {
@@ -23,7 +21,7 @@ public class TrickDealingState : TrickState
         playersPrepared++;
         if(playersPrepared == _trickManager.Players.Length)
         {
-            //_trickManager.ChangeState(new WaitingTurnState(_trickManager));
+            _trickManager.ChangeState(new WaitingTurnState(_trickManager));
         }
     }
 }
