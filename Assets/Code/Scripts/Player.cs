@@ -106,17 +106,7 @@ public class Player : MonoBehaviour
         newCard.owner = this;
         hand.DrawCard(newCard);
     }
-
-    public int CalculateScore()
-    {
-        int score = 0;
-        foreach(CardData card in scoredCards)
-        {
-            score += card.CalculateCardValue();
-        }
-        return score;
-    }
-
+    
     public bool IsHandEmpty()
     {
         return hand.cards.Count == 0;
