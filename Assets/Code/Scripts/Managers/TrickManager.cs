@@ -1,4 +1,3 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,15 +14,14 @@ public class TrickManager : MonoBehaviour
     [Header("Raise Events")]
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private GameEvent onCardAnimationEnded;
+
+    private TrickState currentState;
     [SerializeField] private Player[] players = new Player[2];
-    private int playersPrepared = 0;
-    private Player firstPlayer;
-    private Player secondPlayer;
-    private Suit triumphSuit;
-    private int currentPlayer;
-    private bool isNewTrickPlay = true;
-    private bool isGameEnded = false;
-    private bool isAnimationPlaying = false;
+    public Player[] Players => players;
+    public Player firstPlayer {get; set;}
+    public Player secondPlayer {get; set;}
+    public Suit triumphSuit {get; set;}
+    public int currentPlayer {get; set;}
 
     //-----CORE FUNCTIONS------
     void OnValidate()
@@ -48,19 +46,28 @@ public class TrickManager : MonoBehaviour
         if(onCardSelected != null) onCardSelected.OnRaised -= CardSelected;
         if(onCardsDealt != null) onCardsDealt.OnRaised -= HandleCardsDealt;
         if(onCardAnimationEnded != null) onCardAnimationEnded.OnRaised -= HandleAnimationEnded;
+        if(onGameOver != null) onGameOver.OnRaised -= HandleGameOver;
     }
 
     private void ResetTrick()
     {
-        currentPlayer = 1;// Random.Range(0, players.Length);
-        isNewTrickPlay = true;
-        DiscoverTriumphSuit();
-        isGameEnded = false;
+        currentPlayer = Random.Range(0, players.Length);
+        TrickDealingState trickDealingState = new TrickDealingState(this);
+        ChangeState(trickDealingState);
+    }
+
+    public void ChangeState(TrickState newState)
+    {
+        if(currentState != null) currentState.Exit();
+        currentState = newState;
+        currentState.Enter();
+        Debug.Log("State: " + currentState.GetType().Name);
     }
 
     private void CardSelected(CardData cardData)
     {
-        if(CheckPlayerTurn(cardData.owner) && !isAnimationPlaying) 
+        currentState?.CardSelected(cardData);
+        /*if(CheckPlayerTurn(cardData.owner) && !isAnimationPlaying) 
         {
             cardData.owner.PlayCard(cardData);
             isAnimationPlaying = true;
@@ -71,25 +78,26 @@ public class TrickManager : MonoBehaviour
             }
             else
                 secondPlayer = players[currentPlayer];
-        }
+        }*/
     }
 
     private void HandleGameOver()
     {
-        isGameEnded = true;
-        playersPrepared = 0;
+        //isGameEnded = true;
+        //playersPrepared = 0;
     }
 
-    private void HandleCardsDealt(Player player)
+    public void HandleCardsDealt(Player player)
     {
-        playersPrepared++;
+        currentState?.CardsDealt(player);
+        /*playersPrepared++;
         if(playersPrepared == players.Length)
-            CheckEnemyTurn();
+            CheckEnemyTurn();*/
     }
 
-    private void CheckEnemyTurn()
+    public void CheckEnemyTurn()
     {
-        if(players[currentPlayer].isEnemy) //Is enemy turn?
+        /*if(players[currentPlayer].isEnemy) //Is enemy turn?
         {
             isAnimationPlaying = true;
             players[currentPlayer].PlayRandomCard();
@@ -101,11 +109,11 @@ public class TrickManager : MonoBehaviour
             else
                 secondPlayer = players[currentPlayer];
         }
-        else print("No");
+        else print("No");*/
     }
 
     //-----PRIVATE FUNCTIONS------
-    private void AddScoredCards(Player trickWinner, Player[] players)
+    public void AddScoredCards(Player trickWinner, Player[] players)
     {
         foreach(Player player in players)
         {
@@ -113,7 +121,7 @@ public class TrickManager : MonoBehaviour
         }
     }
 
-    private bool CheckPlayerTurn(Player owner)
+    public bool CheckPlayerTurn(Player owner)
     {
         if(players[currentPlayer] != owner)
         {
@@ -124,7 +132,7 @@ public class TrickManager : MonoBehaviour
             return true;
     }
 
-    private void SelectNextPlayer()
+    public void SelectNextPlayer()
     {
         if(currentPlayer >= players.Length - 1)
             currentPlayer = 0;
@@ -133,7 +141,7 @@ public class TrickManager : MonoBehaviour
         print("Next player is: " + players[currentPlayer]);
     }
 
-    private bool CheckAllPlayersHavePlayed()
+    public bool CheckAllPlayersHavePlayed()
     {
         foreach(Player player in players)
         {
@@ -144,9 +152,10 @@ public class TrickManager : MonoBehaviour
         return true;
     }
 
-    private void HandleAnimationEnded()
+    public void HandleAnimationEnded()
     {
-        print("Animation ended");
+        currentState?.AnimationEnded();
+        /*print("Animation ended");
         SelectNextPlayer();  
         isAnimationPlaying = false;
         if(CheckAllPlayersHavePlayed())
@@ -177,10 +186,15 @@ public class TrickManager : MonoBehaviour
             onTrickEnded.Raise();
             print("Trick ended");
         }
-        if(!isGameEnded) CheckEnemyTurn();
+        if(!isGameEnded) CheckEnemyTurn();*/
+    }
+
+    public void RaiseTrickEnded()
+    {
+        if(onTrickEnded != null) onTrickEnded.Raise();
     }
     
-    private void DiscoverTriumphSuit()
+    public void DiscoverTriumphSuit()
     {
         print("Discovering triumph suit...");
         Suit newTriumphSuit = (Suit)Random.Range(0, System.Enum.GetValues(typeof(Suit)).Length);

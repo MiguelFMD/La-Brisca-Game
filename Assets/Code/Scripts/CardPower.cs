@@ -13,16 +13,16 @@ public class CardPower : MonoBehaviour
     {
         switch(cardData.GetCardSuit())
         {
-            case CardData.Suit.Clubs:
+            case Suit.Clubs:
                 ClubsPower(trickLoser);
                 break;
-            case CardData.Suit.Cups:
+            case Suit.Cups:
                 CupsPower(trickWinner);
                 break;
-            case CardData.Suit.Golds:
+            case Suit.Golds:
                 GoldsPower(trickWinner);
                 break;
-            case CardData.Suit.Swords:
+            case Suit.Swords:
                 SwordsPower(trickLoser);
                 break;
                 

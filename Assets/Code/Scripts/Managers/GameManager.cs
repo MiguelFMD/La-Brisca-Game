@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private Player GetWinnerByScore() //By Score (old)
+    /*private Player GetWinnerByScore() //By Score (old)
     {
         Player winner = players[0];
         int winnerScore = players[0].CalculateScore();
@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
         }
         print("The winner is: " + winner.name);
         return winner;
-    }
+    }*/
 
     private Player GetWinnerByHealth()
     {
@@ -107,8 +107,9 @@ public class GameManager : MonoBehaviour
             return player;
         else if(player.currentHealth < enemy.currentHealth)
             return enemy;
-        else
-            return GetWinnerByScore();
+        return null;
+        /*else
+            return GetWinnerByScore();*/
     }
 
     private void HandlePlayerDeath(Player deadPlayer)
