@@ -9,11 +9,15 @@ public class TrickManager : MonoBehaviour
     [Header("Listeners Events")]
     [SerializeField] private GameEvent onGameLoaded;
     [SerializeField] private CardGameEvent onCardSelected;
-    //[SerializeField] private PlayerGameEvent onCardsDealt;
     [Header("Raise Events")]
+    [SerializeField] private GameEvent onTrickStarted;
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private GameEvent onCardAnimationEnded;
     [SerializeField] private GameEvent onGameOver;
+<<<<<<< Updated upstream
+=======
+    [SerializeField] private GameEvent onPlayerVictory;
+>>>>>>> Stashed changes
 
     private TrickState currentState;
     [SerializeField] private Player[] players = new Player[2];
@@ -55,7 +59,7 @@ public class TrickManager : MonoBehaviour
         {
             player.Reset();
         }
-        currentPlayer = Random.Range(0, players.Length);
+        currentPlayer = 1;//Random.Range(0, players.Length);
         TrickDealingState trickDealingState = new TrickDealingState(this);
         ChangeState(trickDealingState);
     }
@@ -127,6 +131,19 @@ public class TrickManager : MonoBehaviour
         if(onGameOver != null) onGameOver.Raise();
     }
 
+<<<<<<< Updated upstream
+=======
+    public void RaisePlayerWin()
+    {
+        if(onPlayerVictory != null) onPlayerVictory.Raise();
+    }
+
+    public void RaiseTrickStarted()
+    {
+        if(onTrickStarted != null) onTrickStarted.Raise();
+    }
+
+>>>>>>> Stashed changes
     public void DealInitalCards()
     {
         foreach(Player player in players)

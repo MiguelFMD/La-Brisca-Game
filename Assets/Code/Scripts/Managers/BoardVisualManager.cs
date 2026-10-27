@@ -14,9 +14,10 @@ public class BoardVisualManager : MonoBehaviour
     [Header("Raise Events")]
     [SerializeField] private GameEvent onCardAnimationEnded;
     [Header("Listener Events")]
+    [SerializeField] private GameEvent onTrickStarted;
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private CardGameEvent onCardToTable;
-    [SerializeField] private GameEvent onGameLoaded;
+    
     [Header("Card pool")]
     [SerializeField] private CardPoolSO cardPoolSO;
 
@@ -26,21 +27,21 @@ public class BoardVisualManager : MonoBehaviour
     {
         if(onCardToTable == null) Debug.LogError($"[Critical] '{name}' needs 'onCardToTable' in order to work.", this);
         if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
-        if(onGameLoaded == null) Debug.LogError($"[Critical] '{name}' needs 'onGameLoaded' in order to work.", this);
+        if(onTrickStarted == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickStarted' in order to work.", this);
     }
 
     void OnEnable()
     {
         if(onCardToTable != null) onCardToTable.OnRaised += HandleOnCardToTable;
         if(onTrickEnded != null) onTrickEnded.OnRaised += HandleOnTrickEnded;
-        if(onGameLoaded != null) onGameLoaded.OnRaised += ClearTableVisuals;
+        if(onTrickStarted != null) onTrickStarted.OnRaised += ClearTableVisuals;
     }
 
     void OnDisable()
     {
         if(onCardToTable != null) onCardToTable.OnRaised -= HandleOnCardToTable;
         if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleOnTrickEnded;
-        if(onGameLoaded != null) onGameLoaded.OnRaised -= ClearTableVisuals;
+        if(onTrickStarted != null) onTrickStarted.OnRaised -= ClearTableVisuals;
     }
 
     void Awake()

@@ -7,6 +7,7 @@ public class TrickDealingState : TrickState
     public override void Enter()
     {
         _trickManager.DiscoverTriumphSuit();
+        _trickManager.RaiseTrickStarted();
         _trickManager.DealInitalCards();
         _trickManager.ChangeState(new WaitingTurnState(_trickManager));
     }

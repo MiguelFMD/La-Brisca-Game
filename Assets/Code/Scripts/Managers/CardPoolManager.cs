@@ -38,7 +38,6 @@ public class CardPoolManager : MonoBehaviour
 
     private void ReturnCardToPool(CardDisplay cardToReturn)
     {
-        Debug.LogWarning("Return card to pool");
         cardToReturn.gameObject.SetActive(false); // Hide the card
         cardPool.Enqueue(cardToReturn); // Save it for future
         cardToReturn.transform.SetParent(cardPoolTransform);
