@@ -8,7 +8,8 @@ public class PlayerState
     public bool IsDead => CurrentHealth <= 0;
     public List<CardData> Hand { get; } = new List<CardData>();
     public Queue<CardData> Deck { get; } = new Queue<CardData>();
-    public CardData PlayedCard { get; private set; }
+    public CardData PlayedCard { get; set; }
+    public bool IsEnemy {get; private set; }
 
     public PlayerState(float maxHealth)
     {

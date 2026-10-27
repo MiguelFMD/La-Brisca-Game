@@ -23,9 +23,9 @@ public enum Rank
 
 public class TrickResult
 {
-    public Player winner;
-    public Player loser;
-    public TrickResult(Player trickWinner, Player trickLoser)
+    public PlayerState winner;
+    public PlayerState loser;
+    public TrickResult(PlayerState trickWinner, PlayerState trickLoser)
     {
         winner = trickWinner;
         loser = trickLoser;
@@ -37,11 +37,11 @@ public static class BriscaRules
     /// Calculates the trick winner and loser (only 1vs1 version)
     /// </summary>
     /// <returns>Returns the trick result. If there is draw returns null</returns>
-    public static TrickResult CalculateTrickWinner(Suit triumphSuit,Player firstPlayer, Player secondPlayer)
+    public static TrickResult CalculateTrickWinner(Suit triumphSuit,PlayerState firstPlayer, PlayerState secondPlayer)
     {
-        CardData card0 = firstPlayer.playedCard;
-        CardData card1 = secondPlayer.playedCard;
-        Suit trickSuit = firstPlayer.playedCard.GetCardSuit();
+        CardData card0 = firstPlayer.PlayedCard;
+        CardData card1 = secondPlayer.PlayedCard;
+        Suit trickSuit = firstPlayer.PlayedCard.GetCardSuit();
 
         if (card0.GetCardSuit() == card1.GetCardSuit() && card0.GetCardRank() == card1.GetCardRank())
         {
@@ -108,26 +108,26 @@ public static class BriscaRules
         return 1;
     }
 
-    public static bool CheckGameOverConditions(Player firstPlayer, Player secondPlayer)
+    public static bool CheckGameOverConditions(PlayerState firstPlayer, PlayerState secondPlayer)
     {
-        if(firstPlayer.currentHealth <= 0 || secondPlayer.currentHealth <= 0)
+        if(firstPlayer.CurrentHealth <= 0 || secondPlayer.CurrentHealth <= 0)
             return true;
         if(CheckPlayersCardsLeft(firstPlayer, secondPlayer) != null)
             return true;
         return false;
     }
 
-    private static Player ComparePlayersHealth(Player firstPlayer, Player secondPlayer)
+    private static PlayerState ComparePlayersHealth(PlayerState firstPlayer, PlayerState secondPlayer)
     {
-        if(firstPlayer.currentHealth > secondPlayer.currentHealth)
+        if(firstPlayer.CurrentHealth > secondPlayer.CurrentHealth)
             return firstPlayer;
         else
             return secondPlayer;
     }
 
-    private static Player CheckPlayersCardsLeft(Player firstPlayer, Player secondPlayer)
+    private static PlayerState CheckPlayersCardsLeft(PlayerState firstPlayer, PlayerState secondPlayer)
     {
-        Player winner = null;
+        PlayerState winner = null;
         if(firstPlayer.HasNoCardsLeft())
         {
             if(secondPlayer.HasNoCardsLeft())

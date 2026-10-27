@@ -12,14 +12,14 @@ public class TrickCleanUpState : TrickState
         }
         
         //Check if game over
-        if(BriscaRules.CheckGameOverConditions(_trickManager.firstPlayer, _trickManager.secondPlayer))
+        if(BriscaRules.CheckGameOverConditions(_trickManager.firstPlayer.state, _trickManager.secondPlayer.state))
         {
             _trickManager.RaiseGameOver();
         }
         else
         {
-            _trickManager.firstPlayer.playedCard = null;
-            _trickManager.secondPlayer.playedCard = null;
+            _trickManager.firstPlayer.state.PlayedCard = null;
+            _trickManager.secondPlayer.state.PlayedCard = null;
             _trickManager.DealOneCard();
             _trickManager.RaiseTrickEnded();
             _trickManager.firstPlayer = null;
