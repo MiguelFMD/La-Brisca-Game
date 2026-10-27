@@ -35,7 +35,6 @@ public class Deck : MonoBehaviour
     /// </summary>
     public void CreateDeck()
     {
-        //print("Creating deck...");
         deckCards = new Queue<CardData>();
         InitialShuffle();
     }

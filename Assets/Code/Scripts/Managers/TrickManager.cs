@@ -14,6 +14,7 @@ public class TrickManager : MonoBehaviour
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private GameEvent onCardAnimationEnded;
     [SerializeField] private GameEvent onGameOver;
+    [SerializeField] private PlayerGameEvent onPlayerVictory;
 
     private TrickState currentState;
     [SerializeField] private Player[] players = new Player[2];
@@ -75,11 +76,6 @@ public class TrickManager : MonoBehaviour
         currentState?.CardSelected(cardData);
     }
 
-    /*public void HandleCardsDealt(Player player)
-    {
-        currentState?.CardsDealt(player);
-    }*/
-
     public bool CheckPlayerTurn(Player owner)
     {
         if(players[currentPlayer] != owner)
@@ -97,7 +93,6 @@ public class TrickManager : MonoBehaviour
             currentPlayer = 0;
         else
             currentPlayer++;
-        print("Next player is: " + players[currentPlayer]);
     }
 
     public bool CheckAllPlayersHavePlayed()
@@ -107,7 +102,6 @@ public class TrickManager : MonoBehaviour
             if(player.playedCard == null)
                 return false;
         }
-        print("All players have played");
         return true;
     }
 
@@ -119,12 +113,16 @@ public class TrickManager : MonoBehaviour
     public void RaiseTrickEnded()
     {
         if(onTrickEnded != null) onTrickEnded.Raise();
-        print("Trick ended");
     }
 
     public void RaiseGameOver()
     {
         if(onGameOver != null) onGameOver.Raise();
+    }
+
+    public void RaisePlayerWin(Player player)
+    {
+        if(onPlayerVictory != null) onPlayerVictory.Raise(player);
     }
 
     public void DealInitalCards()
@@ -145,7 +143,6 @@ public class TrickManager : MonoBehaviour
     
     public void DiscoverTriumphSuit()
     {
-        print("Discovering triumph suit...");
         Suit newTriumphSuit = (Suit)Random.Range(0, System.Enum.GetValues(typeof(Suit)).Length);
         foreach(CardData card in triumphCards)
         {
@@ -157,6 +154,5 @@ public class TrickManager : MonoBehaviour
         }
         triumphCardDisplay.gameObject.SetActive(true);
         triumphSuit = newTriumphSuit;
-        print("The triumph suit is: " + newTriumphSuit);
     }
 }

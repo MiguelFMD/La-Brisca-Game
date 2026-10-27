@@ -14,7 +14,18 @@ public class TrickCleanUpState : TrickState
         //Check if game over
         if(BriscaRules.CheckGameOverConditions(_trickManager.firstPlayer.state, _trickManager.secondPlayer.state))
         {
-            _trickManager.RaiseGameOver();
+            PlayerState winner = BriscaRules.CheckForWinner(_trickManager.firstPlayer.state, _trickManager.secondPlayer.state);
+        
+
+            if(winner.IsEnemy)
+                _trickManager.RaiseGameOver();
+            else
+            {
+                Player winnerMonoBehaviour = _trickManager.firstPlayer.state == winner
+                ? _trickManager.firstPlayer 
+                : _trickManager.secondPlayer;
+                _trickManager.RaisePlayerWin(winnerMonoBehaviour);
+            }
         }
         else
         {

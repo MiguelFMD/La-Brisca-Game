@@ -136,7 +136,6 @@ public class Player : MonoBehaviour
         
         if (state.IsDead)
         {
-            print("dead");
             onPlayerDeath.Raise(this);
         }
     }

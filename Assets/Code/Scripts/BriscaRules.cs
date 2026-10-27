@@ -117,6 +117,12 @@ public static class BriscaRules
         return false;
     }
 
+    public static PlayerState CheckForWinner(PlayerState firstPlayer, PlayerState secondPlayer)
+    {
+        PlayerState winner = CheckPlayersCardsLeft(firstPlayer, secondPlayer);
+        return winner;
+    }
+
     private static PlayerState ComparePlayersHealth(PlayerState firstPlayer, PlayerState secondPlayer)
     {
         if(firstPlayer.CurrentHealth > secondPlayer.CurrentHealth)

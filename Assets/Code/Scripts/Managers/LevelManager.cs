@@ -49,7 +49,6 @@ public class LevelManager : MonoBehaviour
 
     private void HandleOnPlayerVictory()
     {
-        print("current level is: " + currentLevel);
         if(currentLevel < enemies.Length - 1)
         {
             currentLevel++;

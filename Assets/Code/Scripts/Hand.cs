@@ -22,7 +22,6 @@ public class Hand : MonoBehaviour
     public CardData PlayCard(CardData selectedCard)
     {
         CardData playedCard = selectedCard;
-        //print("Played card is: " + selectedCard.GetCardRank() + " of " + selectedCard.GetCardSuit());
         if(RemoveCard(playedCard))
         {
             onCardPlayed.Raise(playedCard);

@@ -61,8 +61,6 @@ public class BoardVisualManager : MonoBehaviour
             return;
         }
         tableCards.Add(cardDisplay);
-        print("activada?");
-        print(cardDisplay.isActiveAndEnabled);
         CardToCenter(cardDisplay);
     }
 
@@ -73,7 +71,6 @@ public class BoardVisualManager : MonoBehaviour
 
     private void CardToCenter(CardDisplay cardDisplay)
     {
-        print(cardDisplay);
         RectTransform cardRect = cardDisplay.GetComponent<RectTransform>();
         cardRect.SetParent(tableRectTransform, true);
         StartCoroutine(AnimateCard(cardRect));
@@ -83,8 +80,6 @@ public class BoardVisualManager : MonoBehaviour
     {
         Vector2 targetPosition = tableRectTransform.position;
         Vector2 startPosition = selectedCard.position;
-        print(targetPosition);
-        print(startPosition);
         float timeElapsed = 0f;
         while (timeElapsed < cardAnimationDuration)
         {
