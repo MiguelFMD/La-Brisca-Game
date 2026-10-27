@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Deck : MonoBehaviour
+public class DeckDisplay : MonoBehaviour
 {
     [SerializeField] private DeckType deckType;
     private Queue<CardData> deckCards;

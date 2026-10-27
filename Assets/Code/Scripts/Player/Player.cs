@@ -1,20 +1,13 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Hand))]
 public class Player : MonoBehaviour
 {
-    public List<CardData> scoredCards;
     public CardData playedCard;
     public bool isEnemy = false;
     private Hand hand;
-    [SerializeField] private Deck deck;
-    [Header("Listener Events")]
-    //[SerializeField] private GameEvent onGameLoaded;
-    //[SerializeField] private GameEvent onTrickEnded;
+    [SerializeField] private DeckDisplay deck;
     [Header("Raise Events")]
-    //[SerializeField] private PlayerGameEvent onCardsDealt;
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
     [SerializeField] private PlayerGameEvent onPlayerDeath;
    
@@ -23,25 +16,6 @@ public class Player : MonoBehaviour
     [SerializeField] public int initialCardsAmount = 3;
     public float maxHealth = 100.0f;
     public float currentHealth;
-
-    void OnValidate()
-    {
-        //if(onGameLoaded == null) Debug.LogError($"[Critical] '{name}' needs 'onGameLoaded' in order to work.", this);
-        //if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
-        //if(onCardsDealt == null) Debug.LogError($"[Critical] '{name}' needs 'onCardsDealt' in order to work.", this);
-    }
-
-    void OnEnable()
-    {
-        //if(onGameLoaded != null) onGameLoaded.OnRaised += Reset;
-        //if(onTrickEnded != null) onTrickEnded.OnRaised += HandleOnTrickEnded;
-    }
-
-    void OnDisable()
-    {
-        //if(onGameLoaded != null) onGameLoaded.OnRaised -= Reset;
-        //if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleOnTrickEnded;
-    }
     
     void Awake()
     {
@@ -53,7 +27,6 @@ public class Player : MonoBehaviour
     public void Reset()
     {
         hand.ClearHand();
-        scoredCards.Clear();
         Heal(maxHealth);
         CreateDeck();
     }
