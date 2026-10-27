@@ -20,7 +20,7 @@ public class PlayerState
     public void SetMaxHealth(float newMaxHealth)
     {
         MaxHealth = newMaxHealth;
-        CurrentHealth = Math.Min(CurrentHealth, MaxHealth);
+        CurrentHealth = newMaxHealth;
     }
 
     public void TakeDamage(float amount)

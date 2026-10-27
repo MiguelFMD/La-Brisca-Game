@@ -3,10 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Hand))]
 public class Player : MonoBehaviour
 {
-    // --- ESTADO LÓGICO PURO ---
     public PlayerState state { get; private set; }
 
-    // --- PROPIEDADES PUENTE (No rompen las referencias de tus otros scripts) ---
     public CardData playedCard => state?.PlayedCard;
     public float maxHealth => state != null ? state.MaxHealth : 100f;
     public float currentHealth => state != null ? state.CurrentHealth : maxHealth;
@@ -20,22 +18,17 @@ public class Player : MonoBehaviour
    
     [Header("Player Stats")]
     [SerializeField] public int initialCardsAmount = 3;
-    [SerializeField] private float defaultMaxHealth = 100f; // Añadido para inicializar el estado
-    
+    [SerializeField] private float defaultMaxHealth = 100f; 
     void Awake()
     {
         hand = GetComponent<Hand>();
-        
-        // 1. Inicializamos el estado lógico (C# puro)
         state = new PlayerState(defaultMaxHealth);
-
-        if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
     }
 
     public void Reset()
     {
         hand.ClearHand();
-        state = new PlayerState(defaultMaxHealth); // Reseteamos la lógica también
+        //state = new PlayerState(defaultMaxHealth);
         Heal(maxHealth);
         CreateDeck();
     }
@@ -43,7 +36,7 @@ public class Player : MonoBehaviour
     public void SetPlayerData(DeckType newDeck, float newMaxHealth)
     {
         deck.AssignDeck(newDeck);
-        state.SetMaxHealth(newMaxHealth); // Se pasa al estado
+        state.SetMaxHealth(newMaxHealth);
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
     }
 
@@ -64,10 +57,8 @@ public class Player : MonoBehaviour
 
     public void PlayCard(CardData newPlayedCard)
     {
-        // 1. Modificamos la lógica pura
         state.PlayCard(newPlayedCard);
         
-        // 2. Reflejamos en la interfaz visual (MonoBehaviour)
         hand.PlayCard(newPlayedCard);
     }
 
@@ -87,10 +78,8 @@ public class Player : MonoBehaviour
         
         newCard.owner = this; 
         
-        // 1. Registramos en la lógica pura
         state.Hand.Add(newCard);
         
-        // 2. Mostramos en la mano visual
         hand.DrawCard(newCard);
     }
 
@@ -101,13 +90,11 @@ public class Player : MonoBehaviour
     
     private bool IsHandEmpty()
     {
-        // Leemos desde el estado lógico
         return state.Hand.Count == 0;
     }
 
     private bool IsDeckEmpty()
     {
-        // Para sincronización, mantenemos la lectura del visual, pero podrías leer de state.Deck.Count
         return deck.IsDeckEmpty();
     }
 
@@ -131,7 +118,6 @@ public class Player : MonoBehaviour
             CardData card = hand.cards[random];
             if(card != null)
             {
-                // ¡Importante usar PlayCard aquí para que actualice la lógica y no solo lo visual!
                 PlayCard(card);
             }
         }
@@ -144,13 +130,11 @@ public class Player : MonoBehaviour
     //------STATS FUNCTIONS-------
     public void TakeDamage(float amount)
     {
-        // 1. Modificamos la lógica pura
         state.TakeDamage(amount);
         
-        // 2. Notificamos a los eventos de Unity
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
         
-        if (state.IsDead) // Usamos la propiedad del estado lógico
+        if (state.IsDead)
         {
             print("dead");
             onPlayerDeath.Raise(this);
@@ -159,10 +143,8 @@ public class Player : MonoBehaviour
 
     public void Heal(float amount)
     {
-        // 1. Modificamos la lógica pura
         state.Heal(amount);
         
-        // 2. Notificamos a los eventos de Unity
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
     }
 }
