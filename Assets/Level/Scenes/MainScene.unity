@@ -1322,6 +1322,7 @@ MonoBehaviour:
   players:
   - {fileID: 4226369508331607537}
   - {fileID: 995535605711435897}
+  currentStateName: Ninguno
 --- !u!1001 &740756726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4365,6 +4366,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 332979518}
     - target: {fileID: 4932871627453121259, guid: 45e92edeef72da3469c55085ebe45c57, type: 3}
+      propertyPath: isEnemy
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932871627453121259, guid: 45e92edeef72da3469c55085ebe45c57, type: 3}
       propertyPath: onCardsDealt
       value: 
       objectReference: {fileID: 11400000, guid: 8e139a933b2c99044927473b383794c1, type: 2}
@@ -4376,6 +4381,10 @@ PrefabInstance:
       propertyPath: onTrickEnded
       value: 
       objectReference: {fileID: 11400000, guid: d7c5d43b462a17d499b0f9e5fb156d0a, type: 2}
+    - target: {fileID: 4932871627453121259, guid: 45e92edeef72da3469c55085ebe45c57, type: 3}
+      propertyPath: defaultMaxHealth
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6017824495029447117, guid: 45e92edeef72da3469c55085ebe45c57, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

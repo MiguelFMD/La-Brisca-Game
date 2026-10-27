@@ -1,59 +1,34 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Hand))]
 public class Player : MonoBehaviour
 {
-    public List<CardData> scoredCards;
-    public CardData playedCard;
-    public bool isEnemy = false;
+    public PlayerState state { get; private set; }
+
+    public CardData playedCard => state?.PlayedCard;
+    public float maxHealth => state != null ? state.MaxHealth : 100f;
+    public float currentHealth => state != null ? state.CurrentHealth : maxHealth;
+    [SerializeField] public bool isEnemy = false;
     private Hand hand;
     [SerializeField] private Deck deck;
-    [Header("Listener Events")]
-    //[SerializeField] private GameEvent onGameLoaded;
-    //[SerializeField] private GameEvent onTrickEnded;
+    
     [Header("Raise Events")]
-    //[SerializeField] private PlayerGameEvent onCardsDealt;
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
     [SerializeField] private PlayerGameEvent onPlayerDeath;
    
-    
     [Header("Player Stats")]
     [SerializeField] public int initialCardsAmount = 3;
-    public float maxHealth = 100.0f;
-    public float currentHealth;
-
-    void OnValidate()
-    {
-        //if(onGameLoaded == null) Debug.LogError($"[Critical] '{name}' needs 'onGameLoaded' in order to work.", this);
-        //if(onTrickEnded == null) Debug.LogError($"[Critical] '{name}' needs 'onTrickEnded' in order to work.", this);
-        //if(onCardsDealt == null) Debug.LogError($"[Critical] '{name}' needs 'onCardsDealt' in order to work.", this);
-    }
-
-    void OnEnable()
-    {
-        //if(onGameLoaded != null) onGameLoaded.OnRaised += Reset;
-        //if(onTrickEnded != null) onTrickEnded.OnRaised += HandleOnTrickEnded;
-    }
-
-    void OnDisable()
-    {
-        //if(onGameLoaded != null) onGameLoaded.OnRaised -= Reset;
-        //if(onTrickEnded != null) onTrickEnded.OnRaised -= HandleOnTrickEnded;
-    }
-    
+    [SerializeField] private float defaultMaxHealth = 100f; 
     void Awake()
     {
         hand = GetComponent<Hand>();
-        currentHealth = maxHealth;
-        if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
+        state = new PlayerState(defaultMaxHealth);
     }
 
     public void Reset()
     {
         hand.ClearHand();
-        scoredCards.Clear();
+        //state = new PlayerState(defaultMaxHealth);
         Heal(maxHealth);
         CreateDeck();
     }
@@ -61,7 +36,8 @@ public class Player : MonoBehaviour
     public void SetPlayerData(DeckType newDeck, float newMaxHealth)
     {
         deck.AssignDeck(newDeck);
-        maxHealth = newMaxHealth;
+        state.SetMaxHealth(newMaxHealth);
+        if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
     }
 
     //------CARDS FUNCTIONS----------
@@ -74,11 +50,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    /*private void HandleOnTrickEnded()
-    {
-        playedCard = null;
-    }*/
-
     private void CreateDeck()
     {
         deck.CreateDeck();
@@ -86,21 +57,29 @@ public class Player : MonoBehaviour
 
     public void PlayCard(CardData newPlayedCard)
     {
-        playedCard = newPlayedCard;
-        hand.PlayCard(playedCard);
+        state.PlayCard(newPlayedCard);
+        
+        hand.PlayCard(newPlayedCard);
     }
 
     public void PlayRandomCard()
     {
-        int randomC = UnityEngine.Random.Range(0, hand.cards.Count);
-        PlayCard(hand.cards[randomC]);
+        if(hand.cards.Count > 0)
+        {
+            int randomC = UnityEngine.Random.Range(0, hand.cards.Count);
+            PlayCard(hand.cards[randomC]);
+        }
     }
 
     public void DrawOneCard()
     {
         CardData newCard = deck.RemoveCard();
         if(newCard == null) return;
-        newCard.owner = this;
+        
+        newCard.owner = this; 
+        
+        state.Hand.Add(newCard);
+        
         hand.DrawCard(newCard);
     }
 
@@ -111,7 +90,7 @@ public class Player : MonoBehaviour
     
     private bool IsHandEmpty()
     {
-        return hand.cards.Count == 0;
+        return state.Hand.Count == 0;
     }
 
     private bool IsDeckEmpty()
@@ -139,7 +118,7 @@ public class Player : MonoBehaviour
             CardData card = hand.cards[random];
             if(card != null)
             {
-                hand.PlayCard(card);
+                PlayCard(card);
             }
         }
         else
@@ -151,20 +130,20 @@ public class Player : MonoBehaviour
     //------STATS FUNCTIONS-------
     public void TakeDamage(float amount)
     {
-        currentHealth = Mathf.Max(0, currentHealth - amount);
-        //print("Take damage: " + currentHealth);
+        state.TakeDamage(amount);
+        
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
-        if (currentHealth <= 0)
+        
+        if (state.IsDead)
         {
-            print("dead");
             onPlayerDeath.Raise(this);
         }
     }
 
     public void Heal(float amount)
     {
-        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        state.Heal(amount);
+        
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
-        //OnPlayerHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 }

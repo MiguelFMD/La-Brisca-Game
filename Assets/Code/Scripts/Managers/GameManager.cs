@@ -57,12 +57,10 @@ public class GameManager : MonoBehaviour
         if(deadPlayer.isEnemy)
         {
             onPlayerVictory.Raise();
-            print("YOU WIN");
         }
         else
         {
             onGameOver.Raise();
-            print("YOU LOSE");
         }
         
     }
@@ -70,7 +68,6 @@ public class GameManager : MonoBehaviour
     private void HandleOnGameFinished()
     {
         isGameEnded = true;
-        print("GAME FINISHED");
     }
 
     private void HandleOnGameLoaded()

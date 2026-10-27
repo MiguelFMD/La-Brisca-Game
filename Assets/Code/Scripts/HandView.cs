@@ -60,7 +60,6 @@ public class HandView : MonoBehaviour
     private void HandleOnCardPlayed(CardData cardData)
     {
         if(cardData.owner != playerHand.playerOwner) return;
-        print("carta a la mesa");
         onCardToTable.Raise(cardData);
     }
 
