@@ -6,7 +6,7 @@ public class CardResolutionState: TrickState
 
     public override void Enter()
     {
-        Debug.Log("Card resolution state");
+        
     }
 
     public override void Exit() {}

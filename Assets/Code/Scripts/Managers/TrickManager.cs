@@ -17,6 +17,8 @@ public class TrickManager : MonoBehaviour
 
     private TrickState currentState;
     [SerializeField] private Player[] players = new Player[2];
+    [Header("Debug")]
+    [SerializeField] private string currentStateName = "Ninguno";
     public Player[] Players => players;
     public Player firstPlayer {get; set;}
     public Player secondPlayer {get; set;}
@@ -54,17 +56,18 @@ public class TrickManager : MonoBehaviour
             player.Reset();
         }
         currentPlayer = Random.Range(0, players.Length);
-        print("ey");
         TrickDealingState trickDealingState = new TrickDealingState(this);
         ChangeState(trickDealingState);
     }
 
     public void ChangeState(TrickState newState)
     {
+        string oldStateName = currentState != null ? currentState.GetType().Name : "Ninguno";
         if(currentState != null) currentState.Exit();
         currentState = newState;
+        Debug.Log($"<color=cyan>[FSM]</color> {oldStateName} ---> {currentState.GetType().Name}");
+        currentStateName = currentState.GetType().Name;
         currentState.Enter();
-        Debug.Log("State: " + currentState.GetType().Name);
     }
 
     private void CardSelected(CardData cardData)
