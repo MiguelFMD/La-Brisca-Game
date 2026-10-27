@@ -14,9 +14,6 @@ public class TrickCleanUpState : TrickState
         //Check if game over
         if(BriscaRules.CheckGameOverConditions(_trickManager.firstPlayer, _trickManager.secondPlayer))
         {
-<<<<<<< Updated upstream
-            _trickManager.RaiseGameOver();
-=======
             PlayerState winner = BriscaRules.CheckForWinner(_trickManager.firstPlayer.state, _trickManager.secondPlayer.state);
             if(winner.IsEnemy)
                 _trickManager.RaiseGameOver();
@@ -24,7 +21,6 @@ public class TrickCleanUpState : TrickState
             {
                 _trickManager.RaisePlayerWin();
             }
->>>>>>> Stashed changes
         }
         else
         {

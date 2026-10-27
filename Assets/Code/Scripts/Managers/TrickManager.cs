@@ -14,10 +14,7 @@ public class TrickManager : MonoBehaviour
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private GameEvent onCardAnimationEnded;
     [SerializeField] private GameEvent onGameOver;
-<<<<<<< Updated upstream
-=======
     [SerializeField] private GameEvent onPlayerVictory;
->>>>>>> Stashed changes
 
     private TrickState currentState;
     [SerializeField] private Player[] players = new Player[2];
@@ -131,8 +128,6 @@ public class TrickManager : MonoBehaviour
         if(onGameOver != null) onGameOver.Raise();
     }
 
-<<<<<<< Updated upstream
-=======
     public void RaisePlayerWin()
     {
         if(onPlayerVictory != null) onPlayerVictory.Raise();
@@ -143,7 +138,6 @@ public class TrickManager : MonoBehaviour
         if(onTrickStarted != null) onTrickStarted.Raise();
     }
 
->>>>>>> Stashed changes
     public void DealInitalCards()
     {
         foreach(Player player in players)
