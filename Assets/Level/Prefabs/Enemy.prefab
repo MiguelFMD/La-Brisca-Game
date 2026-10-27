@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6017824495029447117}
   - component: {fileID: 4932871627453121259}
   - component: {fileID: 6621825684179871824}
-  - component: {fileID: 6495400105532174158}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -46,19 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc333bac9d39a344ae573ca8b80e3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  scoredCards: []
-  playedCard: {fileID: 0}
-  playedCardDisplay: {fileID: 0}
   isEnemy: 1
   deck: {fileID: 0}
-  onGameLoaded: {fileID: 11400000, guid: 0312c12ce24835647a9c03d9a68c0892, type: 2}
-  onTrickEnded: {fileID: 11400000, guid: d7c5d43b462a17d499b0f9e5fb156d0a, type: 2}
-  onCardsDealt: {fileID: 11400000, guid: 8e139a933b2c99044927473b383794c1, type: 2}
   onPlayerHealthChanged: {fileID: 11400000, guid: 56f1e997dfca24a41800ba6a2badf55b, type: 2}
   onPlayerDeath: {fileID: 11400000, guid: 12d2b981ea81e174a954a54284f9c18b, type: 2}
   initialCardsAmount: 3
-  maxHealth: 5
-  currentHealth: 0
+  defaultMaxHealth: 100
 --- !u!114 &6621825684179871824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,16 +65,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Hand
   cards: []
   maxCardsAmount: 3
-  displayedCards: {fileID: 0}
---- !u!114 &6495400105532174158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6097974611110791536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9e8672a78e382f4690fbfe208e241ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
+  playerOwner: {fileID: 0}
+  onAddedCard: {fileID: 0}
+  onClearHand: {fileID: 0}
+  onCardPlayed: {fileID: 0}

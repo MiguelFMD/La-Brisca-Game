@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Reflection;
-using System.Collections.Generic;
 
 public class BriscaRulesTests
 {

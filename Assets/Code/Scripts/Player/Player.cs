@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public CardData playedCard => state?.PlayedCard;
     public float maxHealth => state != null ? state.MaxHealth : 100f;
     public float currentHealth => state != null ? state.CurrentHealth : maxHealth;
-    public bool isEnemy => state != null ? state.IsEnemy : false;
+    [SerializeField] public bool isEnemy = false;
     private Hand hand;
     [SerializeField] private Deck deck;
     
