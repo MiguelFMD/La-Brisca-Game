@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class CardResolutionState: TrickState
 {
-    public CardResolutionState(TrickManager trickManager) : base(trickManager) {}
+    private CardData _cardToPlay;
+    public CardResolutionState(TrickManager trickManager, CardData cardToPlay) : base(trickManager)
+    {
+        _cardToPlay = cardToPlay;
+    }
 
     public override void Enter()
     {
-        
+        _cardToPlay.owner.PlayCard(_cardToPlay);
     }
 
     public override void Exit() {}

@@ -66,9 +66,15 @@ public class Player : MonoBehaviour
     {
         if(hand.cards.Count > 0)
         {
-            int randomC = UnityEngine.Random.Range(0, hand.cards.Count);
+            int randomC = Random.Range(0, hand.cards.Count);
             PlayCard(hand.cards[randomC]);
         }
+    }
+
+    public CardData GetRandomCard()
+    {
+        int randomC = Random.Range(0, hand.cards.Count);
+        return hand.cards[randomC];
     }
 
     public void DrawOneCard()

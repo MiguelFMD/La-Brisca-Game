@@ -74,7 +74,8 @@ public class BoardVisualManager : MonoBehaviour
     {
         RectTransform cardRect = cardDisplay.GetComponent<RectTransform>();
         cardRect.SetParent(tableRectTransform, true);
-        StartCoroutine(AnimateCard(cardRect));
+        onCardAnimationEnded.Raise();
+        //StartCoroutine(AnimateCard(cardRect));
     }
 
     private IEnumerator AnimateCard(RectTransform selectedCard)
