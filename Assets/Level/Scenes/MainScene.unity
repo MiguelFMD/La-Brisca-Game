@@ -1102,8 +1102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6712e0ba337414396a4728d1fac42b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hand
-  cards: []
   maxCardsAmount: 3
+  cards: []
   playerOwner: {fileID: 0}
   onAddedCard: {fileID: 11400000, guid: cd0a2d8b99f38dd4abea0fee41873742, type: 2}
   onClearHand: {fileID: 11400000, guid: fff8e42c26a8f014eab8e886c4dd1d29, type: 2}
@@ -1120,12 +1120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc333bac9d39a344ae573ca8b80e3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  initialCardsAmount: 3
   isEnemy: 0
   deck: {fileID: 1073730592}
   onPlayerHealthChanged: {fileID: 11400000, guid: e4c1fea3429533b47be9d9cd6e2fd007, type: 2}
   onPlayerDeath: {fileID: 11400000, guid: 12d2b981ea81e174a954a54284f9c18b, type: 2}
-  initialCardsAmount: 3
-  defaultMaxHealth: 100
 --- !u!4 &555349634
 Transform:
   m_ObjectHideFlags: 0
@@ -1140,6 +1139,41 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &556330978
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 556330979}
+  m_Layer: 0
+  m_Name: BackCards
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &556330979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556330978}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2119998928}
+  - {fileID: 1061349653}
+  - {fileID: 639840811}
+  - {fileID: 1839063019}
+  m_Father: {fileID: 1073730593}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &567750043
 GameObject:
@@ -1242,12 +1276,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 639840810}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.042, y: 0.038, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.042000055, y: 0.037999988, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1073730593}
+  m_Father: {fileID: 556330979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &639840812
 SpriteRenderer:
@@ -2118,10 +2152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc77a892cc45444d9a4bdc16fb1e3ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
-  enemies:
+  levels:
   - {fileID: 11400000, guid: 78bc2fa050f48a7499df340185ae7b35, type: 2}
   - {fileID: 11400000, guid: bc0bafa6c2269d347831f9e90f10bfad, type: 2}
-  enemy: {fileID: 1554677660}
   onGameLoaded: {fileID: 11400000, guid: 0312c12ce24835647a9c03d9a68c0892, type: 2}
   onGameFinished: {fileID: 11400000, guid: 10f214ac917a9674aa17eb4742d85c66, type: 2}
   onGameRestarted: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
@@ -2691,12 +2724,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061349652}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.08, y: 0.072, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.07999992, y: 0.07200003, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1073730593}
+  m_Father: {fileID: 556330979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1061349654
 SpriteRenderer:
@@ -2800,10 +2833,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 2119998928}
-  - {fileID: 1061349653}
-  - {fileID: 639840811}
-  - {fileID: 1839063019}
+  - {fileID: 556330979}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1095751299
@@ -2892,7 +2922,7 @@ GameObject:
   - component: {fileID: 1110483087}
   - component: {fileID: 1110483088}
   m_Layer: 0
-  m_Name: BackCards
+  m_Name: BackCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2906,12 +2936,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110483086}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2101182307}
+  m_Father: {fileID: 1157349305}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1110483088
 SpriteRenderer:
@@ -3145,6 +3175,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127130573}
   m_CullTransparentMesh: 1
+--- !u!1 &1157349304
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1157349305}
+  m_Layer: 0
+  m_Name: BackCards
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1157349305
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157349304}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1718226669}
+  - {fileID: 1882894846}
+  - {fileID: 1779628950}
+  - {fileID: 1110483087}
+  m_Father: {fileID: 2101182307}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1175779392
 GameObject:
   m_ObjectHideFlags: 0
@@ -3189,6 +3254,30 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1157349304}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 556330978}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!4 &1175779394
 Transform:
@@ -3273,6 +3362,30 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1157349304}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 556330978}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!4 &1226252625
 Transform:
@@ -3979,8 +4092,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6712e0ba337414396a4728d1fac42b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hand
-  cards: []
   maxCardsAmount: 3
+  cards: []
   playerOwner: {fileID: 0}
   onAddedCard: {fileID: 11400000, guid: cd0a2d8b99f38dd4abea0fee41873742, type: 2}
   onClearHand: {fileID: 11400000, guid: fff8e42c26a8f014eab8e886c4dd1d29, type: 2}
@@ -3997,12 +4110,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc333bac9d39a344ae573ca8b80e3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  initialCardsAmount: 3
   isEnemy: 1
   deck: {fileID: 2101182306}
   onPlayerHealthChanged: {fileID: 11400000, guid: 56f1e997dfca24a41800ba6a2badf55b, type: 2}
   onPlayerDeath: {fileID: 11400000, guid: 12d2b981ea81e174a954a54284f9c18b, type: 2}
-  initialCardsAmount: 3
-  defaultMaxHealth: 100
 --- !u!4 &1554677661
 Transform:
   m_ObjectHideFlags: 0
@@ -4236,12 +4348,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1718226668}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.124, y: 0.12, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.12400007, y: 0.120000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2101182307}
+  m_Father: {fileID: 1157349305}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1718226670
 SpriteRenderer:
@@ -4473,6 +4585,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1157349304}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 556330978}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!4 &1778022313
 Transform:
   m_ObjectHideFlags: 0
@@ -4513,12 +4649,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1779628949}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.042, y: 0.038, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.042000055, y: 0.037999988, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2101182307}
+  m_Father: {fileID: 1157349305}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1779628951
 SpriteRenderer:
@@ -4590,7 +4726,7 @@ GameObject:
   - component: {fileID: 1839063019}
   - component: {fileID: 1839063020}
   m_Layer: 0
-  m_Name: BackCards
+  m_Name: BackCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4604,12 +4740,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839063018}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1073730593}
+  m_Father: {fileID: 556330979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1839063020
 SpriteRenderer:
@@ -4695,12 +4831,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1882894845}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.08, y: 0.072, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.07999992, y: 0.07200003, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2101182307}
+  m_Father: {fileID: 1157349305}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1882894847
 SpriteRenderer:
@@ -4927,12 +5063,6 @@ MonoBehaviour:
   onGameOver: {fileID: 11400000, guid: f7b2230f28caf4348b575bfd572d60d9, type: 2}
   onGameRestarted: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
   onPlayerVictory: {fileID: 11400000, guid: 3eeceff22c07fa742ba29fb12a6452b5, type: 2}
-  player: {fileID: 0}
-  enemy: {fileID: 0}
-  players:
-  - {fileID: 0}
-  - {fileID: 0}
-  isGameEnded: 0
 --- !u!4 &2042267821
 Transform:
   m_ObjectHideFlags: 0
@@ -5128,10 +5258,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1718226669}
-  - {fileID: 1882894846}
-  - {fileID: 1779628950}
-  - {fileID: 1110483087}
+  - {fileID: 1157349305}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2119998927
@@ -5159,12 +5286,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2119998927}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.124, y: 0.12, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.12400007, y: 0.120000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1073730593}
+  m_Father: {fileID: 556330979}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2119998929
 SpriteRenderer:

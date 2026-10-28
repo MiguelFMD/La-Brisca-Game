@@ -5,11 +5,14 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CardPower))]
 public class CardDisplay : MonoBehaviour
 {
-    [SerializeField] private CardGameEvent onCardSelected;
     private Button cardButton;
     private CardData cardData;
     private CardPower cardPower;
+    [SerializeField] private CardGameEvent onCardSelected;
     [SerializeField] private Image image;
+    public Player owner => cardData.owner;
+    
+    
 
     void OnEnable()
     {
