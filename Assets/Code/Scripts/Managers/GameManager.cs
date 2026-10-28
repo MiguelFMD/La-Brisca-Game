@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
     [Header("Listeners Events")]
     [SerializeField] private PlayerGameEvent onPlayerDeath;
     [SerializeField] private GameEvent onGameFinished;
@@ -11,10 +12,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameEvent onGameRestarted;
     [SerializeField] private GameEvent onPlayerVictory;
     
-    public Player player;
-    public Player enemy;
-    public Player[] players;
-    public bool isGameEnded = false;
 
     void OnValidate()
     {
@@ -36,24 +33,19 @@ public class GameManager : MonoBehaviour
         if(onGameLoaded != null) onGameLoaded.OnRaised -= HandleOnGameLoaded;
     }
 
-    private void Awake()
-    {
-        players = new Player[2] {player, enemy};
-    }
-
     void Start()
     {
        ResetGame();
     }
     private void ResetGame()
     {
-        isGameEnded = false;
+        //isGameEnded = false;
         onGameRestarted.Raise();
     }
 
     private void HandlePlayerDeath(Player deadPlayer)
     {
-        isGameEnded = true;
+        //isGameEnded = true;
         if(deadPlayer.isEnemy)
         {
             onPlayerVictory.Raise();
@@ -67,11 +59,11 @@ public class GameManager : MonoBehaviour
 
     private void HandleOnGameFinished()
     {
-        isGameEnded = true;
+        //isGameEnded = true;
     }
 
     private void HandleOnGameLoaded()
     {
-        isGameEnded = false;
+        //isGameEnded = false;
     }
 }

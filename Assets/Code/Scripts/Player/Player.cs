@@ -3,11 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Hand))]
 public class Player : MonoBehaviour
 {
-    public PlayerState state { get; private set; }
-
-    public CardData playedCard => state?.PlayedCard;
-    public float maxHealth => state != null ? state.MaxHealth : 100f;
-    public float currentHealth => state != null ? state.CurrentHealth : maxHealth;
+    [Header("Player Stats")]
+    [SerializeField] [Range(1, 5)] public int initialCardsAmount = 3;
     [SerializeField] public bool isEnemy = false;
     private Hand hand;
     [SerializeField] private Deck deck;
@@ -16,9 +13,13 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
     [SerializeField] private PlayerGameEvent onPlayerDeath;
    
-    [Header("Player Stats")]
-    [SerializeField] public int initialCardsAmount = 3;
-    [SerializeField] private float defaultMaxHealth = 100f; 
+    private float defaultMaxHealth = 100f;
+    public PlayerState state { get; private set; }
+    public CardData playedCard => state?.PlayedCard;
+    public float maxHealth => state != null ? state.MaxHealth : 100f;
+    public float currentHealth => state != null ? state.CurrentHealth : maxHealth;
+    
+
     void Awake()
     {
         hand = GetComponent<Hand>();

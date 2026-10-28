@@ -1,13 +1,9 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    private int currentLevel = 0;
-    [Tooltip("Each enemy is a level. Put as much enemies as levels wanted")]
-    [SerializeField] private EnemyType [] enemies;
-    [SerializeField] private Player enemy; 
+    [Tooltip("Each level is an enemy. Put as much levels as levels wanted")]
+    [SerializeField] private EnemyType [] levels;
     [Header("Raise Events")]
     [SerializeField] private GameEvent onGameLoaded;
     [SerializeField] private GameEvent onGameFinished;
@@ -16,7 +12,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameEvent onGameRestarted;
     [SerializeField] private GameEvent onNextLevelStarted;
     [SerializeField] private GameEvent onPlayerVictory;
-    
+    private Player enemy;
+    private int currentLevel = 0;
 
     void OnValidate()
     {
@@ -41,6 +38,17 @@ public class LevelManager : MonoBehaviour
         if(onPlayerVictory != null) onPlayerVictory.OnRaised -= HandleOnPlayerVictory;
     }
 
+    void Awake()
+    {
+        if(levels.Length < 0) Debug.LogError($"[Critical] '{name}' needs 'levels/enemies' in order to work.", this);
+        
+        Player playerEnemy = GameObject.FindWithTag("Enemy").GetComponent<Player>();
+        if(playerEnemy != null)
+            enemy = playerEnemy;
+        else
+            Debug.LogError("Enemy not found in scene");
+    }
+
     private void HandleOnNextLevel()
     {
         print("---------------NEXT LEVEL----------------");
@@ -49,7 +57,7 @@ public class LevelManager : MonoBehaviour
 
     private void HandleOnPlayerVictory()
     {
-        if(currentLevel < enemies.Length - 1)
+        if(currentLevel < levels.Length - 1)
         {
             currentLevel++;
         }
@@ -67,7 +75,8 @@ public class LevelManager : MonoBehaviour
 
     private void LoadNewEnemy()
     {
-        enemy.SetPlayerData(enemies[currentLevel].deck, enemies[currentLevel].health);
+        if(levels.Length == 0) return;
+        enemy.SetPlayerData(levels[currentLevel].deck, levels[currentLevel].health);
         onGameLoaded.Raise();
     }
 }

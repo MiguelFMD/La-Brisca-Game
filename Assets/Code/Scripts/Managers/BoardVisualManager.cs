@@ -5,21 +5,19 @@ using UnityEngine;
 public class BoardVisualManager : MonoBehaviour
 {
     [Header("Card animation")]
-    [SerializeField] private float cardAnimationDuration;
+    [SerializeField] [Range(0.1f, 2.0f)] private float cardAnimationDuration;
     [SerializeField] private AnimationCurve easingCurve;
     [Header("Game references")]
     [SerializeField] private RectTransform tableRectTransform;
     [SerializeField] private HandView playerHandView;
     [SerializeField] private HandView enemyHandView;
+    [SerializeField] private CardPoolSO cardPoolSO;
     [Header("Raise Events")]
     [SerializeField] private GameEvent onCardAnimationEnded;
     [Header("Listener Events")]
     [SerializeField] private GameEvent onTrickStarted;
     [SerializeField] private GameEvent onTrickEnded;
     [SerializeField] private CardGameEvent onCardToTable;
-    
-    [Header("Card pool")]
-    [SerializeField] private CardPoolSO cardPoolSO;
 
     private List<CardDisplay> tableCards;
 

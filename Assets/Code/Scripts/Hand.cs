@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class Hand : MonoBehaviour
 {
+    [SerializeField][Range(1, 10)] private int maxCardsAmount = 3;
+    [Header("Debug")]
     public List<CardData> cards;
-    public int maxCardsAmount;
     public Player playerOwner;
     
     [Header("Events")]

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HandView : MonoBehaviour
 {
+    [Header("Player hand reference")]
     public Hand playerHand;
     public Dictionary<CardData, CardDisplay> cardVisuals = new Dictionary<CardData, CardDisplay>();
     [Header("Listener events")]

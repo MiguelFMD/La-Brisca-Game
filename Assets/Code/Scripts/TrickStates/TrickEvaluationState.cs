@@ -17,9 +17,9 @@ public class TrickEvaluationState: TrickState
             int damageAmount = BriscaRules.CalculateCardValue(trickResult.winner.PlayedCard);
             loserMonoBehaviour.TakeDamage(damageAmount);
             //activate powers
-            for(int i = 0; i < _trickManager.Players.Length; i++) //Next player to play is the winner
+            for(int i = 0; i < _trickManager.players.Length; i++) //Next player to play is the winner
             {
-                if(_trickManager.Players[i].state == trickResult.winner)
+                if(_trickManager.players[i].state == trickResult.winner)
                 {
                     _trickManager.currentPlayer = i;
                     break;

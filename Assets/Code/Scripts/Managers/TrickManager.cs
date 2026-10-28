@@ -6,6 +6,7 @@ public class TrickManager : MonoBehaviour
     [Header("Table references")]
     [SerializeField] private Image triumphCardDisplay;
     [SerializeField] private CardData[] triumphCards;
+    
     [Header("Listeners Events")]
     [SerializeField] private GameEvent onGameLoaded;
     [SerializeField] private CardGameEvent onCardSelected;
@@ -15,12 +16,11 @@ public class TrickManager : MonoBehaviour
     [SerializeField] private GameEvent onCardAnimationEnded;
     [SerializeField] private GameEvent onGameOver;
     [SerializeField] private GameEvent onPlayerVictory;
-
     private TrickState currentState;
-    [SerializeField] private Player[] players = new Player[2];
     [Header("Debug")]
     [SerializeField] private string currentStateName = "Ninguno";
-    public Player[] Players => players;
+
+    public Player[] players = new Player[2];
     public Player firstPlayer {get; set;}
     public Player secondPlayer {get; set;}
     public Suit triumphSuit {get; set;}
@@ -48,6 +48,16 @@ public class TrickManager : MonoBehaviour
         if(onCardSelected != null) onCardSelected.OnRaised -= CardSelected;
         //if(onCardsDealt != null) onCardsDealt.OnRaised -= HandleCardsDealt;
         if(onCardAnimationEnded != null) onCardAnimationEnded.OnRaised -= HandleAnimationEnded;
+    }
+
+    void Awake()
+    {
+        Player[] playersInScene = Object.FindObjectsByType<Player>(FindObjectsSortMode.None);
+        if(playersInScene.Length != 2)
+            Debug.LogWarning("Error finding the two players");
+        else
+            players = playersInScene;
+
     }
 
     private void ResetTrick()
