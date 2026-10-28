@@ -3863,8 +3863,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandView
   playerHand: {fileID: 1554677659}
-  onAddedCard: {fileID: 11400000, guid: cd0a2d8b99f38dd4abea0fee41873742, type: 2}
-  onCardPlayed: {fileID: 11400000, guid: b218f919976a1ce408888f83dbad32c7, type: 2}
+  onAddedCard: {fileID: 11400000, guid: 62f2fac16cf85284db9f2edf53c9b95d, type: 2}
+  onCardPlayed: {fileID: 11400000, guid: 814085bc5e7c5d34ea2ce34d6c7f4758, type: 2}
   onClearHand: {fileID: 11400000, guid: fff8e42c26a8f014eab8e886c4dd1d29, type: 2}
   onCardToTable: {fileID: 11400000, guid: 37e0bbbd77d673e4585807bacc05d512, type: 2}
   cardPoolSO: {fileID: 11400000, guid: d1e3f124a74090b4caa3d394c476376d, type: 2}
@@ -4095,9 +4095,9 @@ MonoBehaviour:
   maxCardsAmount: 3
   cards: []
   playerOwner: {fileID: 0}
-  onAddedCard: {fileID: 11400000, guid: cd0a2d8b99f38dd4abea0fee41873742, type: 2}
+  onAddedCard: {fileID: 11400000, guid: 62f2fac16cf85284db9f2edf53c9b95d, type: 2}
   onClearHand: {fileID: 11400000, guid: fff8e42c26a8f014eab8e886c4dd1d29, type: 2}
-  onCardPlayed: {fileID: 11400000, guid: b218f919976a1ce408888f83dbad32c7, type: 2}
+  onCardPlayed: {fileID: 11400000, guid: 814085bc5e7c5d34ea2ce34d6c7f4758, type: 2}
 --- !u!114 &1554677660
 MonoBehaviour:
   m_ObjectHideFlags: 0
