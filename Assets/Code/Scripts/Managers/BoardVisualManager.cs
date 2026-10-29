@@ -47,13 +47,13 @@ public class BoardVisualManager : MonoBehaviour
         tableCards = new List<CardDisplay>();
     }
 
-    private void HandleOnCardToTable(CardData cardData)
+    private void HandleOnCardToTable(CardStatus cardStatus)
     {
         CardDisplay cardDisplay;
-        if(cardData.owner == playerHandView.playerHand.playerOwner)
-            cardDisplay = playerHandView.ExtractCardDisplay(cardData);
-        else if(cardData.owner == enemyHandView.playerHand.playerOwner)
-            cardDisplay = enemyHandView.ExtractCardDisplay(cardData);
+        if(cardStatus.owner == playerHandView.playerHand.playerOwner.state)
+            cardDisplay = playerHandView.ExtractCardDisplay(cardStatus);
+        else if(cardStatus.owner == enemyHandView.playerHand.playerOwner.state)
+            cardDisplay = enemyHandView.ExtractCardDisplay(cardStatus);
         else
         {
             Debug.LogError("No owner");

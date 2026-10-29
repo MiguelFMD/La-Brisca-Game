@@ -1,17 +1,19 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
     [SerializeField] private DeckType deckType;
-    private Queue<CardData> deckCards;
+    private Queue<CardStatus> deckCards;
+    private PlayerState owner;
 
     public void AssignDeck(DeckType newDeck)
     {
         deckType = newDeck;
     }
     
-    public CardData RemoveCard()
+    public CardStatus RemoveCard()
     {
         if(!IsDeckEmpty())
         {
@@ -33,9 +35,10 @@ public class Deck : MonoBehaviour
     /// <summary>
     /// Creates a new initial deck. Use this to start a new game.
     /// </summary>
-    public void CreateDeck()
+    public void CreateDeck(Player newOwner)
     {
-        deckCards = new Queue<CardData>();
+        deckCards = new Queue<CardStatus>();
+        owner = newOwner.state;
         InitialShuffle();
     }
     private void InitialShuffle(int? seed = null)
@@ -43,14 +46,21 @@ public class Deck : MonoBehaviour
         deckCards.Clear();
         if (deckType == null || deckType.cards == null || deckType.cards.Length == 0)
             return;
-        CardData[] cards = (CardData[])deckType.cards.Clone();
+
+        CardStatus[] cards = new CardStatus[deckType.cards.Length];
+        
+        for(int i = 0; i < deckType.cards.Length; i++)
+        {
+            CardStatus newCard = new CardStatus(deckType.cards[i], owner);
+            cards[i] = newCard;
+        }
 
         System.Random prng = seed.HasValue ? new System.Random(seed.Value) : new System.Random();
 
         for (int i = cards.Length - 1; i > 0; i--)
         {
             int randomIndex = prng.Next(0, i + 1);
-            CardData temp = cards[i];
+            CardStatus temp = cards[i];
             cards[i] = cards[randomIndex];
             cards[randomIndex] = temp;
         }

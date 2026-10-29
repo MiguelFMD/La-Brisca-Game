@@ -6,10 +6,10 @@ public class PlayerState
     public float MaxHealth {get; private set;}
     public float CurrentHealth {get; private set;}
     public bool IsDead => CurrentHealth <= 0;
-    public List<CardData> Hand { get; } = new List<CardData>();
-    public Queue<CardData> Deck { get; } = new Queue<CardData>();
-    public CardData PlayedCard { get; set; }
-    public bool IsEnemy {get; private set; }
+    public List<CardStatus> Hand { get; } = new List<CardStatus>();
+    public Queue<CardStatus> Deck { get; } = new Queue<CardStatus>();
+    public CardStatus PlayedCard { get; set; }
+    public bool IsEnemy {get; set; }
 
     public PlayerState(float maxHealth)
     {
@@ -35,7 +35,7 @@ public class PlayerState
         CurrentHealth = Math.Min(MaxHealth, CurrentHealth + amount);
     }
 
-    public void LoadDeck(IEnumerable<CardData> cards)
+    public void LoadDeck(IEnumerable<CardStatus> cards)
     {
         Deck.Clear();
         foreach (var card in cards)
@@ -44,16 +44,16 @@ public class PlayerState
         }
     }
 
-    public CardData DrawCard()
+    public CardStatus DrawCard()
     {
         if (Deck.Count == 0) return null;
 
-        CardData card = Deck.Dequeue();
+        CardStatus card = Deck.Dequeue();
         Hand.Add(card);
         return card;
     }
 
-    public bool PlayCard(CardData card)
+    public bool PlayCard(CardStatus card)
     {
         if (!Hand.Contains(card)) return false;
 

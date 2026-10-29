@@ -5,7 +5,7 @@ public class Hand : MonoBehaviour
 {
     [SerializeField][Range(1, 10)] private int maxCardsAmount = 3;
     [Header("Debug")]
-    public List<CardData> cards;
+    public List<CardStatus> cards;
     public Player playerOwner;
     
     [Header("Events")]
@@ -16,24 +16,23 @@ public class Hand : MonoBehaviour
 
     void Awake()
     {
-        cards = new List<CardData>();
+        cards = new List<CardStatus>();
         playerOwner = GetComponent<Player>();
     }
 
-    public CardData PlayCard(CardData selectedCard)
+    public CardStatus PlayCard(CardStatus selectedCardStatus)
     {
-        CardData playedCard = selectedCard;
-        if(RemoveCard(playedCard))
+        if(RemoveCard(selectedCardStatus))
         {
-            onCardPlayed.Raise(playedCard);
-            return playedCard;
+            onCardPlayed.Raise(selectedCardStatus);
+            return selectedCardStatus;
         }
             
         else
             return null;
     }
 
-    public void DrawCard(CardData newCard)
+    public void DrawCard(CardStatus newCard)
     {
         AddCard(newCard);
     }
@@ -49,17 +48,17 @@ public class Hand : MonoBehaviour
     /// <summary>
     /// Adds a card.
     /// </summary>
-    private bool AddCard(CardData newCard)
+    private bool AddCard(CardStatus newCardStatus)
     {
         if(cards.Count >= maxCardsAmount)
             return false;
         
-        cards.Add(newCard);
-        onAddedCard.Raise(newCard);
+        cards.Add(newCardStatus);
+        onAddedCard.Raise(newCardStatus);
         return true;
     }
     
-    private bool RemoveCard(CardData selectedCard)
+    private bool RemoveCard(CardStatus selectedCard)
     {
         return cards.Remove(selectedCard);
     }

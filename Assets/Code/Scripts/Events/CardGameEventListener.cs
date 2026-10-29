@@ -1,1 +1,1 @@
-public class CardGameEventListener : BaseGameEventListener<CardData> { }
+public class CardGameEventListener : BaseGameEventListener<CardStatus> { }

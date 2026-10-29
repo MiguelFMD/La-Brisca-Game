@@ -6,14 +6,11 @@ using UnityEngine.UI;
 public class CardDisplay : MonoBehaviour
 {
     private Button cardButton;
-    private CardData cardData;
+    private CardStatus cardStatus;
     private CardPower cardPower;
     [SerializeField] private CardGameEvent onCardSelected;
     [SerializeField] private Image image;
-    public Player owner => cardData.owner;
     
-    
-
     void OnEnable()
     {
         cardButton.onClick.AddListener(OnButtonClick);
@@ -30,11 +27,11 @@ public class CardDisplay : MonoBehaviour
         cardPower = GetComponent<CardPower>();
     }
 
-    public void SetCardData(CardData newCardData)
+    public void SetCardData(CardStatus newCardStatus)
     {
-        cardData = newCardData;
-        image.sprite = cardData.GetCardSprite();
-        if(newCardData.owner.isEnemy)
+        cardStatus = newCardStatus;
+        image.sprite = cardStatus.cardData.GetCardSprite();
+        if(newCardStatus.owner.IsEnemy)
         {
             cardButton.interactable = false;
         }
@@ -42,26 +39,26 @@ public class CardDisplay : MonoBehaviour
         {
             cardButton.interactable = true;
         }
-        cardPower.SetCardPowerData(newCardData);
+        //cardPower.SetCardPowerData(newCardData);
     }
 
     public CardData GetCardData()
     {
-        return cardData;
+        return cardStatus.cardData;
     }
 
-    public Player GetPlayerOwner()
+    public PlayerState GetPlayerOwner()
     {
-        return cardData.owner;
+        return cardStatus.owner;
     }
 
-    public void UseMyPower(Player trickLoser)
+    /*public void UseMyPower(Player trickLoser)
     {
-        cardPower.InvokePower(cardData.owner, trickLoser);
-    }
+        cardPower.InvokePower(cardStatus.cardData.owner, trickLoser);
+    }*/
 
     private void OnButtonClick()
     {
-        onCardSelected.Raise(cardData);
+        onCardSelected.Raise(cardStatus);
     }
 }

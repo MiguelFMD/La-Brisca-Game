@@ -28,11 +28,14 @@ public class BriscaRulesTests
         PlayerState p1 = new PlayerState(100f);
         PlayerState p2 = new PlayerState(100f);
         
-        CardData cartaTriunfo = CreateCard(Suit.Golds, Rank.Two); // Triunfo de valor bajo
-        CardData cartaNormalAlta = CreateCard(Suit.Cups, Rank.Ace); // As de otro palo
+        CardData cartaTriunfoData = CreateCard(Suit.Golds, Rank.Two); // Triunfo de valor bajo
+        CardData cartaNormalAltaData = CreateCard(Suit.Cups, Rank.Ace); // As de otro palo
         
-        p1.Hand.Add(cartaTriunfo);
-        p1.PlayCard(cartaTriunfo);
+        CardStatus cardStatusTriunfo = new CardStatus(cartaTriunfoData, p1);
+        CardStatus cartaNormalAlta = new CardStatus(cartaNormalAltaData, p2);
+
+        p1.Hand.Add(cardStatusTriunfo);
+        p1.PlayCard(cardStatusTriunfo);
         
         p2.Hand.Add(cartaNormalAlta);
         p2.PlayCard(cartaNormalAlta);
@@ -44,8 +47,8 @@ public class BriscaRulesTests
         Assert.That(result.winner, Is.EqualTo(p1), "El triunfo debería ganar aunque sea de menor rango.");
 
         // Limpieza de memoria
-        Object.DestroyImmediate(cartaTriunfo);
-        Object.DestroyImmediate(cartaNormalAlta);
+        Object.DestroyImmediate(cartaTriunfoData);
+        Object.DestroyImmediate(cartaNormalAltaData);
     }
 
     [Test]
@@ -56,12 +59,15 @@ public class BriscaRulesTests
         
         CardData cartaBaja = CreateCard(Suit.Swords, Rank.Three);
         CardData cartaAlta = CreateCard(Suit.Swords, Rank.Ace);
+
+        CardStatus baja = new CardStatus(cartaBaja, p1);
+        CardStatus alta = new CardStatus(cartaAlta, p2);
+
+        p1.Hand.Add(baja);
+        p1.PlayCard(baja);
         
-        p1.Hand.Add(cartaBaja);
-        p1.PlayCard(cartaBaja);
-        
-        p2.Hand.Add(cartaAlta);
-        p2.PlayCard(cartaAlta);
+        p2.Hand.Add(alta);
+        p2.PlayCard(alta);
 
         // Act (El triunfo es Bastos, pero juegan Espadas)
         TrickResult result = BriscaRules.CalculateTrickWinner(Suit.Clubs, p1, p2);
@@ -82,11 +88,14 @@ public class BriscaRulesTests
         CardData cartaAbre = CreateCard(Suit.Cups, Rank.Two); // Abre con Copas
         CardData cartaResponde = CreateCard(Suit.Swords, Rank.Ace); // Responde con Espadas (As)
         
-        p1.Hand.Add(cartaAbre);
-        p1.PlayCard(cartaAbre);
+        CardStatus abre = new CardStatus(cartaAbre, p1);
+        CardStatus responde = new CardStatus(cartaResponde, p2);
+
+        p1.Hand.Add(abre);
+        p1.PlayCard(abre);
         
-        p2.Hand.Add(cartaResponde);
-        p2.PlayCard(cartaResponde);
+        p2.Hand.Add(responde);
+        p2.PlayCard(responde);
 
         // Act (El triunfo es Oros)
         TrickResult result = BriscaRules.CalculateTrickWinner(Suit.Golds, p1, p2);
@@ -109,8 +118,9 @@ public class BriscaRulesTests
 
         // Simulamos que tienen cartas para que esa no sea la causa del fin
         CardData dummyCard = CreateCard(Suit.Golds, Rank.Two);
-        p1.Hand.Add(dummyCard);
-        p2.Hand.Add(dummyCard);
+        CardStatus dummy = new CardStatus(dummyCard, p1);
+        p1.Hand.Add(dummy);
+        p2.Hand.Add(dummy);
 
         // Act 1: Nadie ha muerto
         bool gameOverAntes = BriscaRules.CheckGameOverConditions(p1, p2);
@@ -135,7 +145,8 @@ public class BriscaRulesTests
         
         // Le damos una carta a P2 para que solo P1 esté sin cartas
         CardData dummyCard = CreateCard(Suit.Golds, Rank.Two);
-        p2.Hand.Add(dummyCard);
+        CardStatus dummy = new CardStatus(dummyCard, p2);
+        p2.Hand.Add(dummy);
 
         // Act
         bool isGameOver = BriscaRules.CheckGameOverConditions(p1, p2);

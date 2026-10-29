@@ -39,9 +39,9 @@ public static class BriscaRules
     /// <returns>Returns the trick result. If there is draw returns null</returns>
     public static TrickResult CalculateTrickWinner(Suit triumphSuit,PlayerState firstPlayer, PlayerState secondPlayer)
     {
-        CardData card0 = firstPlayer.PlayedCard;
-        CardData card1 = secondPlayer.PlayedCard;
-        Suit trickSuit = firstPlayer.PlayedCard.GetCardSuit();
+        CardData card0 = firstPlayer.PlayedCard.cardData;
+        CardData card1 = secondPlayer.PlayedCard.cardData;
+        Suit trickSuit = firstPlayer.PlayedCard.cardData.GetCardSuit();
 
         if (card0.GetCardSuit() == card1.GetCardSuit() && card0.GetCardRank() == card1.GetCardRank())
         {

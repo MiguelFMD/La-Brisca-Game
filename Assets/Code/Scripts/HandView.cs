@@ -6,7 +6,7 @@ public class HandView : MonoBehaviour
 {
     [Header("Player hand reference")]
     public Hand playerHand;
-    public Dictionary<CardData, CardDisplay> cardVisuals = new Dictionary<CardData, CardDisplay>();
+    public Dictionary<CardStatus, CardDisplay> cardVisuals = new Dictionary<CardStatus, CardDisplay>();
     [Header("Listener events")]
     [SerializeField] private CardGameEvent onAddedCard;
     [SerializeField] private CardGameEvent onCardPlayed;
@@ -37,7 +37,7 @@ public class HandView : MonoBehaviour
         if(onCardPlayed != null) onCardPlayed.OnRaised -= HandleOnCardPlayed;
     }
 
-    public CardDisplay ExtractCardDisplay(CardData cardData)
+    public CardDisplay ExtractCardDisplay(CardStatus cardData)
     {
         if (cardVisuals.TryGetValue(cardData, out CardDisplay cardVisual))
         {
@@ -48,20 +48,21 @@ public class HandView : MonoBehaviour
         return null;
     }
 
-    private void AddDisplayCard(CardData cardData)
+    private void AddDisplayCard(CardStatus cardStatus)
     {
-        if(cardData.owner != playerHand.playerOwner) return;
+        CardData cardData = cardStatus.cardData;
+        if(cardStatus.owner != playerHand.playerOwner.state) return;
         CardDisplay newCardDisplay = cardPoolSO.Get();
         newCardDisplay.transform.SetParent(transform, false);
         newCardDisplay.transform.localScale = Vector3.one;
-        newCardDisplay.SetCardData(cardData);
-        cardVisuals.Add(cardData, newCardDisplay);
+        newCardDisplay.SetCardData(cardStatus);
+        cardVisuals.Add(cardStatus, newCardDisplay);
     }
 
-    private void HandleOnCardPlayed(CardData cardData)
+    private void HandleOnCardPlayed(CardStatus cardStatus)
     {
-        if(cardData.owner != playerHand.playerOwner) return;
-        onCardToTable.Raise(cardData);
+        if(cardStatus.owner != playerHand.playerOwner.state) return;
+        onCardToTable.Raise(cardStatus);
     }
 
 

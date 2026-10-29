@@ -8,7 +8,7 @@ public abstract class TrickState
     public abstract void Enter();
     public abstract void Exit();
 
-    public virtual void CardSelected(CardData cardData){}
+    public virtual void CardSelected(CardStatus cardStatus){}
 
     public virtual void AnimationEnded(){}
 }

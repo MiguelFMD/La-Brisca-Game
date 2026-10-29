@@ -10,7 +10,6 @@ public class CardData : ScriptableObject
     [SerializeField] private Sprite cardSprite;
     [SerializeField] private Suit cardSuit;
     [SerializeField] private Rank cardRank;
-    public Player owner;
 
     public Sprite GetCardSprite()
     {

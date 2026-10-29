@@ -1,3 +1,4 @@
+using Codice.Client.Commands;
 using UnityEngine;
 
 [RequireComponent(typeof(Hand))]
@@ -15,7 +16,7 @@ public class Player : MonoBehaviour
    
     private float defaultMaxHealth = 100f;
     public PlayerState state { get; private set; }
-    public CardData playedCard => state?.PlayedCard;
+    public CardStatus playedCard => state?.PlayedCard;
     public float maxHealth => state != null ? state.MaxHealth : 100f;
     public float currentHealth => state != null ? state.CurrentHealth : maxHealth;
     
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
     {
         hand = GetComponent<Hand>();
         state = new PlayerState(defaultMaxHealth);
+        state.IsEnemy = isEnemy;
     }
 
     public void Reset()
@@ -53,10 +55,10 @@ public class Player : MonoBehaviour
 
     private void CreateDeck()
     {
-        deck.CreateDeck();
+        deck.CreateDeck(this);
     }
 
-    public void PlayCard(CardData newPlayedCard)
+    public void PlayCard(CardStatus newPlayedCard)
     {
         state.PlayCard(newPlayedCard);
         
@@ -72,7 +74,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public CardData GetRandomCard()
+    public CardStatus GetRandomCard()
     {
         int randomC = Random.Range(0, hand.cards.Count);
         return hand.cards[randomC];
@@ -80,10 +82,10 @@ public class Player : MonoBehaviour
 
     public void DrawOneCard()
     {
-        CardData newCard = deck.RemoveCard();
+        CardStatus newCard = deck.RemoveCard();
         if(newCard == null) return;
         
-        newCard.owner = this; 
+        newCard.owner = state; 
         
         state.Hand.Add(newCard);
         
@@ -122,7 +124,7 @@ public class Player : MonoBehaviour
         if(!IsHandEmpty())
         {
             int random = UnityEngine.Random.Range(0, hand.cards.Count);
-            CardData card = hand.cards[random];
+            CardStatus card = hand.cards[random];
             if(card != null)
             {
                 PlayCard(card);

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CardResolutionState: TrickState
 {
-    private CardData _cardToPlay;
-    public CardResolutionState(TrickManager trickManager, CardData cardToPlay) : base(trickManager)
+    private CardStatus _cardToPlay;
+    public CardResolutionState(TrickManager trickManager, CardStatus cardToPlay) : base(trickManager)
     {
         _cardToPlay = cardToPlay;
     }

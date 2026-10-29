@@ -14,7 +14,7 @@ public class TrickEvaluationState: TrickState
             : _trickManager.secondPlayer;
 
             // 2. Llamamos al TakeDamage del MonoBehaviour (que actualizará el state y disparará el evento visual)
-            int damageAmount = BriscaRules.CalculateCardValue(trickResult.winner.PlayedCard);
+            int damageAmount = BriscaRules.CalculateCardValue(trickResult.winner.PlayedCard.cardData);
             loserMonoBehaviour.TakeDamage(damageAmount);
             //activate powers
             for(int i = 0; i < _trickManager.players.Length; i++) //Next player to play is the winner

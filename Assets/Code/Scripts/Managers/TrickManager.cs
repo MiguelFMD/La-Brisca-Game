@@ -57,7 +57,6 @@ public class TrickManager : MonoBehaviour
             Debug.LogWarning("Error finding the two players");
         else
             players = playersInScene;
-
     }
 
     private void ResetTrick()
@@ -81,9 +80,9 @@ public class TrickManager : MonoBehaviour
         currentState.Enter();
     }
 
-    private void CardSelected(CardData cardData)
+    private void CardSelected(CardStatus cardStatus)
     {
-        currentState?.CardSelected(cardData);
+        currentState?.CardSelected(cardStatus);
     }
 
     /*public void HandleCardsDealt(Player player)
@@ -91,9 +90,9 @@ public class TrickManager : MonoBehaviour
         currentState?.CardsDealt(player);
     }*/
 
-    public bool CheckPlayerTurn(Player owner)
+    public bool CheckPlayerTurn(PlayerState owner)
     {
-        if(players[currentPlayer] != owner)
+        if(players[currentPlayer].state != owner)
         {
             Debug.LogWarning("Wait for your turn!");
             return false;
