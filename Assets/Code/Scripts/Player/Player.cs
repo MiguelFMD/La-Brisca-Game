@@ -1,4 +1,3 @@
-using Codice.Client.Commands;
 using UnityEngine;
 
 [RequireComponent(typeof(Hand))]
@@ -19,13 +18,13 @@ public class Player : MonoBehaviour
     public CardStatus playedCard => state?.PlayedCard;
     public float maxHealth => state != null ? state.MaxHealth : 100f;
     public float currentHealth => state != null ? state.CurrentHealth : maxHealth;
-    
 
     void Awake()
     {
         hand = GetComponent<Hand>();
         state = new PlayerState(defaultMaxHealth);
         state.IsEnemy = isEnemy;
+        state.onCardPlayed += PlayCard;
     }
 
     public void Reset()
@@ -58,20 +57,10 @@ public class Player : MonoBehaviour
         deck.CreateDeck(this);
     }
 
-    public void PlayCard(CardStatus newPlayedCard)
+    private void PlayCard(CardStatus newPlayedCard)
     {
-        state.PlayCard(newPlayedCard);
-        
+        //state.PlayCard(newPlayedCard);
         hand.PlayCard(newPlayedCard);
-    }
-
-    public void PlayRandomCard()
-    {
-        if(hand.cards.Count > 0)
-        {
-            int randomC = Random.Range(0, hand.cards.Count);
-            PlayCard(hand.cards[randomC]);
-        }
     }
 
     public CardStatus GetRandomCard()

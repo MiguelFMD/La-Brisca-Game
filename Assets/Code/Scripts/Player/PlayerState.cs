@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class PlayerState
 {
+     public event Action<CardStatus> onCardPlayed;
     public float MaxHealth {get; private set;}
     public float CurrentHealth {get; private set;}
     public bool IsDead => CurrentHealth <= 0;
@@ -59,6 +60,7 @@ public class PlayerState
 
         Hand.Remove(card);
         PlayedCard = card;
+        onCardPlayed?.Invoke(card);
         return true;
     }
 

@@ -9,6 +9,7 @@ public class TrickDealingState : TrickState
         _trickManager.DiscoverTriumphSuit();
         _trickManager.RaiseTrickStarted();
         _trickManager.DealInitalCards();
+        _trickManager.SelectNextPlayer();
         _trickManager.ChangeState(new WaitingTurnState(_trickManager));
     }
 

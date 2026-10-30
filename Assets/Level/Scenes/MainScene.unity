@@ -1103,7 +1103,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hand
   maxCardsAmount: 3
-  cards: []
   playerOwner: {fileID: 0}
   onAddedCard: {fileID: 11400000, guid: cd0a2d8b99f38dd4abea0fee41873742, type: 2}
   onClearHand: {fileID: 11400000, guid: fff8e42c26a8f014eab8e886c4dd1d29, type: 2}
@@ -1125,6 +1124,7 @@ MonoBehaviour:
   deck: {fileID: 1073730592}
   onPlayerHealthChanged: {fileID: 11400000, guid: e4c1fea3429533b47be9d9cd6e2fd007, type: 2}
   onPlayerDeath: {fileID: 11400000, guid: 12d2b981ea81e174a954a54284f9c18b, type: 2}
+  onCardSelected: {fileID: 11400000, guid: a1124c7d7132a6e4c9639ff404417ae8, type: 2}
 --- !u!4 &555349634
 Transform:
   m_ObjectHideFlags: 0
@@ -4093,7 +4093,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hand
   maxCardsAmount: 3
-  cards: []
   playerOwner: {fileID: 0}
   onAddedCard: {fileID: 11400000, guid: 62f2fac16cf85284db9f2edf53c9b95d, type: 2}
   onClearHand: {fileID: 11400000, guid: fff8e42c26a8f014eab8e886c4dd1d29, type: 2}
@@ -4115,6 +4114,7 @@ MonoBehaviour:
   deck: {fileID: 2101182306}
   onPlayerHealthChanged: {fileID: 11400000, guid: 56f1e997dfca24a41800ba6a2badf55b, type: 2}
   onPlayerDeath: {fileID: 11400000, guid: 12d2b981ea81e174a954a54284f9c18b, type: 2}
+  onCardSelected: {fileID: 0}
 --- !u!4 &1554677661
 Transform:
   m_ObjectHideFlags: 0
