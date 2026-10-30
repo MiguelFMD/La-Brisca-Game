@@ -11,6 +11,12 @@ public class CardData : ScriptableObject
     [SerializeField] private Suit cardSuit;
     [SerializeField] private Rank cardRank;
 
+    public void Initialize(Suit newCardSuit, Rank newCardRank)
+    {
+        cardSuit = newCardSuit;
+        cardRank = newCardRank;
+    }
+
     public Sprite GetCardSprite()
     {
         return cardSprite;
@@ -25,6 +31,8 @@ public class CardData : ScriptableObject
     {
         return cardRank;
     }
+
+    
 
     #if UNITY_EDITOR
     private void OnValidate()

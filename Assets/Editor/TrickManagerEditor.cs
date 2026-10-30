@@ -9,6 +9,7 @@ public class TrickManagerEditor : EditorWindow
     VisualElement root;
     private GameEvent onPlayerVictory;
     private GameEvent onGameOver;
+    private CardGameEvent onCardAdded;
     [MenuItem("Window/UI Toolkit/TrickManagerEditor")]
     public static void ShowExample()
     {
@@ -22,26 +23,14 @@ public class TrickManagerEditor : EditorWindow
         root = rootVisualElement;
 
         
-        root.Add(FieldEvent(onPlayerVictory));
-        root.Add(FieldEvent(onGameOver));
-
-        // 2. Crear un Dropdown (Menú desplegable)
-        /*List<string> trickOptions = new List<string> { "Salto", "Giro", "Aceleración" };
-        
-        // Parámetros: Etiqueta, Lista de opciones, Índice por defecto (0)
-        DropdownField trickDropdown = new DropdownField("Selecciona un truco", trickOptions, 0);
-        
-        // Suscribirse al evento de cambio de valor
-        trickDropdown.RegisterValueChangedCallback(evt =>
-        {
-            Debug.Log($"Nueva opción seleccionada: {evt.newValue}. Llama a tu evento aquí.");
-            // Ejemplo: MiGameManager.Instancia.PrepararTruco(evt.newValue);
-        });
-        root.Add(trickDropdown);*/
+        root.Add(AddGameEventField(onPlayerVictory));
+        root.Add(AddGameEventField(onGameOver));
+        root.Add(AddCardEventField(onCardAdded));
 
     }
 
-    private ObjectField FieldEvent(GameEvent gameEvent)
+
+    private ObjectField AddGameEventField(GameEvent gameEvent)
     {
         ObjectField eventField = new ObjectField("Game Event");
         eventField.objectType = typeof(GameEvent);
@@ -50,19 +39,51 @@ public class TrickManagerEditor : EditorWindow
             gameEvent = evt.newValue as GameEvent;
             Debug.Log($"Evento asignado: {(gameEvent != null ? gameEvent.name : "Ninguno")}");
             eventField.name = gameEvent.name;
-            root.Add(CreateButton(gameEvent));
+            root.Add(CreateButtonGameEvent(gameEvent));
         });
         
         return eventField;
     }
 
-    private Button CreateButton(GameEvent myEvent)
+    private Button CreateButtonGameEvent(GameEvent myEvent)
     {
         Button actionButton = new Button();
         actionButton.text = myEvent.name;
         actionButton.clicked += () => 
         {
             if(myEvent != null) myEvent.Raise();
+            else Debug.LogWarning("First assign an event to the button");
+        };
+        return actionButton;
+    }
+
+    private ObjectField AddCardEventField(CardGameEvent cardGameEvent)
+    {
+        ObjectField eventField = new ObjectField("Card Game Event");
+        eventField.objectType = typeof(CardGameEvent);
+        eventField.RegisterValueChangedCallback(evt =>
+        {
+            cardGameEvent = evt.newValue as CardGameEvent;
+            Debug.Log($"Evento asignado: {(cardGameEvent != null ? cardGameEvent.name : "Ninguno")}");
+            CreateButtonCardEvent(cardGameEvent, Suit.Clubs);
+            CreateButtonCardEvent(cardGameEvent, Suit.Cups);
+            CreateButtonCardEvent(cardGameEvent, Suit.Golds);
+            CreateButtonCardEvent(cardGameEvent, Suit.Swords);
+        });
+        return eventField;
+    }
+
+    private Button CreateButtonCardEvent(CardGameEvent myEvent, Suit suit)
+    {
+        CardData cardData = ScriptableObject.CreateInstance<CardData>();
+        cardData.Initialize(suit, Rank.Ace);
+        Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        CardStatus cardStatus = new CardStatus(cardData, player.state);
+        Button actionButton = new Button();
+        actionButton.text = suit.ToString();
+        actionButton.clicked += () => 
+        {
+            if(myEvent != null) myEvent.Raise(cardStatus);
             else Debug.LogWarning("First assign an event to the button");
         };
         return actionButton;

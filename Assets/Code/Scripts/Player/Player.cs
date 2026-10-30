@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     [Header("Raise Events")]
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
     [SerializeField] private PlayerGameEvent onPlayerDeath;
+
+    [Header("Debug")]
+    [SerializeField] private CardGameEvent onTestCardAdded;
    
     private float defaultMaxHealth = 100f;
     public PlayerState state { get; private set; }
@@ -19,12 +22,24 @@ public class Player : MonoBehaviour
     public float maxHealth => state != null ? state.MaxHealth : 100f;
     public float currentHealth => state != null ? state.CurrentHealth : maxHealth;
 
+    void OnEnable()
+    {
+        state.onCardPlayed += PlayCard;
+        if(onTestCardAdded != null) onTestCardAdded.OnRaised += Test_PlayCard;       
+    }
+
+    void OnDisable()
+    {
+        state.onCardPlayed -= PlayCard;
+        if(onTestCardAdded != null) onTestCardAdded.OnRaised -= Test_PlayCard; 
+    }
+
     void Awake()
     {
         hand = GetComponent<Hand>();
         state = new PlayerState(defaultMaxHealth);
         state.IsEnemy = isEnemy;
-        state.onCardPlayed += PlayCard;
+        
     }
 
     public void Reset()
@@ -61,6 +76,11 @@ public class Player : MonoBehaviour
     {
         //state.PlayCard(newPlayedCard);
         hand.PlayCard(newPlayedCard);
+    }
+
+    private void Test_PlayCard(CardStatus cardStatus)
+    {
+        state.PlayCard(cardStatus);
     }
 
     public CardStatus GetRandomCard()
