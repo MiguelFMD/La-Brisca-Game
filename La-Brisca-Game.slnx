@@ -1,4 +1,5 @@
 ﻿<Solution>
   <Project Path="GameCore.csproj" />
   <Project Path="GameCore.Tests.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
 </Solution>
