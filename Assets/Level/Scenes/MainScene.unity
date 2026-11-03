@@ -1124,7 +1124,6 @@ MonoBehaviour:
   deck: {fileID: 1073730592}
   onPlayerHealthChanged: {fileID: 11400000, guid: e4c1fea3429533b47be9d9cd6e2fd007, type: 2}
   onPlayerDeath: {fileID: 11400000, guid: 12d2b981ea81e174a954a54284f9c18b, type: 2}
-  onCardSelected: {fileID: 11400000, guid: a1124c7d7132a6e4c9639ff404417ae8, type: 2}
 --- !u!4 &555349634
 Transform:
   m_ObjectHideFlags: 0
@@ -1722,9 +1721,9 @@ RectTransform:
   - {fileID: 1059756706}
   m_Father: {fileID: 685128955}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -50}
   m_SizeDelta: {x: 309.1, y: 64.41}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &741971634
@@ -3077,7 +3076,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1114654793
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3589,6 +3588,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  canvasRoot: {fileID: 1746887667}
   tableRectTransform: {fileID: 844133884}
   playerHandView: {fileID: 2041251665}
   enemyHandView: {fileID: 1451562375}
@@ -4114,7 +4114,6 @@ MonoBehaviour:
   deck: {fileID: 2101182306}
   onPlayerHealthChanged: {fileID: 11400000, guid: 56f1e997dfca24a41800ba6a2badf55b, type: 2}
   onPlayerDeath: {fileID: 11400000, guid: 12d2b981ea81e174a954a54284f9c18b, type: 2}
-  onCardSelected: {fileID: 0}
 --- !u!4 &1554677661
 Transform:
   m_ObjectHideFlags: 0

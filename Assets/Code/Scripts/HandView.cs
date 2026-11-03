@@ -42,7 +42,6 @@ public class HandView : MonoBehaviour
         if (cardVisuals.TryGetValue(cardData, out CardDisplay cardVisual))
         {
             cardVisuals.Remove(cardData);
-            cardVisual.transform.SetParent(null);
             return cardVisual;
         }
         return null;

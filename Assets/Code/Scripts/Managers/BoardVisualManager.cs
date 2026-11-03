@@ -8,6 +8,7 @@ public class BoardVisualManager : MonoBehaviour
     [SerializeField] [Range(0.1f, 2.0f)] private float cardAnimationDuration;
     [SerializeField] private AnimationCurve easingCurve;
     [Header("Game references")]
+    [SerializeField] private RectTransform canvasRoot;
     [SerializeField] private RectTransform tableRectTransform;
     [SerializeField] private HandView playerHandView;
     [SerializeField] private HandView enemyHandView;
@@ -71,9 +72,8 @@ public class BoardVisualManager : MonoBehaviour
     private void CardToCenter(CardDisplay cardDisplay)
     {
         RectTransform cardRect = cardDisplay.GetComponent<RectTransform>();
-        cardRect.SetParent(tableRectTransform, true);
-        onCardAnimationEnded.Raise();
-        //StartCoroutine(AnimateCard(cardRect));
+        cardRect.SetParent(canvasRoot, true);
+        StartCoroutine(AnimateCard(cardRect));
     }
 
     private IEnumerator AnimateCard(RectTransform selectedCard)
