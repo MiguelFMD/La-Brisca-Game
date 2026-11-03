@@ -2,12 +2,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-[RequireComponent(typeof(CardPower))]
 public class CardDisplay : MonoBehaviour
 {
     private Button cardButton;
     private CardStatus cardStatus;
-    private CardPower cardPower;
     [SerializeField] private CardGameEvent onCardSelected;
     [SerializeField] private Image image;
     
@@ -24,7 +22,6 @@ public class CardDisplay : MonoBehaviour
     void Awake()
     {
         cardButton = GetComponent<Button>();
-        cardPower = GetComponent<CardPower>();
     }
 
     public void SetCardData(CardStatus newCardStatus)
@@ -39,7 +36,6 @@ public class CardDisplay : MonoBehaviour
         {
             cardButton.interactable = true;
         }
-        //cardPower.SetCardPowerData(newCardData);
     }
 
     public CardData GetCardData()
@@ -51,11 +47,6 @@ public class CardDisplay : MonoBehaviour
     {
         return cardStatus.owner;
     }
-
-    /*public void UseMyPower(Player trickLoser)
-    {
-        cardPower.InvokePower(cardStatus.cardData.owner, trickLoser);
-    }*/
 
     private void OnButtonClick()
     {

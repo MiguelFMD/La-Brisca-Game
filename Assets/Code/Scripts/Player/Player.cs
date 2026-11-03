@@ -100,30 +100,6 @@ public class Player : MonoBehaviour
     {
         onPlayerDeath.Raise(this);
     }
-    
-    //Powers related
-
-    public void UseCardPower(Player trickLoser)
-    {
-        //playedCard.UseMyPower(trickLoser);
-    }
-
-    public void RemoveRandomCard() //For clubs power
-    {
-        if(!IsHandEmpty())
-        {
-            int random = UnityEngine.Random.Range(0, hand.cards.Count);
-            CardStatus card = hand.cards[random];
-            if(card != null)
-            {
-                PlayCard(card);
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Player's hand is empty");
-        }
-    }
 
     //------STATS FUNCTIONS-------
     public void TakeDamage(float amount)
@@ -132,10 +108,7 @@ public class Player : MonoBehaviour
         
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
         
-        if (state.IsDead)
-        {
-            onPlayerDeath.Raise(this);
-        }
+        if (state.IsDead) onPlayerDeath.Raise(this);
     }
 
     public void Heal(float amount)
