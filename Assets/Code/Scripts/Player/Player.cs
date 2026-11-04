@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] [Range(1, 5)] public int initialCardsAmount = 3;
     [SerializeField] public bool isEnemy = false;
     private Hand hand;
+    [SerializeField] private DeckType playerDeck;
     
     [Header("Raise Events")]
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
@@ -25,11 +26,13 @@ public class Player : MonoBehaviour
         state = new PlayerState(defaultMaxHealth);
         state.IsEnemy = isEnemy;
         state.onCardPlayed += PlayCard;
+        state.Deck = new Deck();
     }
 
     public void Reset()
     {
         hand.ClearHand();
+        if(!state.IsEnemy) SetPlayerData(playerDeck, maxHealth);
         Heal(maxHealth);
         CreateDeck();
     }

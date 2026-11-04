@@ -17,10 +17,8 @@ public class TrickEvaluationState: TrickState
             : _trickManager.secondPlayer;
 
             
-            //Normal damage 
-            
-
-
+            CombatManager.ApplyWinnerPower(winner, loser);
+            CombatManager.ApplyLoserPower(loser, winner);
             
             for(int i = 0; i < _trickManager.players.Length; i++) //Next player to play is the winner
             {

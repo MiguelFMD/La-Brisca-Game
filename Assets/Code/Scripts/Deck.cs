@@ -4,8 +4,8 @@ using UnityEngine;
 public class Deck
 {
     private DeckType deckType;
-    private Queue<CardStatus> deckCards;
-    private Stack<CardStatus> deadCards;
+    private Queue<CardStatus> deckCards = new Queue<CardStatus>();
+    private Stack<CardStatus> deadCards = new Stack<CardStatus>();
     private PlayerState owner;
 
     public void AssignDeck(DeckType newDeck)
@@ -34,16 +34,30 @@ public class Deck
     {
         return deckCards.Count;
     }
-    public void ReviveCard()
+    public void ReviveCards(int amount)
     {
-        CardStatus card = deadCards.Pop();
-        if(card != null) deckCards.Enqueue(card);
+        for(int i = 0; i < amount; i++)
+        {
+            CardStatus card = deadCards.Pop();
+            if(card != null) 
+            {
+                deckCards.Enqueue(card);
+                return;
+            }
+        }
     }
 
-    public void BurnCard()
+    public void BurnCards(int amount)
     {
-        CardStatus card = deckCards.Dequeue();
-        if(card != null) deadCards.Push(card);
+        for(int i = 0; i < amount; i++)
+        {
+            CardStatus card = deckCards.Dequeue();
+            if(card != null)
+            {
+                deadCards.Push(card);
+                return;
+            }
+        }   
     }
 
     public bool IsDeckEmpty()
@@ -56,7 +70,6 @@ public class Deck
     /// </summary>
     public void CreateDeck(Player newOwner)
     {
-        deckCards = new Queue<CardStatus>();
         owner = newOwner.state;
         InitialShuffle();
     }
