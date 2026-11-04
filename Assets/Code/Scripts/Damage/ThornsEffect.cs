@@ -8,5 +8,6 @@ public class ThornsEffect : StatusEffect
         int reflectDamage = this.Stacks;
 
         ctx.Target.TakeDamage(reflectDamage);
+
     }
 }

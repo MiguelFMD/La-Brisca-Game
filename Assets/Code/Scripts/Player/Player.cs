@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     public CardStatus playedCard => state?.PlayedCard;
     public float maxHealth => state != null ? state.MaxHealth : 100f;
     public float currentHealth => state != null ? state.CurrentHealth : maxHealth;
+    
 
     void Awake()
     {
@@ -30,7 +31,6 @@ public class Player : MonoBehaviour
     public void Reset()
     {
         hand.ClearHand();
-        //state = new PlayerState(defaultMaxHealth);
         Heal(maxHealth);
         CreateDeck();
     }
@@ -59,7 +59,6 @@ public class Player : MonoBehaviour
 
     private void PlayCard(CardStatus newPlayedCard)
     {
-        //state.PlayCard(newPlayedCard);
         hand.PlayCard(newPlayedCard);
     }
 

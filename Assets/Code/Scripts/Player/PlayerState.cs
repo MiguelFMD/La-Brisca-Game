@@ -3,12 +3,13 @@ using System.Collections.Generic;
 
 public class PlayerState
 {
-     public event Action<CardStatus> onCardPlayed;
+    public event Action<CardStatus> onCardPlayed;
     public float MaxHealth {get; private set;}
     public float CurrentHealth {get; private set;}
     public bool IsDead => CurrentHealth <= 0;
     public List<CardStatus> Hand { get; } = new List<CardStatus>();
     public Queue<CardStatus> Deck { get; } = new Queue<CardStatus>();
+    public List<StatusEffect> StatusEffects {get;} = new List<StatusEffect>();
     public CardStatus PlayedCard { get; set; }
     public bool IsEnemy {get; set; }
 
@@ -64,10 +65,23 @@ public class PlayerState
         return true;
     }
 
+    
+
     public void ClearPlayedCard()
     {
         PlayedCard = null;
     }
 
     public bool HasNoCardsLeft() => Hand.Count == 0 && Deck.Count == 0;
+
+    //Status Effects
+    public void ClearStatusEffects()
+    {
+        StatusEffects.Clear();
+    }
+
+    public void AddStatusEffect(StatusEffect newStatusEffect)
+    {
+        StatusEffects.Add(newStatusEffect);
+    }
 }

@@ -18,9 +18,10 @@ public class TrickEvaluationState: TrickState
 
             
             //Normal damage 
-            int damageAmount = BriscaRules.CalculateCardValue(trickResult.winner.PlayedCard.cardData);
             
-            loser.TakeDamage(damageAmount);
+
+
+            
             for(int i = 0; i < _trickManager.players.Length; i++) //Next player to play is the winner
             {
                 if(_trickManager.players[i].state == trickResult.winner)

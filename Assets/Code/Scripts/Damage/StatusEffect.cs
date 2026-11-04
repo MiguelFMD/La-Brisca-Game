@@ -7,4 +7,5 @@ public abstract class StatusEffect
     public virtual void OnTrickWon(TrickResult result) {}
     public virtual void OnBeforeReceiveDamage(DamageContext ctx) {}
     public virtual void OnAfterReceiveDamage(DamageContext ctx) {}
+    public virtual void OnAfterDrawnCard(DamageContext ctx) {}
 }
