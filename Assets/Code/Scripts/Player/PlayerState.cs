@@ -3,12 +3,13 @@ using System.Collections.Generic;
 
 public class PlayerState
 {
+    public Deck Deck {get; set; }
     public event Action<CardStatus> onCardPlayed;
     public float MaxHealth {get; private set;}
     public float CurrentHealth {get; private set;}
+    public float CurrentShield {get; set;}
     public bool IsDead => CurrentHealth <= 0;
     public List<CardStatus> Hand { get; } = new List<CardStatus>();
-    public Queue<CardStatus> Deck { get; } = new Queue<CardStatus>();
     public List<StatusEffect> StatusEffects {get;} = new List<StatusEffect>();
     public CardStatus PlayedCard { get; set; }
     public bool IsEnemy {get; set; }
@@ -28,7 +29,12 @@ public class PlayerState
     public void TakeDamage(float amount)
     {
         if (IsDead) return;
-        CurrentHealth = Math.Max(0, CurrentHealth - amount);
+        if(CurrentShield > 0)
+        {
+            float amountLeft = CurrentShield - amount;
+            CurrentHealth = Math.Max(0, CurrentHealth - amountLeft);
+        } 
+        else CurrentHealth = Math.Max(0, CurrentHealth - amount);
     }
 
     public void Heal(float amount)
@@ -37,23 +43,6 @@ public class PlayerState
         CurrentHealth = Math.Min(MaxHealth, CurrentHealth + amount);
     }
 
-    public void LoadDeck(IEnumerable<CardStatus> cards)
-    {
-        Deck.Clear();
-        foreach (var card in cards)
-        {
-            Deck.Enqueue(card);
-        }
-    }
-
-    public CardStatus DrawCard()
-    {
-        if (Deck.Count == 0) return null;
-
-        CardStatus card = Deck.Dequeue();
-        Hand.Add(card);
-        return card;
-    }
 
     public bool PlayCard(CardStatus card)
     {
@@ -72,7 +61,7 @@ public class PlayerState
         PlayedCard = null;
     }
 
-    public bool HasNoCardsLeft() => Hand.Count == 0 && Deck.Count == 0;
+    public bool HasNoCardsLeft() => Hand.Count == 0 && Deck.CountCards() == 0;
 
     //Status Effects
     public void ClearStatusEffects()

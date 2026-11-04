@@ -7,7 +7,6 @@ public class Player : MonoBehaviour
     [SerializeField] [Range(1, 5)] public int initialCardsAmount = 3;
     [SerializeField] public bool isEnemy = false;
     private Hand hand;
-    [SerializeField] private Deck deck;
     
     [Header("Raise Events")]
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
@@ -37,7 +36,7 @@ public class Player : MonoBehaviour
 
     public void SetPlayerData(DeckType newDeck, float newMaxHealth)
     {
-        deck.AssignDeck(newDeck);
+        state.Deck.AssignDeck(newDeck);
         state.SetMaxHealth(newMaxHealth);
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
     }
@@ -54,7 +53,7 @@ public class Player : MonoBehaviour
 
     private void CreateDeck()
     {
-        deck.CreateDeck(this);
+        state.Deck.CreateDeck(this);
     }
 
     private void PlayCard(CardStatus newPlayedCard)
@@ -70,7 +69,7 @@ public class Player : MonoBehaviour
 
     public void DrawOneCard()
     {
-        CardStatus newCard = deck.RemoveCard();
+        CardStatus newCard = state.Deck.RemoveCard();
         if(newCard == null) return;
         
         newCard.owner = state; 
@@ -78,26 +77,6 @@ public class Player : MonoBehaviour
         state.Hand.Add(newCard);
         
         hand.DrawCard(newCard);
-    }
-
-    public bool HasNoCardsLeft()
-    {
-        return IsHandEmpty() && IsDeckEmpty();
-    }
-    
-    private bool IsHandEmpty()
-    {
-        return state.Hand.Count == 0;
-    }
-
-    private bool IsDeckEmpty()
-    {
-        return deck.IsDeckEmpty();
-    }
-
-    public void TriggerPlayerDeath()
-    {
-        onPlayerDeath.Raise(this);
     }
 
     //------STATS FUNCTIONS-------

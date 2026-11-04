@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class Deck : MonoBehaviour
+public class Deck
 {
-    [SerializeField] private DeckType deckType;
+    private DeckType deckType;
     private Queue<CardStatus> deckCards;
+    private Stack<CardStatus> deadCards;
     private PlayerState owner;
 
     public void AssignDeck(DeckType newDeck)
@@ -17,7 +17,9 @@ public class Deck : MonoBehaviour
     {
         if(!IsDeckEmpty())
         {
-            return deckCards.Dequeue();
+            CardStatus removedCard = deckCards.Dequeue();
+            deadCards.Push(removedCard);
+            return removedCard;
         }
             
         else
@@ -27,6 +29,23 @@ public class Deck : MonoBehaviour
         }
             
     }
+
+    public int CountCards()
+    {
+        return deckCards.Count;
+    }
+    public void ReviveCard()
+    {
+        CardStatus card = deadCards.Pop();
+        if(card != null) deckCards.Enqueue(card);
+    }
+
+    public void BurnCard()
+    {
+        CardStatus card = deckCards.Dequeue();
+        if(card != null) deadCards.Push(card);
+    }
+
     public bool IsDeckEmpty()
     {
         return deckCards.Count == 0;

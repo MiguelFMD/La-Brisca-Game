@@ -1121,7 +1121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   initialCardsAmount: 3
   isEnemy: 0
-  deck: {fileID: 1073730592}
+  deck: {fileID: 0}
   onPlayerHealthChanged: {fileID: 11400000, guid: e4c1fea3429533b47be9d9cd6e2fd007, type: 2}
   onPlayerDeath: {fileID: 11400000, guid: 12d2b981ea81e174a954a54284f9c18b, type: 2}
 --- !u!4 &555349634
@@ -2798,7 +2798,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1073730593}
-  - component: {fileID: 1073730592}
   m_Layer: 0
   m_Name: BasicDeck_Player
   m_TagString: Untagged
@@ -2806,19 +2805,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1073730592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1073730591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d25ef20e228273942b7a235b80c2e0c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Deck
-  deckType: {fileID: 11400000, guid: a8aa9591ea8079c4885359f1849a7027, type: 2}
 --- !u!4 &1073730593
 Transform:
   m_ObjectHideFlags: 0
@@ -4111,7 +4097,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   initialCardsAmount: 3
   isEnemy: 1
-  deck: {fileID: 2101182306}
+  deck: {fileID: 0}
   onPlayerHealthChanged: {fileID: 11400000, guid: 56f1e997dfca24a41800ba6a2badf55b, type: 2}
   onPlayerDeath: {fileID: 11400000, guid: 12d2b981ea81e174a954a54284f9c18b, type: 2}
 --- !u!4 &1554677661
@@ -5223,7 +5209,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2101182307}
-  - component: {fileID: 2101182306}
   m_Layer: 0
   m_Name: BasicDeck_Enemy
   m_TagString: Untagged
@@ -5231,19 +5216,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2101182306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2101182305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d25ef20e228273942b7a235b80c2e0c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Deck
-  deckType: {fileID: 11400000, guid: a8aa9591ea8079c4885359f1849a7027, type: 2}
 --- !u!4 &2101182307
 Transform:
   m_ObjectHideFlags: 0
