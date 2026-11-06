@@ -10,7 +10,7 @@ public class PlayerState
     public float CurrentShield {get; set;}
     public bool IsDead => CurrentHealth <= 0;
     public List<CardStatus> Hand { get; } = new List<CardStatus>();
-    public List<StatusEffect> StatusEffects {get;} = new List<StatusEffect>();
+    public List<StatusEffect> activeStatusEffects = new List<StatusEffect>();
     public CardStatus PlayedCard { get; set; }
     public bool IsEnemy {get; set; }
 
@@ -37,9 +37,9 @@ public class PlayerState
             CurrentHealth = Math.Max(0, CurrentHealth - amountLeft);
             newContext.Amount = amountLeft;
         }
-        foreach(StatusEffect status in StatusEffects)
+        foreach(StatusEffect statusEffect in activeStatusEffects)
         {
-            status.OnAfterReceiveDamage(newContext);
+            statusEffect.OnAfterReceiveDamage(newContext);
         }
     }
 
@@ -60,20 +60,16 @@ public class PlayerState
         return true;
     }
 
-    public void DrawCards(int amount)
-    {
-        for(int c = 0; c < amount; c++)
-        {
-            DrawOneCard();
-        }
-    }
-
     public CardStatus DrawOneCard()
     {
         CardStatus newCard = Deck.RemoveCard();
         if(newCard == null) return newCard;
         newCard.owner = this; 
         Hand.Add(newCard);
+        foreach(StatusEffect statusEffect in activeStatusEffects)
+        {
+            statusEffect.OnAfterDrawnCard(this);
+        }
         return newCard;
     }
 
@@ -85,14 +81,16 @@ public class PlayerState
     public bool HasNoCardsLeft() => Hand.Count == 0 && Deck.CountCards() == 0;
 
     //Status Effects
-    public void ClearStatusEffects()
-    {
-        StatusEffects.Clear();
-    }
-
     public void AddStatusEffect(StatusEffect newStatusEffect)
     {
-        StatusEffects.Add(newStatusEffect);
+        foreach(StatusEffect statusEffect in activeStatusEffects)
+        {
+            if(statusEffect.GetType() == newStatusEffect.GetType())
+            {
+                statusEffect.Stacks += newStatusEffect.Stacks;
+                return;
+            }
+        }
     }
 
 

@@ -2,7 +2,7 @@
 
 public class BleedingEffect : StatusEffect
 {
-    public override void OnAfterDrawnCard(Player player)
+    public override void OnAfterDrawnCard(PlayerState player)
     {
         DamageContext ctx = new DamageContext
         {

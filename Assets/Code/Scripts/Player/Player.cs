@@ -45,9 +45,6 @@ public class Player : MonoBehaviour
     }
 
     //------CARDS FUNCTIONS----------
-
-    
-
     private void CreateDeck()
     {
         state.Deck.CreateDeck(this);
