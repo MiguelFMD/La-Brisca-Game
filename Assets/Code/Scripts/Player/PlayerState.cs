@@ -29,12 +29,18 @@ public class PlayerState
     public void TakeDamage(DamageContext ctx)
     {
         if (IsDead) return;
-        if(CurrentShield > 0)
+        DamageContext newContext = ctx;
+        float amountLeft = ctx.Amount;
+        if(CurrentShield > 0) amountLeft -= CurrentShield; 
+        if(amountLeft > 0) 
         {
-            float amountLeft = CurrentShield - ctx.Amount;
             CurrentHealth = Math.Max(0, CurrentHealth - amountLeft);
-        } 
-        else CurrentHealth = Math.Max(0, CurrentHealth - ctx.Amount);
+            newContext.Amount = amountLeft;
+        }
+        foreach(StatusEffect status in StatusEffects)
+        {
+            status.OnAfterReceiveDamage(newContext);
+        }
     }
 
     public void Heal(float amount)
@@ -54,7 +60,22 @@ public class PlayerState
         return true;
     }
 
-    
+    public void DrawCards(int amount)
+    {
+        for(int c = 0; c < amount; c++)
+        {
+            DrawOneCard();
+        }
+    }
+
+    public CardStatus DrawOneCard()
+    {
+        CardStatus newCard = Deck.RemoveCard();
+        if(newCard == null) return newCard;
+        newCard.owner = this; 
+        Hand.Add(newCard);
+        return newCard;
+    }
 
     public void ClearPlayedCard()
     {
@@ -73,4 +94,6 @@ public class PlayerState
     {
         StatusEffects.Add(newStatusEffect);
     }
+
+
 }

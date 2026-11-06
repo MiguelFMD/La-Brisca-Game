@@ -46,13 +46,7 @@ public class Player : MonoBehaviour
 
     //------CARDS FUNCTIONS----------
 
-    public void DrawCards(int amount)
-    {
-        for(int c = 0; c < amount; c++)
-        {
-            DrawOneCard();
-        }
-    }
+    
 
     private void CreateDeck()
     {
@@ -70,15 +64,18 @@ public class Player : MonoBehaviour
         return hand.cards[randomC];
     }
 
+    public void DrawCards(int amount)
+    {
+        for(int c = 0; c < amount; c++)
+        {
+            DrawOneCard();
+        }
+    }
+
     public void DrawOneCard()
     {
-        CardStatus newCard = state.Deck.RemoveCard();
+        CardStatus newCard = state.DrawOneCard();
         if(newCard == null) return;
-        
-        newCard.owner = state; 
-        
-        state.Hand.Add(newCard);
-        
         hand.DrawCard(newCard);
     }
 
