@@ -26,15 +26,15 @@ public class PlayerState
         CurrentHealth = newMaxHealth;
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(DamageContext ctx)
     {
         if (IsDead) return;
         if(CurrentShield > 0)
         {
-            float amountLeft = CurrentShield - amount;
+            float amountLeft = CurrentShield - ctx.Amount;
             CurrentHealth = Math.Max(0, CurrentHealth - amountLeft);
         } 
-        else CurrentHealth = Math.Max(0, CurrentHealth - amount);
+        else CurrentHealth = Math.Max(0, CurrentHealth - ctx.Amount);
     }
 
     public void Heal(float amount)

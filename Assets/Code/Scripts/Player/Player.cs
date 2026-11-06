@@ -83,9 +83,9 @@ public class Player : MonoBehaviour
     }
 
     //------STATS FUNCTIONS-------
-    public void TakeDamage(float amount)
+    public void TakeDamage(DamageContext ctx)
     {
-        state.TakeDamage(amount);
+        state.TakeDamage(ctx);
         
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
         
