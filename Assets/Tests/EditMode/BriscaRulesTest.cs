@@ -125,8 +125,12 @@ public class BriscaRulesTests
         // Act 1: Nadie ha muerto
         bool gameOverAntes = BriscaRules.CheckGameOverConditions(p1, p2);
 
+        DamageContext ctx = new DamageContext
+        {
+            Amount = 150f
+        };
         // Act 2: Matamos a P2
-        p2.TakeDamage(150f);
+        p2.TakeDamage(ctx);
         bool gameOverDespues = BriscaRules.CheckGameOverConditions(p1, p2);
 
         // Assert

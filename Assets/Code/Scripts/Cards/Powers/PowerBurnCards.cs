@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PowerBurnCards : Power
 {
-    public override void Activate(CardData cardData, Player source, Player target)
+    public override void Activate(CardData cardData, PlayerState source, PlayerState target)
     {
-        source.state.Deck.BurnCards(BriscaRules.CalculateCardValue(cardData));
+        target.Deck.BurnCards(BriscaRules.CalculateCardValue(cardData));
     }
 }

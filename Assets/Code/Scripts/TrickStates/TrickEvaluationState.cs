@@ -9,12 +9,12 @@ public class TrickEvaluationState: TrickState
         TrickResult trickResult = BriscaRules.CalculateTrickWinner(_trickManager.triumphSuit, _trickManager.firstPlayer.state, _trickManager.secondPlayer.state);
         if(trickResult != null)
         {
-            Player loser = _trickManager.firstPlayer.state == trickResult.loser 
-            ? _trickManager.firstPlayer 
-            : _trickManager.secondPlayer;
-            Player winner = _trickManager.firstPlayer.state == trickResult.winner 
-            ? _trickManager.firstPlayer 
-            : _trickManager.secondPlayer;
+            PlayerState loser = _trickManager.firstPlayer.state == trickResult.loser 
+            ? _trickManager.firstPlayer.state 
+            : _trickManager.secondPlayer.state;
+            PlayerState winner = _trickManager.firstPlayer.state == trickResult.winner 
+            ? _trickManager.firstPlayer.state 
+            : _trickManager.secondPlayer.state;
 
             
             CombatManager.ApplyWinnerPower(winner, loser);

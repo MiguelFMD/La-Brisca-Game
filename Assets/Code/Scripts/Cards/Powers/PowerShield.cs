@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PowerShield : Power
 {
-    public override void Activate(CardData cardData, Player source, Player target)
+    public override void Activate(CardData cardData, PlayerState source, PlayerState target)
     {
-        source.state.CurrentShield += BriscaRules.CalculateCardValue(cardData);
+        source.CurrentShield += BriscaRules.CalculateCardValue(cardData);
     }
 }

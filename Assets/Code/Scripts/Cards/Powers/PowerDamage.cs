@@ -1,7 +1,7 @@
 
 public class PowerDamage : Power
 {
-    public override void Activate(CardData cardData, Player source, Player target)
+    public override void Activate(CardData cardData, PlayerState source, PlayerState target)
     {
         DamageContext damageContext = new DamageContext
         {
@@ -12,6 +12,6 @@ public class PowerDamage : Power
             Amount = BriscaRules.CalculateCardValue(cardData)
         };
 
-        target.TakeDamage(damageContext.Amount);
+        target.TakeDamage(damageContext);
     }
 }

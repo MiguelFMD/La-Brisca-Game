@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PowerReviveCards :Power
 {
-    public override void Activate(CardData cardData, Player source, Player target)
+    public override void Activate(CardData cardData, PlayerState source, PlayerState target)
     {
-        source.state.Deck.ReviveCards(BriscaRules.CalculateCardValue(cardData));
+        source.Deck.ReviveCards(BriscaRules.CalculateCardValue(cardData));
     }
 }

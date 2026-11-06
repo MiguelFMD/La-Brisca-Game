@@ -1,9 +1,9 @@
 
 public static class CombatManager
 {
-    public static void ApplyWinnerPower(Player winner, Player loser)
+    public static void ApplyWinnerPower(PlayerState winner, PlayerState loser)
     {
-        CardData winnerCard = winner.playedCard.cardData;
+        CardData winnerCard = winner.PlayedCard.cardData;
         Power winnerPower = null;
         switch(winnerCard.GetCardSuit())
         {
@@ -23,9 +23,9 @@ public static class CombatManager
         winnerPower.Activate(winnerCard, winner, loser);
     }
 
-    public static void ApplyLoserPower(Player loser, Player winner)
+    public static void ApplyLoserPower(PlayerState loser, PlayerState winner)
     {
-        CardData loserCard = loser.playedCard.cardData;
+        CardData loserCard = loser.PlayedCard.cardData;
         Power loserPower = null;
         switch(loserCard.GetCardSuit())
         {
