@@ -49,6 +49,7 @@ public class Deck
 
     public void BurnCards(int amount)
     {
+        if(deckCards.Count <= 0) return;
         for(int i = 0; i < amount; i++)
         {
             CardStatus card = deckCards.Dequeue();
