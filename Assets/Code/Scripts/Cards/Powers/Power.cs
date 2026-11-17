@@ -1,4 +1,6 @@
 
+using System.Diagnostics;
+
 public abstract class Power: IPowerEffect
 {
     public string powerName {get; set;}

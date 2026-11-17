@@ -1,7 +1,12 @@
 public abstract class StatusEffect
 {
-    public int Stacks { get; set; }
-    public PlayerState Owner { get; set; }
+    public int Stacks { get; private set; }
+    private PlayerState Owner { get; set; }
+
+    public StatusEffect(int stacks)
+    {
+        Stacks = stacks;
+    }
 
     public virtual void OnTurnEnd() {}
     public virtual void OnTrickWon(TrickResult result) {}

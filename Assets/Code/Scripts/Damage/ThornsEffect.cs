@@ -1,6 +1,9 @@
 
 public class ThornsEffect : StatusEffect
 {
+    public ThornsEffect(int stacks) : base(stacks)
+    {
+    }
     public override void OnAfterReceiveDamage(DamageContext ctx)
     {
         if(ctx.IsRetaliation) return;
