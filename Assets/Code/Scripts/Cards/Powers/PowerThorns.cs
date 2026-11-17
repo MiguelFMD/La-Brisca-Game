@@ -3,7 +3,8 @@ public class PowerThorns : Power
 {
     public override void Activate(CardData cardData, PlayerState source, PlayerState target)
     {
-        ThornsEffect thornsEffect = new ThornsEffect(BriscaRules.CalculateCardValue(cardData));
+        base.Activate(cardData, source, target);
+        ThornsEffect thornsEffect = new ThornsEffect(BriscaRules.CalculateCardValue(cardData) + powerInvested);
         target.AddStatusEffect(thornsEffect);
     }
 }

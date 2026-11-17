@@ -13,11 +13,13 @@ public class PlayerState
     public List<StatusEffect> activeStatusEffects = new List<StatusEffect>();
     public CardStatus PlayedCard { get; set; }
     public bool IsEnemy {get; set; }
+    public int Investment {get; private set;} //Applied to card played value
 
     public PlayerState(float maxHealth)
     {
         MaxHealth = maxHealth;
         CurrentHealth = maxHealth;
+        Investment = 0;
     }
 
     public void SetMaxHealth(float newMaxHealth)
@@ -96,6 +98,11 @@ public class PlayerState
     public void ClearStatus()
     {
         activeStatusEffects.Clear();
+    }
+
+    public void AddInvestment(int amount)
+    {
+        Investment += amount;
     }
 
 

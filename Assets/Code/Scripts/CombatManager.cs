@@ -39,7 +39,7 @@ public static class CombatManager
                 loser.ClearStatus();
                 break;
             case Suit.Golds:
-                loserPower = new PowerBurnCards();
+                loserPower = new PowerInvestment();
                 break;
         }
         loserPower.Activate(loserCard, loser, winner);
