@@ -20,7 +20,7 @@ public static class CombatManager
                 winnerPower = new PowerBurnCards();
                 break;
         }
-        winnerPower.Activate(winnerCard, winner, loser);
+        if(winnerPower != null) winnerPower.Activate(winnerCard, winner, loser);
     }
 
     public static void ApplyLoserPower(PlayerState loser, PlayerState winner)
@@ -42,6 +42,6 @@ public static class CombatManager
                 loserPower = new PowerInvestment();
                 break;
         }
-        loserPower.Activate(loserCard, loser, winner);
+        if(loserPower != null) loserPower.Activate(loserCard, loser, winner);
     }
 }

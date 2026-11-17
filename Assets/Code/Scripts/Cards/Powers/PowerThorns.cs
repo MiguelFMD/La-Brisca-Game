@@ -5,6 +5,6 @@ public class PowerThorns : Power
     {
         base.Activate(cardData, source, target);
         ThornsEffect thornsEffect = new ThornsEffect(BriscaRules.CalculateCardValue(cardData) + powerInvested);
-        target.AddStatusEffect(thornsEffect);
+        source.AddStatusEffect(thornsEffect);
     }
 }

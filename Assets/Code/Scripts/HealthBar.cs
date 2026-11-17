@@ -12,7 +12,7 @@ public class HealthBar : MonoBehaviour
 
     public void HandlePlayerHealthChanged(Player player)
     {
-        ChangeHealthBar(player.currentHealth, player.maxHealth);
+        ChangeHealthBar(player.state.CurrentHealth, player.state.MaxHealth);
     }
 
     private void ChangeHealthBar(float current, float max)

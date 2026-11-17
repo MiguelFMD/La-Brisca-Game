@@ -11,5 +11,6 @@ public abstract class Power: IPowerEffect
     public virtual void Activate(CardData cardData, PlayerState source, PlayerState target)
     {
         powerInvested = source.Investment;
+        source.ClearInvestment();
     }
 }

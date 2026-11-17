@@ -52,12 +52,7 @@ public class Deck
         if(deckCards.Count <= 0) return;
         for(int i = 0; i < amount; i++)
         {
-            CardStatus card = deckCards.Dequeue();
-            if(card != null)
-            {
-                deadCards.Push(card);
-                return;
-            }
+            RemoveCard();
         }   
     }
 

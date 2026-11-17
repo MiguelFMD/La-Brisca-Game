@@ -10,6 +10,7 @@ public class PlayerStatsUI : MonoBehaviour
     [SerializeField]private TMP_Text shield;
     [SerializeField]private TMP_Text bleed;
     [SerializeField]private TMP_Text thorns;
+    [SerializeField] private TMP_Text investment;
     [SerializeField]private TMP_Text cardsLeft;
     [SerializeField]private TMP_Text playedCard;
     
@@ -17,8 +18,8 @@ public class PlayerStatsUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        maxHealth.text = "Max HP: " + player.maxHealth;
-        currentHealth.text = "Current HP: " + player.currentHealth;
+        maxHealth.text = "Max HP: " + player.state.MaxHealth;
+        currentHealth.text = "Current HP: " + player.state.CurrentHealth;
         shield.text = "Shield: " + player.state.CurrentShield;
         if(player.state.activeStatusEffects.Count == 0)
         {
@@ -31,6 +32,7 @@ public class PlayerStatsUI : MonoBehaviour
             else if(statusEffect is BleedingEffect) bleed.text = "Bleed: " + statusEffect.Stacks;
         }
         cardsLeft.text = "Cards: " + player.state.Deck.CountCards();
-        playedCard.text = "Played card: " + player.state.PlayedCard;
+        if(player.state.PlayedCard != null) playedCard.text = "Played card: " + player.state.PlayedCard.cardData;
+        investment.text = "Investment: " + player.state.Investment;
     }
 }

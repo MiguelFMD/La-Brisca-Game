@@ -8,10 +8,11 @@ public class BleedingEffect : StatusEffect
         DamageContext ctx = new DamageContext
         {
             Target = player,
-            Amount = this.Stacks,
+            Amount = 1,
             DamageType = DamageType.Bleeding,
             IsRetaliation = false
         };
+        ReduceStack();
         ctx.Target.TakeDamage(ctx);
     }
 }

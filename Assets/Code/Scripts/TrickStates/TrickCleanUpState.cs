@@ -6,7 +6,7 @@ public class TrickCleanUpState : TrickState
 
     public override void Enter()
     {
-        if (_trickManager.firstPlayer.currentHealth <= 0 || _trickManager.secondPlayer.currentHealth <= 0)
+        if (_trickManager.firstPlayer.state.IsDead || _trickManager.secondPlayer.state.IsDead)
         {
             return; 
         }

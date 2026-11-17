@@ -16,8 +16,6 @@ public class Player : MonoBehaviour
     private float defaultMaxHealth = 100f;
     public PlayerState state { get; private set; }
     public CardStatus playedCard => state?.PlayedCard;
-    public float maxHealth => state != null ? state.MaxHealth : 100f;
-    public float currentHealth => state != null ? state.CurrentHealth : maxHealth;
     
 
     void Awake()
@@ -26,13 +24,22 @@ public class Player : MonoBehaviour
         state = new PlayerState(defaultMaxHealth);
         state.IsEnemy = isEnemy;
         state.onCardPlayed += PlayCard;
+        state.onPlayerDeath += RaisePlayerDeath;
+        state.onPlayerHealthChanged += RaisePlayerHealthChanged;
         state.Deck = new Deck();
+    }
+
+    void OnDisable()
+    {
+        state.onCardPlayed -= PlayCard;
+        state.onPlayerDeath -= RaisePlayerDeath;
+        state.onPlayerHealthChanged -= RaisePlayerHealthChanged;
     }
 
     public void Reset()
     {
         hand.ClearHand();
-        if(!state.IsEnemy) SetPlayerData(playerDeck, maxHealth);
+        if(!state.IsEnemy) SetPlayerData(playerDeck, defaultMaxHealth);
         ResetStats();
         CreateDeck();
     }
@@ -86,6 +93,16 @@ public class Player : MonoBehaviour
         if (state.IsDead) onPlayerDeath.Raise(this);
     }
 
+    private void RaisePlayerHealthChanged()
+    {
+        onPlayerHealthChanged.Raise(this);
+    }
+
+    private void RaisePlayerDeath()
+    {
+        onPlayerDeath.Raise(this);
+    }
+
     public void Heal(float amount)
     {
         state.Heal(amount);
@@ -95,7 +112,7 @@ public class Player : MonoBehaviour
 
     private void ResetStats()
     {
-        Heal(maxHealth);
+        Heal(defaultMaxHealth);
         state.CurrentShield = 0;
         state.ClearStatus();
     }

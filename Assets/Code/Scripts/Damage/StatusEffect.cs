@@ -13,6 +13,16 @@ public abstract class StatusEffect
         Stacks += amount;
     }
 
+    public void ClearStacks()
+    {
+        Stacks = 0;
+    }
+
+    public void ReduceStack()
+    {
+        Stacks--;
+    }
+
     public virtual void OnTurnEnd() {}
     public virtual void OnTrickWon(TrickResult result) {}
     public virtual void OnBeforeReceiveDamage(DamageContext ctx) {}

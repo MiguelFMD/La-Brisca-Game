@@ -5,6 +5,8 @@ public class PlayerState
 {
     public Deck Deck {get; set; }
     public event Action<CardStatus> onCardPlayed;
+    public event Action onPlayerDeath;
+    public event Action onPlayerHealthChanged;
     public float MaxHealth {get; private set;}
     public float CurrentHealth {get; private set;}
     public float CurrentShield {get; set;}
@@ -31,17 +33,21 @@ public class PlayerState
     public void TakeDamage(DamageContext ctx)
     {
         if (IsDead) return;
-        DamageContext newContext = ctx;
         float amountLeft = ctx.Amount;
-        if(CurrentShield > 0) amountLeft -= CurrentShield; 
+        if(CurrentShield > 0) 
+        {
+            amountLeft -= CurrentShield; 
+            CurrentShield -= ctx.Amount;
+        }
         if(amountLeft > 0) 
         {
             CurrentHealth = Math.Max(0, CurrentHealth - amountLeft);
-            newContext.Amount = amountLeft;
+            onPlayerHealthChanged?.Invoke();
         }
+        if(IsDead) onPlayerDeath?.Invoke();
         foreach(StatusEffect statusEffect in activeStatusEffects)
         {
-            statusEffect.OnAfterReceiveDamage(newContext);
+            statusEffect.OnAfterReceiveDamage(ctx);
         }
     }
 
@@ -70,7 +76,8 @@ public class PlayerState
         Hand.Add(newCard);
         foreach(StatusEffect statusEffect in activeStatusEffects)
         {
-            statusEffect.OnAfterDrawnCard(this);
+            if(statusEffect.Stacks == 0) activeStatusEffects.Remove(statusEffect);
+            else statusEffect.OnAfterDrawnCard(this);
         }
         return newCard;
     }
@@ -85,13 +92,20 @@ public class PlayerState
     //Status Effects
     public void AddStatusEffect(StatusEffect newStatusEffect)
     {
-        foreach(StatusEffect statusEffect in activeStatusEffects)
+        if(activeStatusEffects.Contains(newStatusEffect))
         {
-            if(statusEffect.GetType() == newStatusEffect.GetType())
+            foreach(StatusEffect statusEffect in activeStatusEffects)
             {
-                statusEffect.AddStacks(newStatusEffect.Stacks);
-                return;
+                if(statusEffect.GetType() == newStatusEffect.GetType())
+                {
+                    statusEffect.AddStacks(newStatusEffect.Stacks);
+                    return;
+                }
             }
+        }
+        else
+        {
+            activeStatusEffects.Add(newStatusEffect);
         }
     }
 
@@ -103,6 +117,11 @@ public class PlayerState
     public void AddInvestment(int amount)
     {
         Investment += amount;
+    }
+
+    public void ClearInvestment()
+    {
+        Investment = 0;
     }
 
 
