@@ -45,9 +45,10 @@ public class PlayerState
             onPlayerHealthChanged?.Invoke();
         }
         if(IsDead) onPlayerDeath?.Invoke();
-        foreach(StatusEffect statusEffect in activeStatusEffects)
+        for(int i = activeStatusEffects.Count - 1; i >= 0; i--)
         {
-            statusEffect.OnAfterReceiveDamage(ctx);
+            if(activeStatusEffects[i].Stacks == 0) activeStatusEffects.RemoveAt(i);
+            else activeStatusEffects[i].OnAfterReceiveDamage(ctx);
         }
     }
 
@@ -74,10 +75,10 @@ public class PlayerState
         if(newCard == null) return newCard;
         newCard.owner = this; 
         Hand.Add(newCard);
-        foreach(StatusEffect statusEffect in activeStatusEffects)
+        for(int i = activeStatusEffects.Count - 1; i >= 0; i--)
         {
-            if(statusEffect.Stacks == 0) activeStatusEffects.Remove(statusEffect);
-            else statusEffect.OnAfterDrawnCard(this);
+            if(activeStatusEffects[i].Stacks == 0) activeStatusEffects.RemoveAt(i);
+            else activeStatusEffects[i].OnAfterDrawnCard(this);
         }
         return newCard;
     }

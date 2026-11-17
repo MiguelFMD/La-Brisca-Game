@@ -5,6 +5,6 @@ public class PowerHeal : Power
     {
         base.Activate(cardData, source, target);
         float healAmount = BriscaRules.CalculateCardValue(cardData) + powerInvested;
-        target.Heal(healAmount);
+        source.Heal(healAmount);
     }
 }
