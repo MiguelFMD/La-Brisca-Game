@@ -3491,8 +3491,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   levels:
-  - {fileID: 11400000, guid: bc0bafa6c2269d347831f9e90f10bfad, type: 2}
-  - {fileID: 11400000, guid: bc0bafa6c2269d347831f9e90f10bfad, type: 2}
+  - {fileID: 11400000, guid: 78bc2fa050f48a7499df340185ae7b35, type: 2}
+  - {fileID: 11400000, guid: 7ace29ef6a1930e4aabedfe8169c9145, type: 2}
   onGameLoaded: {fileID: 11400000, guid: 0312c12ce24835647a9c03d9a68c0892, type: 2}
   onGameFinished: {fileID: 11400000, guid: 10f214ac917a9674aa17eb4742d85c66, type: 2}
   onGameRestarted: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
