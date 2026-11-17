@@ -93,5 +93,10 @@ public class PlayerState
         }
     }
 
+    public void ClearStatus()
+    {
+        activeStatusEffects.Clear();
+    }
+
 
 }

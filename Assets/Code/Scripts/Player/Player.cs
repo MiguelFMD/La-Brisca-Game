@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     {
         hand.ClearHand();
         if(!state.IsEnemy) SetPlayerData(playerDeck, maxHealth);
-        Heal(maxHealth);
+        ResetStats();
         CreateDeck();
     }
 
@@ -91,5 +91,12 @@ public class Player : MonoBehaviour
         state.Heal(amount);
         
         if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
+    }
+
+    private void ResetStats()
+    {
+        Heal(maxHealth);
+        state.CurrentShield = 0;
+        state.ClearStatus();
     }
 }
