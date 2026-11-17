@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [Header("Raise Events")]
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
     [SerializeField] private PlayerGameEvent onPlayerDeath;
+    [SerializeField] private PlayerGameEvent onDeckCardRemoved;
    
     private float defaultMaxHealth = 100f;
     public PlayerState state { get; private set; }
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
         state.onCardPlayed += PlayCard;
         state.onPlayerDeath += RaisePlayerDeath;
         state.onPlayerHealthChanged += RaisePlayerHealthChanged;
+        state.onDeckCardRemoved += RaiseOnDeckCardRemoved;
         state.Deck = new Deck();
     }
 
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
         state.onCardPlayed -= PlayCard;
         state.onPlayerDeath -= RaisePlayerDeath;
         state.onPlayerHealthChanged -= RaisePlayerHealthChanged;
+        state.onDeckCardRemoved -= RaiseOnDeckCardRemoved;
     }
 
     public void Reset()
@@ -115,5 +118,10 @@ public class Player : MonoBehaviour
         Heal(defaultMaxHealth);
         state.CurrentShield = 0;
         state.ClearStatus();
+    }
+
+    private void RaiseOnDeckCardRemoved()
+    {
+        onDeckCardRemoved.Raise(this);
     }
 }

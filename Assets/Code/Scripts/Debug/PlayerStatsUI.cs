@@ -12,6 +12,7 @@ public class PlayerStatsUI : MonoBehaviour
 
     [Header("Listener events")]
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
+    [SerializeField] private PlayerGameEvent onDeckCardRemoved;
     /*[SerializeField]private TMP_Text shield;
     [SerializeField]private TMP_Text bleed;
     [SerializeField]private TMP_Text thorns;
@@ -20,11 +21,18 @@ public class PlayerStatsUI : MonoBehaviour
     private void OnEnable()
     {
         onPlayerHealthChanged.OnRaised += UpdatePlayerHealth;
+        onDeckCardRemoved.OnRaised += UpdateCardsLeft;
     }
 
     private void OnDisable()
     {
         onPlayerHealthChanged.OnRaised -= UpdatePlayerHealth;
+        onDeckCardRemoved.OnRaised -= UpdateCardsLeft;
+    }
+
+    void Start()
+    {
+        UpdateCardsLeft(player);
     }
 
     // Update is called once per frame
@@ -52,7 +60,7 @@ public class PlayerStatsUI : MonoBehaviour
         health.text = player.state.CurrentHealth + " / " + player.state.MaxHealth;
     }
 
-    public void UpdateCardsLeft()
+    public void UpdateCardsLeft(Player other)
     {
         cardsLeft.text = player.state.Deck.CountCards().ToString();
     }

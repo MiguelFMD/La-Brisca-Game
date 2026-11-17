@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class Deck
     private Queue<CardStatus> deckCards = new Queue<CardStatus>();
     private Stack<CardStatus> deadCards = new Stack<CardStatus>();
     private PlayerState owner;
+    public event Action onCardRemoved;
 
     public void AssignDeck(DeckType newDeck)
     {
@@ -19,6 +21,7 @@ public class Deck
         {
             CardStatus removedCard = deckCards.Dequeue();
             deadCards.Push(removedCard);
+            onCardRemoved?.Invoke();
             return removedCard;
         }
             

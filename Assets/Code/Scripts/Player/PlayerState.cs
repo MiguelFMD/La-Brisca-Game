@@ -7,6 +7,7 @@ public class PlayerState
     public event Action<CardStatus> onCardPlayed;
     public event Action onPlayerDeath;
     public event Action onPlayerHealthChanged;
+    public event Action onDeckCardRemoved;
     public float MaxHealth {get; private set;}
     public float CurrentHealth {get; private set;}
     public float CurrentShield {get; set;}
@@ -16,7 +17,6 @@ public class PlayerState
     public CardStatus PlayedCard { get; set; }
     public bool IsEnemy {get; set; }
     public int Investment {get; private set;} //Applied to card played value
-
     public PlayerState(float maxHealth)
     {
         MaxHealth = maxHealth;
@@ -28,6 +28,7 @@ public class PlayerState
     {
         MaxHealth = newMaxHealth;
         CurrentHealth = newMaxHealth;
+        Deck.onCardRemoved += RaiseOnDeckCardRemoved;
     }
 
     public void TakeDamage(DamageContext ctx)
@@ -125,5 +126,9 @@ public class PlayerState
         Investment = 0;
     }
 
+    private void RaiseOnDeckCardRemoved()
+    {
+        onDeckCardRemoved?.Invoke();
+    }
 
 }
