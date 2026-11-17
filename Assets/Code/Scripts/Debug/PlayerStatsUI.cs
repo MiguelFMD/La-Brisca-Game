@@ -4,22 +4,32 @@ using TMPro;
 
 public class PlayerStatsUI : MonoBehaviour
 {
+    [Header("Scene references")]
     [SerializeField]private Player player;
-    [SerializeField]private TMP_Text maxHealth;
-    [SerializeField]private TMP_Text currentHealth;
-    [SerializeField]private TMP_Text shield;
+    [SerializeField]private TMP_Text health;
+    [SerializeField]private TMP_Text cardsLeft;
+
+
+    [Header("Listener events")]
+    [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
+    /*[SerializeField]private TMP_Text shield;
     [SerializeField]private TMP_Text bleed;
     [SerializeField]private TMP_Text thorns;
-    [SerializeField] private TMP_Text investment;
-    [SerializeField]private TMP_Text cardsLeft;
-    [SerializeField]private TMP_Text playedCard;
-    
+    [SerializeField] private TMP_Text investment;*/
+
+    private void OnEnable()
+    {
+        onPlayerHealthChanged.OnRaised += UpdatePlayerHealth;
+    }
+
+    private void OnDisable()
+    {
+        onPlayerHealthChanged.OnRaised -= UpdatePlayerHealth;
+    }
 
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
-        maxHealth.text = "Max HP: " + player.state.MaxHealth;
-        currentHealth.text = "Current HP: " + player.state.CurrentHealth;
         shield.text = "Shield: " + player.state.CurrentShield;
         if(player.state.activeStatusEffects.Count == 0)
         {
@@ -32,7 +42,18 @@ public class PlayerStatsUI : MonoBehaviour
             else if(statusEffect is BleedingEffect) bleed.text = "Bleed: " + statusEffect.Stacks;
         }
         cardsLeft.text = "Cards: " + player.state.Deck.CountCards();
-        if(player.state.PlayedCard != null) playedCard.text = "Played card: " + player.state.PlayedCard.cardData;
+        //if(player.state.PlayedCard != null) playedCard.text = "Played card: " + player.state.PlayedCard.cardData;
         investment.text = "Investment: " + player.state.Investment;
+    }*/
+
+    public void UpdatePlayerHealth(Player other)
+    {
+        if(other != player) return;
+        health.text = player.state.CurrentHealth + " / " + player.state.MaxHealth;
+    }
+
+    public void UpdateCardsLeft()
+    {
+        cardsLeft.text = player.state.Deck.CountCards().ToString();
     }
 }
