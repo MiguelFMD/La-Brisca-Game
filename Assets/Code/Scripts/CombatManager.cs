@@ -30,13 +30,13 @@ public static class CombatManager
         switch(loserCard.GetCardSuit())
         {
             case Suit.Swords:
-                loserPower = new PowerDamage();
+                loserPower = new PowerBleed();
                 break;
             case Suit.Clubs:
-                loserPower = new PowerShield();
+                loserPower = new PowerThorns();
                 break;
             case Suit.Cups:
-                loserPower = new PowerHeal();
+                loser.ClearStatus();
                 break;
             case Suit.Golds:
                 loserPower = new PowerBurnCards();

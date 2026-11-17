@@ -8,6 +8,11 @@ public abstract class StatusEffect
         Stacks = stacks;
     }
 
+    public void AddStacks(int amount)
+    {
+        Stacks += amount;
+    }
+
     public virtual void OnTurnEnd() {}
     public virtual void OnTrickWon(TrickResult result) {}
     public virtual void OnBeforeReceiveDamage(DamageContext ctx) {}

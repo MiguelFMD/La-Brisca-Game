@@ -87,7 +87,7 @@ public class PlayerState
         {
             if(statusEffect.GetType() == newStatusEffect.GetType())
             {
-                statusEffect.Stacks += newStatusEffect.Stacks;
+                statusEffect.AddStacks(newStatusEffect.Stacks);
                 return;
             }
         }
