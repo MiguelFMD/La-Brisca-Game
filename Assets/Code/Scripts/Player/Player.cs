@@ -27,8 +27,7 @@ public class Player : MonoBehaviour
         hand = GetComponent<Hand>();
         state = new PlayerState(defaultMaxHealth)
         {
-            IsEnemy = isEnemy,
-            Deck = new Deck()
+            IsEnemy = isEnemy
         };
         state.onCardPlayed += PlayCard;
         state.onPlayerDeath += RaisePlayerDeath;
@@ -52,8 +51,11 @@ public class Player : MonoBehaviour
 
     public void Reset()
     {
-        hand.ClearHand();
-        if(!state.IsEnemy) SetPlayerData(playerDeck, defaultMaxHealth);
+        if (hand == null) hand = GetComponent<Hand>();
+        if (hand != null && hand.cards != null) hand.ClearHand();
+        if (state == null) return;
+
+        if (!state.IsEnemy && playerDeck != null) SetPlayerData(playerDeck, defaultMaxHealth);
         ResetStats();
         CreateDeck();
     }

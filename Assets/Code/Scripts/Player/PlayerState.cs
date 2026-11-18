@@ -31,6 +31,7 @@ public class PlayerState
         MaxHealth = maxHealth;
         CurrentHealth = maxHealth;
         Investment = 0;
+        Deck = new Deck();
     }
 
     public void SetMaxHealth(float newMaxHealth)
@@ -98,7 +99,7 @@ public class PlayerState
         PlayedCard = null;
     }
 
-    public bool HasNoCardsLeft() => Hand.Count == 0 && Deck.CountCards() == 0;
+    public bool HasNoCardsLeft() => Hand.Count == 0 &&(Deck == null || Deck.CountCards() == 0);
 
     //Status Effects
     public void AddStatusEffect(StatusEffect newStatusEffect)

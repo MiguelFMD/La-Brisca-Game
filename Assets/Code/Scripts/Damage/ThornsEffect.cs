@@ -6,7 +6,7 @@ public class ThornsEffect : StatusEffect
     }
     public override void OnAfterReceiveDamage(DamageContext ctx)
     {
-        if(ctx.IsRetaliation) return;
+        if(ctx.IsRetaliation || ctx.Source == null) return;
         DamageContext newCtx = new DamageContext
         {
             Amount = Stacks,

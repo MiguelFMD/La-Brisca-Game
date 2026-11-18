@@ -41,11 +41,11 @@ public class Deck
     {
         for(int i = 0; i < amount; i++)
         {
-            CardStatus card = deadCards.Pop();
+            CardStatus card = null;
+            if(deadCards.Count > 0) card = deadCards.Pop();
             if(card != null) 
             {
                 deckCards.Enqueue(card);
-                return;
             }
         }
     }
