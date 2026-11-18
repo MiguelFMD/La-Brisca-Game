@@ -25,8 +25,11 @@ public class Player : MonoBehaviour
     void Awake()
     {
         hand = GetComponent<Hand>();
-        state = new PlayerState(defaultMaxHealth);
-        state.IsEnemy = isEnemy;
+        state = new PlayerState(defaultMaxHealth)
+        {
+            IsEnemy = isEnemy,
+            Deck = new Deck()
+        };
         state.onCardPlayed += PlayCard;
         state.onPlayerDeath += RaisePlayerDeath;
         state.onPlayerHealthChanged += RaisePlayerHealthChanged;
@@ -34,7 +37,6 @@ public class Player : MonoBehaviour
         state.onInvestmentChanged += RaiseOnInvestChanged;
         state.onShieldChanged += RaiseOnShieldChanged;
         state.onStatusEffectChanged += RaiseOnStatusEffectChanged;
-        state.Deck = new Deck();
     }
 
     void OnDisable()
@@ -54,6 +56,14 @@ public class Player : MonoBehaviour
         if(!state.IsEnemy) SetPlayerData(playerDeck, defaultMaxHealth);
         ResetStats();
         CreateDeck();
+    }
+
+    private void ResetStats()
+    {
+        state.Heal(defaultMaxHealth);
+        state.ResetShield();
+        state.ClearInvestment();
+        state.ClearStatus();
     }
 
     public void SetPlayerData(DeckType newDeck, float newMaxHealth)
@@ -95,18 +105,12 @@ public class Player : MonoBehaviour
         hand.DrawCard(newCard);
     }
 
-    //------STATS FUNCTIONS-------
-    public void TakeDamage(DamageContext ctx)
-    {
-        state.TakeDamage(ctx);
-        
-        if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
-        
-        if (state.IsDead) onPlayerDeath.Raise(this);
-    }
+    //Events
+
 
     private void RaisePlayerHealthChanged()
     {
+        Debug.Log($"<color=orange>[Player]</color> {this.name} health: {state.CurrentHealth} / {state.MaxHealth}");
         onPlayerHealthChanged.Raise(this);
     }
 
@@ -115,38 +119,27 @@ public class Player : MonoBehaviour
         onPlayerDeath.Raise(this);
     }
 
-    public void Heal(float amount)
-    {
-        state.Heal(amount);
-        
-        if(onPlayerHealthChanged != null) onPlayerHealthChanged.Raise(this);
-    }
-
-    private void ResetStats()
-    {
-        Heal(defaultMaxHealth);
-        state.ResetShield();
-        state.ClearInvestment();
-        state.ClearStatus();
-    }
-
     private void RaiseOnDeckCardRemoved()
     {
+        Debug.Log($"<color=blue>[Player]</color> {this.name} cards: {state.Deck.CountCards()}");
         onDeckCardRemoved.Raise(this);
     }
 
     private void RaiseOnInvestChanged()
     {
+        Debug.Log($"<color=yellow>[Player]</color> {this.name} invest: {state.Investment}");
         onInvestmentChanged.Raise(this);
     }
 
     private void RaiseOnStatusEffectChanged()
     {
+        Debug.Log($"<color=purple>[Player]</color> {this.name} added status");
         onStatusEffectChanged.Raise(this);
     }
 
     private void RaiseOnShieldChanged()
     {
+        Debug.Log($"<color=green>[Player]</color> {this.name} shield: {state.CurrentShield}");
         onShieldChanged.Raise(this);
     }
 }

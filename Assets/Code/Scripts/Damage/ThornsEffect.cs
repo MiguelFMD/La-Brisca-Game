@@ -16,6 +16,6 @@ public class ThornsEffect : StatusEffect
             DamageType = DamageType.Thorns
         };
         ClearStacks();
-        ctx.Target.TakeDamage(newCtx);
+        ctx.Source.TakeDamage(newCtx);
     }
 }
