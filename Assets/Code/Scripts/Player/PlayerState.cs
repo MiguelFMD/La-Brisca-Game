@@ -103,21 +103,18 @@ public class PlayerState
     //Status Effects
     public void AddStatusEffect(StatusEffect newStatusEffect)
     {
-        if(activeStatusEffects.Contains(newStatusEffect))
+        if (newStatusEffect == null) return;
+        foreach (StatusEffect statusEffect in activeStatusEffects)
         {
-            foreach(StatusEffect statusEffect in activeStatusEffects)
+            if (statusEffect.GetType() == newStatusEffect.GetType())
             {
-                if(statusEffect.GetType() == newStatusEffect.GetType())
-                {
-                    statusEffect.AddStacks(newStatusEffect.Stacks);
-                    break;
-                }
+                statusEffect.AddStacks(newStatusEffect.Stacks);
+                onStatusEffectChanged?.Invoke();
+                return;
             }
         }
-        else
-        {
-            activeStatusEffects.Add(newStatusEffect);
-        }
+
+        activeStatusEffects.Add(newStatusEffect);
         onStatusEffectChanged?.Invoke();
     }
 
