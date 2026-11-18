@@ -2125,7 +2125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   initialCardsAmount: 3
   isEnemy: 0
-  playerDeck: {fileID: 11400000, guid: 85fd015c948d8024d849a66e539c2960, type: 2}
+  playerDeck: {fileID: 11400000, guid: a8aa9591ea8079c4885359f1849a7027, type: 2}
   onPlayerHealthChanged: {fileID: 11400000, guid: e4c1fea3429533b47be9d9cd6e2fd007, type: 2}
   onPlayerDeath: {fileID: 11400000, guid: 12d2b981ea81e174a954a54284f9c18b, type: 2}
   onDeckCardRemoved: {fileID: 11400000, guid: ff4c0e9ca8762564fa7cd58eaa1afd9d, type: 2}
@@ -5501,7 +5501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1293663845
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5566,13 +5566,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: a962ad256ef23c14896cb2348d2c30f2, type: 2}
-        m_TargetAssemblyTypeName: GameEvent, Assembly-CSharp
-        m_MethodName: Raise
-        m_Mode: 1
+      - m_Target: {fileID: 555349633}
+        m_TargetAssemblyTypeName: Player, GameCore
+        m_MethodName: OnAddedCard
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 11400000, guid: 41cba24af27cb8147838e30fc0cd2fa5, type: 2}
+          m_ObjectArgumentAssemblyTypeName: CardData, GameCore
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5684,7 +5684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0fc5674f13611d41996420d745aad3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoardVisualManager
-  cardAnimationDuration: 2
+  cardAnimationDuration: 0.7
   easingCurve:
     serializedVersion: 2
     m_Curve:

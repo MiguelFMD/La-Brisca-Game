@@ -107,6 +107,12 @@ public class Player : MonoBehaviour
         hand.DrawCard(newCard);
     }
 
+    public void OnAddedCard(CardData cardData)
+    {
+        CardStatus cardStatus = new CardStatus(cardData, state);
+        state.Deck.AddCard(cardStatus);
+    }
+
     //Events
 
 

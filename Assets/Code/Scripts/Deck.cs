@@ -5,6 +5,7 @@ using UnityEngine;
 public class Deck
 {
     private DeckType deckType;
+    private Stack<CardStatus> addedCards = new Stack<CardStatus>();
     private Queue<CardStatus> deckCards = new Queue<CardStatus>();
     private Stack<CardStatus> deadCards = new Stack<CardStatus>();
     private PlayerState owner;
@@ -59,6 +60,11 @@ public class Deck
         }   
     }
 
+    public void AddCard(CardStatus cardStatus)
+    {
+        addedCards.Push(cardStatus);
+    }
+
     public bool IsDeckEmpty()
     {
         return deckCards.Count == 0;
@@ -71,19 +77,28 @@ public class Deck
     {
         owner = newOwner.state;
         InitialShuffle();
+        deadCards.Clear();
     }
+    
     private void InitialShuffle(int? seed = null)
     {
         deckCards.Clear();
         if (deckType == null || deckType.cards == null || deckType.cards.Length == 0)
             return;
 
-        CardStatus[] cards = new CardStatus[deckType.cards.Length];
+        CardStatus[] cards = new CardStatus[deckType.cards.Length + addedCards.Count];
         
         for(int i = 0; i < deckType.cards.Length; i++)
         {
             CardStatus newCard = new CardStatus(deckType.cards[i], owner);
             cards[i] = newCard;
+        }
+
+        int j = deckType.cards.Length;
+        while(addedCards.Count != 0 || j < cards.Length)
+        {
+            cards[j] = addedCards.Pop();
+            j++;
         }
 
         System.Random prng = seed.HasValue ? new System.Random(seed.Value) : new System.Random();
