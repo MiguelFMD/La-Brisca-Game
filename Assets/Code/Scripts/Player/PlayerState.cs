@@ -4,19 +4,27 @@ using System.Collections.Generic;
 public class PlayerState
 {
     public Deck Deck {get; set; }
+    
+    public float MaxHealth {get; private set;}
+    public float CurrentHealth {get; private set;}
+    public float CurrentShield {get; private set;}
+    public bool IsDead => CurrentHealth <= 0;
+    public List<CardStatus> Hand { get; private set;} = new List<CardStatus>();
+    public List<StatusEffect> activeStatusEffects {get; private set;} = new List<StatusEffect>();
+    public CardStatus PlayedCard { get; set; }
+    public bool IsEnemy {get; set; }
+    public int Investment {get; private set;} //Applied to card played value
+
+
+    #region Events
     public event Action<CardStatus> onCardPlayed;
     public event Action onPlayerDeath;
     public event Action onPlayerHealthChanged;
     public event Action onDeckCardRemoved;
-    public float MaxHealth {get; private set;}
-    public float CurrentHealth {get; private set;}
-    public float CurrentShield {get; set;}
-    public bool IsDead => CurrentHealth <= 0;
-    public List<CardStatus> Hand { get; } = new List<CardStatus>();
-    public List<StatusEffect> activeStatusEffects = new List<StatusEffect>();
-    public CardStatus PlayedCard { get; set; }
-    public bool IsEnemy {get; set; }
-    public int Investment {get; private set;} //Applied to card played value
+    public event Action onShieldChanged;
+    public event Action onStatusEffectChanged;
+    public event Action onInvestmentChanged;
+    #endregion
     public PlayerState(float maxHealth)
     {
         MaxHealth = maxHealth;
@@ -38,7 +46,7 @@ public class PlayerState
         if(CurrentShield > 0) 
         {
             amountLeft -= CurrentShield; 
-            CurrentShield -= ctx.Amount;
+            ReduceShield(ctx.Amount);
         }
         if(amountLeft > 0) 
         {
@@ -58,7 +66,6 @@ public class PlayerState
         if (IsDead) return;
         CurrentHealth = Math.Min(MaxHealth, CurrentHealth + amount);
     }
-
 
     public bool PlayCard(CardStatus card)
     {
@@ -80,6 +87,7 @@ public class PlayerState
         {
             if(activeStatusEffects[i].Stacks == 0) activeStatusEffects.RemoveAt(i);
             else activeStatusEffects[i].OnAfterDrawnCard(this);
+            onStatusEffectChanged?.Invoke();
         }
         return newCard;
     }
@@ -101,7 +109,7 @@ public class PlayerState
                 if(statusEffect.GetType() == newStatusEffect.GetType())
                 {
                     statusEffect.AddStacks(newStatusEffect.Stacks);
-                    return;
+                    break;
                 }
             }
         }
@@ -109,21 +117,43 @@ public class PlayerState
         {
             activeStatusEffects.Add(newStatusEffect);
         }
+        onStatusEffectChanged?.Invoke();
     }
 
     public void ClearStatus()
     {
         activeStatusEffects.Clear();
+        onStatusEffectChanged?.Invoke();
     }
 
     public void AddInvestment(int amount)
     {
         Investment += amount;
+        onInvestmentChanged?.Invoke();
     }
 
     public void ClearInvestment()
     {
         Investment = 0;
+        onInvestmentChanged?.Invoke();
+    }
+
+    public void ReduceShield(float amount)
+    {
+        CurrentShield = Math.Max(0, CurrentShield - amount);
+        onShieldChanged?.Invoke();
+    }
+
+    public void AddShield(float amount)
+    {
+        CurrentShield = CurrentShield + amount;
+        onShieldChanged?.Invoke();
+    }
+
+    public void ResetShield()
+    {
+        CurrentShield = 0;
+        onShieldChanged?.Invoke();
     }
 
     private void RaiseOnDeckCardRemoved()

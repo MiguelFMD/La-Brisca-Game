@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerGameEvent onPlayerHealthChanged;
     [SerializeField] private PlayerGameEvent onPlayerDeath;
     [SerializeField] private PlayerGameEvent onDeckCardRemoved;
+    [SerializeField] private PlayerGameEvent onStatusEffectChanged;
+    [SerializeField] private PlayerGameEvent onInvestmentChanged;
+    [SerializeField] private PlayerGameEvent onShieldChanged;
    
     private float defaultMaxHealth = 100f;
     public PlayerState state { get; private set; }
@@ -28,6 +31,9 @@ public class Player : MonoBehaviour
         state.onPlayerDeath += RaisePlayerDeath;
         state.onPlayerHealthChanged += RaisePlayerHealthChanged;
         state.onDeckCardRemoved += RaiseOnDeckCardRemoved;
+        state.onInvestmentChanged += RaiseOnInvestChanged;
+        state.onShieldChanged += RaiseOnShieldChanged;
+        state.onStatusEffectChanged += RaiseOnStatusEffectChanged;
         state.Deck = new Deck();
     }
 
@@ -37,6 +43,9 @@ public class Player : MonoBehaviour
         state.onPlayerDeath -= RaisePlayerDeath;
         state.onPlayerHealthChanged -= RaisePlayerHealthChanged;
         state.onDeckCardRemoved -= RaiseOnDeckCardRemoved;
+        state.onInvestmentChanged -= RaiseOnInvestChanged;
+        state.onShieldChanged -= RaiseOnShieldChanged;
+        state.onStatusEffectChanged -= RaiseOnStatusEffectChanged;
     }
 
     public void Reset()
@@ -116,12 +125,28 @@ public class Player : MonoBehaviour
     private void ResetStats()
     {
         Heal(defaultMaxHealth);
-        state.CurrentShield = 0;
+        state.ResetShield();
+        state.ClearInvestment();
         state.ClearStatus();
     }
 
     private void RaiseOnDeckCardRemoved()
     {
         onDeckCardRemoved.Raise(this);
+    }
+
+    private void RaiseOnInvestChanged()
+    {
+        onInvestmentChanged.Raise(this);
+    }
+
+    private void RaiseOnStatusEffectChanged()
+    {
+        onStatusEffectChanged.Raise(this);
+    }
+
+    private void RaiseOnShieldChanged()
+    {
+        onShieldChanged.Raise(this);
     }
 }
