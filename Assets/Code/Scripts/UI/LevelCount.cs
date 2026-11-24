@@ -15,13 +15,13 @@ public class LevelCount : MonoBehaviour
     public void AddCount()
     {
         curretLevel++;
-        textCount.text = "Level: " + curretLevel;
+        textCount.text = "Level: " + curretLevel +"/5";
     }
 
     public void ResetCount()
     {
         curretLevel = 1;
-        textCount.text = "Level: " + curretLevel;
+        textCount.text = "Level: " + curretLevel + "/5";
     }
 
 }

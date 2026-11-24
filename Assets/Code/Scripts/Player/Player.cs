@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
     [Header("Player Stats")]
     [SerializeField] [Range(1, 5)] public int initialCardsAmount = 3;
     [SerializeField] public bool isEnemy = false;
+    [SerializeField] private float defaultMaxHealth = 100f;
     private Hand hand;
     [SerializeField] private DeckType playerDeck;
     
@@ -17,7 +18,6 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerGameEvent onInvestmentChanged;
     [SerializeField] private PlayerGameEvent onShieldChanged;
    
-    private float defaultMaxHealth = 100f;
     public PlayerState state { get; private set; }
     public CardStatus playedCard => state?.PlayedCard;
     
