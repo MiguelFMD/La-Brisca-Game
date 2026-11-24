@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
         state.ResetShield();
         state.ClearInvestment();
         state.ClearStatus();
+        state.Hand.Clear();
     }
 
     public void SetPlayerData(DeckType newDeck, float newMaxHealth)
