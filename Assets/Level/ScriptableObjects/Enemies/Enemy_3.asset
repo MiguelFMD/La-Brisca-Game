@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Enemy_3
   m_EditorClassIdentifier: Assembly-CSharp::EnemyType
   deck: {fileID: 11400000, guid: d19da68b17764c94897f3e546096855e, type: 2}
-  health: 20
+  health: 25

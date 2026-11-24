@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff16da0180c22f849afe732f5cf96e45, type: 3}
   m_Name: Enemy_2
   m_EditorClassIdentifier: Assembly-CSharp::EnemyType
-  deck: {fileID: 11400000, guid: 890136fa9dfe3a844a92f10f2cc1f5e1, type: 2}
-  health: 20
+  deck: {fileID: 11400000, guid: d737d09ed594c564781e6dc61d27a671, type: 2}
+  health: 15
